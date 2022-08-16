@@ -11,7 +11,6 @@ import NotFound from "./views/NotFound";
 function App() {
   return (
     <div className="App">
-      <h1>Sound Good app</h1>
       <Routes>
         <Route exact path='/login' element={<LogIn />} />
         <Route exact path='/' element={<Home />} />
