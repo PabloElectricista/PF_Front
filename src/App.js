@@ -14,29 +14,21 @@ import NotFound from "./views/NotFound";
 
 
 function App() {
-  return (
-    <Router>
-       <Routes>
-          <Route exact path="/" element={<LandingPage/>}/>
-          <Route path="/home" element={<Home/>}/>
-          <Route exact path='/login' element={<LogIn />} />
-          <Route exact path='/contact' element={<ContactUs />} />
-          <Route path='/detail/:id' element={<ProductDetail/>}/>
-          <Route exact path='/create' element={<CreateProduct />} />
-          <Route exact path='/profile' element={<UserProfile />} />
-          <Route exact path='/payment' element={<Payment />} />
-          <Route path='*' element={<NotFound />} />
-      </Routes>
- </Router>
-
-
-
-
-       
-      </Routes>
-    </div>
-
-  );
+    return (
+        <Router>
+            <Routes>
+                <Route exact path="/" element={<LandingPage/>}/>
+                <Route path="/home" element={<Home/>}/>
+                <Route exact path='/login' element={<LogIn/>}/>
+                <Route exact path='/contact' element={<ContactUs/>}/>
+                <Route path='/detail/:id' element={<ProductDetail/>}/>
+                <Route exact path='/create' element={<CreateProduct/>}/>
+                <Route exact path='/profile' element={<UserProfile/>}/>
+                <Route exact path='/payment' element={<Payment/>}/>
+                <Route path='*' element={<NotFound/>}/>
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;
