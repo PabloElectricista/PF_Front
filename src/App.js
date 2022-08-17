@@ -10,12 +10,12 @@ import CreateProduct from "./views/CreateProduct";
 import UserProfile from "./views/UserProfile";
 import Payment from "./views/Payment";
 import NotFound from "./views/NotFound";
+import Footer from "./components/Footer";
 
 function App() {
     return (
-        <div className="App">
-        <NavBar />
         <Router>
+            <NavBar/>
             <Routes>
                 <Route exact path="/" element={<LandingPage/>}/>
                 <Route path="/home" element={<Home/>}/>
@@ -27,8 +27,8 @@ function App() {
                 <Route exact path='/payment' element={<Payment/>}/>
                 <Route path='*' element={<NotFound/>}/>
             </Routes>
+            <Footer/>
         </Router>
-        </div>
     );
 }
 
