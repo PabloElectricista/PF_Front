@@ -11,9 +11,10 @@ export default function CardContainer() {
   //const allInstruments = useSelector(state => state.instruments)
   const [currentPage, setCurrentPage] = useState(1)
 
-  useEffect(() => {
-    setCurrentPage(1)
-  }, [allInstruments])
+  // useEffect(() => {
+  //   setCurrentPage(1)
+  // }, [allInstruments])
+  
 
   let idxLastItem = currentPage * 15
   let ixdFirstItem = idxLastItem - 15
