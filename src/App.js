@@ -2,6 +2,7 @@
 import {BrowserRouter as Router,  Routes, Route} from 'react-router-dom';
 import LandingPage from './components/LandingPage';
 import Home from './components/Home';
+import NavBar from "./components/NavBar";
 import LogIn from "./views/LogIn";
 import ContactUs from "./views/ContactUs";
 import ProductDetail from "./views/ProductDetail";
@@ -10,11 +11,10 @@ import UserProfile from "./views/UserProfile";
 import Payment from "./views/Payment";
 import NotFound from "./views/NotFound";
 
-
-
-
 function App() {
     return (
+        <div className="App">
+        <NavBar />
         <Router>
             <Routes>
                 <Route exact path="/" element={<LandingPage/>}/>
@@ -28,6 +28,7 @@ function App() {
                 <Route path='*' element={<NotFound/>}/>
             </Routes>
         </Router>
+        </div>
     );
 }
 
