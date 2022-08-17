@@ -14,6 +14,7 @@ export default function CardContainer() {
   // useEffect(() => {
   //   setCurrentPage(1)
   // }, [allInstruments])
+  
 
   let idxLastItem = currentPage * 15
   let ixdFirstItem = idxLastItem - 15
