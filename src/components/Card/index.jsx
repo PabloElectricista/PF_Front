@@ -1,11 +1,6 @@
 import { Link } from 'react-router-dom'
 
-export default function Card({ name, price, rating, image, brand }) {
-  let id = 0 //
-
-  const goToDetail = () => {
-
-  }
+export default function Card({id, name, price, rating, image, brand }) {
   
   return (
       <div>
