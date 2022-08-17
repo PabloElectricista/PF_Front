@@ -1,5 +1,6 @@
 import { Routes , Route } from "react-router-dom";
 import LogIn from "./views/LogIn";
+import NavBar from "./components/NavBar";
 import Home from "./views/Home";
 import ContactUs from "./views/ContactUs";
 import ProductDetail from "./views/ProductDetail";
@@ -11,6 +12,7 @@ import NotFound from "./views/NotFound";
 function App() {
   return (
     <div className="App">
+      <NavBar />
       <Routes>
         <Route exact path='/login' element={<LogIn />} />
         <Route exact path='/' element={<Home />} />
