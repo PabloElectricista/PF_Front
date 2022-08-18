@@ -4,19 +4,19 @@ const {
 
 const initialState = {
     instruments: [],
-    allInstruments:[]
+    allInstruments: []
 }
 
-export default function rootReducer(state = initialState, action){
-    switch(action.type){
+export default function rootReducer(state = initialState, action) {
+    switch (action.type) {
         case GET_ALL_PRODUCTS:
             return {
                 ...state,
                 allInstruments: action.payload,
-                instruments: action.payload,    
+                instruments: action.payload,
             }
 
-        default: 
-        return state
+        default:
+            return state
     }
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import {useDispatch} from 'react-redux'
-//import {getInstrumentsByName} from '../actions'
+import {getInstrumentsByName} from '../../redux/actions'
 import i from '../img/search_FILL0.png'
 import 'bootstrap/dist/css/bootstrap.css';
 

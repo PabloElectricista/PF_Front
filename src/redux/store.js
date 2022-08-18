@@ -9,7 +9,7 @@ const composeEnhancers =
     compose;
 
 const store = configureStore(
-    {reducer: rootReducer},
+    { reducer: rootReducer },
     composeEnhancers(applyMiddleware(thunk)),
 );
 
