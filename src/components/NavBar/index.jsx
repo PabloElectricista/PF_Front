@@ -8,7 +8,7 @@ class NavBar extends Component {
             <div className="NavBar">
                 <div className="linkGroup">
                     <Link className='linkItem' to="/login">Login</Link>
-                    <Link className='linkItem' to="/">Home</Link>
+                    <Link className='linkItem' to="/home">Home</Link>
                     <Link className='linkItem' to="/contact">Contact Us</Link>
                     <Link className='linkItem' to="/create">Create Product</Link>
                     <Link className='linkItem' to="/profile">User Profile</Link>
