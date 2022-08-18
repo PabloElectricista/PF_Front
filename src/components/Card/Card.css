@@ -5,6 +5,7 @@
   grid-template-columns: 1fr 3fr 1fr;
   transition: all 0.3s;
   border-bottom: solid #EEEEEE;
+  padding: 2% 0 2% 0; 
 }
 
 .CardImg{
