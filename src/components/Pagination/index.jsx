@@ -1,3 +1,6 @@
+import './Pagination.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 
 export default function Pagination({currentPage, postPerPage, totalPosts, paginate}) {
   
@@ -7,11 +10,11 @@ export default function Pagination({currentPage, postPerPage, totalPosts, pagina
   }
   
   return (
-    <nav>
+    <div className='Pagination' >
       <ul>
-        {pages.map(e => <li key={e} onClick={()=>paginate(e)} >{e}</li>)}
+        {pages.map(e => <li key={e} className='pagItem' onClick={()=>paginate(e)} >{e}</li>)}
       </ul>
-    </nav>
+    </div>
   )
 }
 

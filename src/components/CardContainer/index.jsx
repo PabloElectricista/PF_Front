@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import './CardContainer.css'
 import Card from "../Card";
 import Pagination from "../Pagination";
 import Loading from "../Loading";
@@ -25,13 +26,15 @@ export default function CardContainer() {
     key={instrument.id}
     id={instrument.id}
     name={instrument.name}
+    price={instrument.price}
+    brand={instrument.brand}
     rating={1}
     image={instrument.image} />)
 
   const paginate = (number) => { setCurrentPage(number) }
 
   return (
-    <div>
+    <div className="CardsContainer">
       <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} />
       {mapInstruments ? mapInstruments : <Loading />}
     </div>
