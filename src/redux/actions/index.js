@@ -1,11 +1,14 @@
-//import axios from 'axios'
+import axios from 'axios'
 
-// export function getAllInstruments(){
-//     return async function(dispatch){
-//         const resu =  await axios('/instruments')
-//         dispatch({
-//             type: "GET_ALL_INSTRUMENTS",
-//             payload: resu.data
-//         })
-//     }
-// }
+export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
+
+export const getAllProducts = () => {
+    return async function (dispatch) {
+        const products = await axios('/products');
+
+        return dispatch({
+            type: GET_ALL_PRODUCTS,
+            payload: products.data
+        });
+    };
+};
