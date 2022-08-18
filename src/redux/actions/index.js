@@ -7,7 +7,7 @@ export const GET_INSTRUMENT_BY_NAME = "GET_INSTRUMENT_BY_NAME";
 
 export const getAllProducts = () => {
     return async function (dispatch) {
-        const products = await axios('/products');
+        const products = await axios('https://my.api.mockaroo.com/instruments_PF?key=2e3ffde0')
 
         return dispatch({
             type: GET_ALL_PRODUCTS,
