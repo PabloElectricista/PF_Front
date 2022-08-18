@@ -1,6 +1,5 @@
 import './Footer.css';
 import React, { Component } from "react";
-import {BsGithub, BsLinkedin} from 'react-icons/bs';
 
 class Footer extends Component {
     render() {
@@ -8,9 +7,9 @@ class Footer extends Component {
             <div className="Footer">
                 <hr />
                 <div className="contactLinks">
-                    <BsGithub className='contactLink' />
-                    <p>Johnny B.Goode</p>
-                    <BsLinkedin className='contactLink' />
+                    <p>Terms & Conditions</p>
+                    <p>Your Privacy Rights</p>
+                    <p>©2022 B. Goode</p>
                 </div>
             </div>
         );
