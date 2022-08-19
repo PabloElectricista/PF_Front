@@ -5,16 +5,16 @@ import Card from "../Card";
 import Pagination from "../Pagination";
 import Loading from "../Loading";
 
-import { allInstruments } from "../../primer mock";
+// import { allInstruments } from "../../primer mock";
 
 
 export default function CardContainer() {
-  //const allInstruments = useSelector(state => state.instruments)
+  const allInstruments = useSelector(state => state.instruments)
   const [currentPage, setCurrentPage] = useState(1)
 
-  // useEffect(() => {
-  //   setCurrentPage(1)
-  // }, [allInstruments])
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [allInstruments])
   
 
   let idxLastItem = currentPage * 15
@@ -23,8 +23,8 @@ export default function CardContainer() {
 
   console.log("pageInstruments", pageInstruments)
   let mapInstruments = pageInstruments.map(instrument => <Card
-    key={instrument.id}
-    id={instrument.id}
+    key={instrument._id}
+    id={instrument._id}
     name={instrument.name}
     price={instrument.price}
     brand={instrument.brand}
