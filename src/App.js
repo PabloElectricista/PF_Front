@@ -10,6 +10,7 @@ import UserProfile from "./views/UserProfile";
 import Payment from "./views/Payment";
 import NotFound from "./views/NotFound";
 import Footer from "./components/Footer";
+import AboutUs from "./views/AboutUs";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                 <Route exact path='/create' element={<CreateProduct/>}/>
                 <Route exact path='/profile' element={<UserProfile/>}/>
                 <Route exact path='/payment' element={<Payment/>}/>
+                <Route exact path='/about' element={<AboutUs/>}/>
                 <Route path='*' element={<NotFound/>}/>
             </Routes>
             <Footer/>
