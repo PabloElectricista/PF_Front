@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+const URL_PRODUCTS= "http://localhost:4000/products";  // temporal para las pruebas
+
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
@@ -7,7 +9,7 @@ export const GET_INSTRUMENT_BY_NAME = "GET_INSTRUMENT_BY_NAME";
 
 export const getAllProducts = () => {
     return async function (dispatch) {
-        const products = await axios('https://my.api.mockaroo.com/instruments_PF?key=2e3ffde0')
+        const products = await axios(URL_PRODUCTS)  // temporal para las pruebas
 
         return dispatch({
             type: GET_ALL_PRODUCTS,
