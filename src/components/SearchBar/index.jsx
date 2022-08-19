@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {useDispatch} from 'react-redux'
 import {getInstrumentsByName} from '../../redux/actions'
-import i from '../img/search_FILL0.png'
+import iconSearch from '../img/search_FILL0.png'
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default function SearchBar(){
@@ -18,12 +18,12 @@ export default function SearchBar(){
         dispatch(getInstrumentsByName(input))
         setInput('')
     }
-    console.log(input)
+    
     return(
-        <div class="container-fluid" >
-            <form class="input-group" onSubmit={(e)=>{handleSubmit(e)}} >
-                <button class="input-group-text" id="basic-addon1" type='submit'><img src={i}/></button>
-                <input class="form-control me-2" value={input} onChange={(e)=>{handleChange(e)}} placeholder='Type your search...' aria-describedby="basic-addon1"/>
+        <div class='d-flex  w-25'>
+            <form class="d-flex input-group" role="search" onSubmit={(e)=>{handleSubmit(e)}} >
+                <button class="input-group-text" id="inputGroup-sizing-default" type='submit'><img src={iconSearch}  alt="search Icon" width="25" height="25"/></button>
+                <input class="form-control me-2" value={input} onChange={(e)=>{handleChange(e)}} placeholder='Type your search...' />
             </form>
         </div>
     )

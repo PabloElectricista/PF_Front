@@ -37,6 +37,7 @@ export default function CardContainer() {
     <div className="CardsContainer">
       <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} />
       {mapInstruments ? mapInstruments : <Loading />}
+      <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} />
     </div>
   )
 }
