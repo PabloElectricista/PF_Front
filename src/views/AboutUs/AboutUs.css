@@ -1,0 +1,42 @@
+.TeamDiv {
+  display: grid;
+  width: fit-content;
+  grid-template-columns: repeat(4, 200px);
+  justify-items: center;
+  align-items: center;
+  margin: 0 auto;
+  column-gap: 50px;
+  row-gap: 35px;
+  border-radius: 0.3em;
+  margin-bottom: 100px;
+}
+
+.TeamCard {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  text-align: center;
+  width: 230px;
+  padding: 0 5% 0 5%;
+  background-color: #FFFFFF;
+}
+
+.CardIcon {
+  margin: 20px;
+  width: 2.5em;
+  height: 2.5em;
+  transition: all 0.3s;
+}
+
+.CardIcon:hover{
+  transform: scale(1.1);
+}
+
+.IconsDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.PageTitle {
+  margin: 40px;
+  text-align: center;
+}
