@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200&display=swap');
+
+.container {
+    height: 74vh;
+    background-image: url("../../components/img/assets/B.Goode-Logo.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: 700px;
+    margin-top: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.best {
+    font-family: "Roboto Mono";
+    width: 30%;
+    text-align: center;
+    position: absolute;
+    top: 33%;
+    left: 5%;
+}
+
+.eslogan {
+    width: 25%;
+    color: black;
+    font-family: "Roboto Mono";
+    padding: 13px 30px 13px;
+    border: 1px solid black;
+    position: absolute;
+    top: 43%;
+    right: 6%;
+}
+
+.eslogan::after {
+    content: "";
+    background-color: #198754;
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+    height: 100%;
+    top: 7px;
+    left: 7px;
+}
+
+.slide {
+    font-size: 20px;
+    font-weight: 200;
+    letter-spacing: 1px;
+    padding: 13px 30px 13px;
+    outline: 0;
+    border: 1px solid black;
+    font-family: "Roboto Mono";
+    cursor: pointer;
+    position: relative;
+    top: 54%;
+    left: 13%;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.slide i {
+    opacity: 0;
+    font-size: 13px;
+    transition: 0.2s;
+    position: absolute;
+    right: 10px;
+    top: 23px;
+    transition: transform 1;
+}
+
+.slide div {
+    transition: transform 0.8s;
+}
+
+.slide:hover div {
+    transform: translateX(-6px);
+}
+
+.slide::after {
+    content: "";
+    background-color: #198754;
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+    height: 100%;
+    top: 7px;
+    left: 7px;
+}
+
+.slide:hover i {
+    opacity: 1;
+    transform: translateX(-6px);
+}
