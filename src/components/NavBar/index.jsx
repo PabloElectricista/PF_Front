@@ -8,7 +8,7 @@ class NavBar extends Component {
     
     render() {
         return (
-            <nav class="navbar bg-light shadow p-3 mb-5 bg-body rounded">
+            <nav class="navbar bg-light p-2 bg-body rounded">
                 <div class="container-fluid justify-content-around ">
                     <div class="d-flex align-items-center">
                         <div class="me-5">
