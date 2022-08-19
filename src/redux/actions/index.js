@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 
-const URL_PRODUCTS= "http://localhost:4000/products";
+import { URL_PRODUCTS } from '../../../config'
 
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
