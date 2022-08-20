@@ -7,8 +7,8 @@ function ProductEdit() {
 
     const regexInteger = /^\d*$/;
     const regexDecimal = /^(\d+\.?\d*|\.\d+)$/;
-    const regexAlphanumeric = /^[\dA-Za-z\s-]*$/;
-    const regexUrl = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)/g;
+    const regexAlphanumeric = /^[\dA-Za-záéíóúüñç\s-]*$/;
+    const regexUrl = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z\d@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z\d@:%_+.~#?&/=]*)/g;
 
     const dispatch = useDispatch();
     const allInstruments = useSelector((state) => state.allInstruments)
@@ -17,25 +17,29 @@ function ProductEdit() {
 
     const [instrumentItem, setInstrumentItem] = React.useState({
         id: 0,
-        instrument: '',
+        name: '',
         price: 1.0,
-        descript: '',
+        description: '',
         image: '',
         stock: 0,
         color: '',
         categorie: '',
         brand: '',
+        location: '',
+        status: '',
     });
 
     const [errorInfo, setErrorInfo] = React.useState({
-        instrument: '',
+        name: '',
         price: '',
-        descript: '',
+        description: '',
         image: '',
         stock: '',
         color: '',
         categorie: '',
         brand: '',
+        location: '',
+        status: '',
     });
 
     function handleChange(event) {
@@ -73,17 +77,17 @@ function ProductEdit() {
     function renderForm(instrumentItem) {
         return (
             <>
-                <h1>Edit {instrumentItem.instrument}</h1>
+                <h1>Edit {instrumentItem.name}</h1>
 
                 <form onSubmit={e => handleSubmit(e)}>
                     <div>
                         <label>Name: </label>
                         <input placeholder='Instrument name'
                                onChange={(e) => handleChange(e)}
-                               onBlur={() => validateAlpha('instrument', instrumentItem.instrument)}
-                               value={instrumentItem.instrument}
-                               type='text' name={'instrument'}/>
-                        <span>{errorInfo.instrument}</span>
+                               onBlur={() => validateAlpha('name', instrumentItem.name)}
+                               value={instrumentItem.name}
+                               type='text' name={'name'}/>
+                        <span>{errorInfo.name}</span>
                     </div>
 
                     <div>
@@ -100,10 +104,10 @@ function ProductEdit() {
                         <label>Description: </label>
                         <input placeholder='Instrument description'
                                onChange={(e) => handleChange(e)}
-                               onBlur={() => validateAlpha('description', instrumentItem.descript)}
-                               value={instrumentItem.descript}
-                               type='text' name={'descript'}/>
-                        <span>{errorInfo.descript}</span>
+                               onBlur={() => validateAlpha('description', instrumentItem.description)}
+                               value={instrumentItem.description}
+                               type='text' name={'description'}/>
+                        <span>{errorInfo.description}</span>
                     </div>
 
                     <div>
@@ -156,6 +160,26 @@ function ProductEdit() {
                         <span>{errorInfo.brand}</span>
                     </div>
 
+                    <div>
+                        <label>Location: </label>
+                        <input placeholder='Instrument location'
+                               onChange={(e) => handleChange(e)}
+                               onBlur={() => validateAlpha('location', instrumentItem.location)}
+                               value={instrumentItem.location}
+                               type='text' name={'location'}/>
+                        <span>{errorInfo.location}</span>
+                    </div>
+
+                    <div>
+                        <label>Brand: </label>
+                        <input placeholder='Instrument status'
+                               onChange={(e) => handleChange(e)}
+                               onBlur={() => validateAlpha('status', instrumentItem.status)}
+                               value={instrumentItem.status}
+                               type='text' name={'status'}/>
+                        <span>{errorInfo.status}</span>
+                    </div>
+
                     <button className='submitButton' type='submit'>Edit</button>
                     <button className='cancelButton'
                             type='button'
@@ -181,18 +205,21 @@ function ProductEdit() {
     }
 
     function validateProduct() {
-        const errorName = validateAlpha('instrument', instrumentItem.instrument);
+        const errorName = validateAlpha('name', instrumentItem.name);
         const errorPrice = validateDecimal('price', instrumentItem.price);
-        const errorDescription = validateAlpha('description', instrumentItem.descript);
+        const errorDescription = validateAlpha('description', instrumentItem.description);
         const errorImage = validateUrl('image', instrumentItem.image);
-        const errorStock = validateInteger('stock', instrumentItem.stock); //validateStock();
+        const errorStock = validateInteger('stock', instrumentItem.stock);
         const errorColor = validateAlpha('color', instrumentItem.color);
         const errorCategory = validateAlpha('category', instrumentItem.categorie);
         const errorBrand = validateAlpha('brand', instrumentItem.brand);
+        const errorLocation = validateAlpha('location', instrumentItem.location);
+        const errorStatus = validateAlpha('status', instrumentItem.status);
 
         return errorName || errorPrice || errorDescription ||
                errorImage || errorStock || errorColor ||
-               errorCategory || errorBrand;
+               errorCategory || errorBrand || errorLocation ||
+               errorStatus;
     }
 
     function validateInteger(key, value) {

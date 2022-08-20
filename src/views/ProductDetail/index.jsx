@@ -34,15 +34,17 @@ function ProductDetail() {
         }
         return (
             <div className="detailsInfo">
-                <h1>{instrumentItem.instrument}</h1>
-                <p><b>Name: </b>{instrumentItem.instrument}</p>
+                <h1>{instrumentItem.name}</h1>
+                <p><b>Name: </b>{instrumentItem.name}</p>
                 <p><b>Price: $</b>{instrumentItem.price}</p>
-                <p><b>Description: </b>{instrumentItem.descript}</p>
+                <p><b>Description: </b>{instrumentItem.description}</p>
                 <p><b>Image: </b>{instrumentItem.image}</p>
                 <p><b>Stock: </b>{instrumentItem.stock}</p>
                 <p><b>Color: </b>{instrumentItem.color}</p>
                 <p><b>Category: </b>{instrumentItem.categorie}</p>
                 <p><b>Brand: </b>{instrumentItem.brand}</p>
+                <p><b>Location: </b>{instrumentItem.location}</p>
+                <p><b>Status: </b>{instrumentItem.status}</p>
             </div>
         );
     }
