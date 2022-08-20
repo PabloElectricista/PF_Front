@@ -6,7 +6,7 @@ import './index.css';
 export default function LandingPage(){
 
     return(
-        <div className='container'>
+        <div className='contain'>
             <div className='best'>
                 <h4>THE BEST VIRTUAL STORE OF MUSICAL INSTRUMENTS</h4>
             </div>

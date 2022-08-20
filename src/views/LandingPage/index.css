@@ -1,10 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200&display=swap');
 
-.container {
+.contain {
     height: 74vh;
     background-image: url("../../components/img/assets/B.Goode-Logo.png");
     background-repeat: no-repeat;
-    background-attachment: fixed;
     background-position: center;
     background-size: 700px;
     margin-top: 15px;
