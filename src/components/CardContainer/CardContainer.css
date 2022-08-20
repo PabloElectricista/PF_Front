@@ -1,6 +1,14 @@
-.CardsContainer{
-  margin: 0 auto;
-  width: 50%;
-  background-color: none;
-  padding-top: 8px;
+.containerHome {
+  padding: 1%;
+}
+
+.containerContent {
+  display: flex;
+}
+
+.containerCards{
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 7%;
+  justify-content: flex-end;
 }

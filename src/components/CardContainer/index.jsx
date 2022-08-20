@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import './CardContainer.css'
-import Card from "../Card";
+import './CardContainer.css';
 import Pagination from "../Pagination";
 import Loading from "../Loading";
-
+import Filters from "../../components/Filters/Filters";
+import ProductCard from '../Card/index';
 import { allInstruments } from "../../primer mock";
 
-
 export default function CardContainer() {
+  
   //const allInstruments = useSelector(state => state.instruments)
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -16,13 +16,11 @@ export default function CardContainer() {
   //   setCurrentPage(1)
   // }, [allInstruments])
   
-
   let idxLastItem = currentPage * 15
   let ixdFirstItem = idxLastItem - 15
   let pageInstruments = allInstruments.slice(ixdFirstItem, idxLastItem)
 
-  console.log("pageInstruments", pageInstruments)
-  let mapInstruments = pageInstruments.map(instrument => <Card
+  let mapInstruments = pageInstruments.map(instrument => <ProductCard
     key={instrument.id}
     id={instrument.id}
     name={instrument.name}
@@ -34,9 +32,18 @@ export default function CardContainer() {
   const paginate = (number) => { setCurrentPage(number) }
 
   return (
-    <div className="CardsContainer">
+    <div className="containerHome">
       <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} />
-      {mapInstruments ? mapInstruments : <Loading />}
+
+      {mapInstruments ? 
+        <div className="containerContent">
+          <Filters/>
+          <div className="containerCards">
+            {mapInstruments}
+          </div>
+        </div> 
+      : <Loading />}
+
       <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} />
     </div>
   )
