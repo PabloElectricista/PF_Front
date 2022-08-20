@@ -11,6 +11,7 @@ import Payment from "./views/Payment";
 import NotFound from "./views/NotFound";
 import Footer from "./components/Footer";
 import AboutUs from "./views/AboutUs";
+import ProductEdit from "./views/ProductEdit";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                 <Route exact path='/login' element={<LogIn/>}/>
                 <Route exact path='/contact' element={<ContactUs/>}/>
                 <Route path='/detail/:id' element={<ProductDetail/>}/>
+                <Route path='/edit/:id' element={<ProductEdit/>}/>
                 <Route exact path='/create' element={<CreateProduct/>}/>
                 <Route exact path='/profile' element={<UserProfile/>}/>
                 <Route exact path='/payment' element={<Payment/>}/>
