@@ -25,6 +25,7 @@ function App() {
                 <Route exact path='/contact' element={<ContactUs/>}/>
                 <Route path='/detail/:id' element={<ProductDetail/>}/>
                 <Route path='/edit/:id' element={<ProductEdit/>}/>
+                <Route path='/favorites' element={<Favorites/>}/>
                 <Route exact path='/create' element={<CreateProduct/>}/>
                 <Route exact path='/favorites' element={<Favorites/>}/>
                 <Route exact path='/profile' element={<UserProfile/>}/>

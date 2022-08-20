@@ -5,7 +5,8 @@ const {
 
 const initialState = {
     instruments: [],
-    allInstruments: []
+    allInstruments: [],
+    favoriteInstruments: [],
 }
 
 export default function rootReducer(state = initialState, action) {
