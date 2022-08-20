@@ -23,7 +23,9 @@ class NavBar extends Component {
                     </div>
                     <SearchBar />
                     <div>
+                        <a href="/login">
                         <button class="btn btn-outline-success me-2" type="button">Log in</button>
+                        </a>
                         <button class="btn btn-sm btn-outline-secondary" type="button">Sign in</button>
                     </div>
                 </div>
