@@ -3,7 +3,12 @@ textarea {
 }
 
 .FormTextArea{
+  padding: 15px;
   font-size: 1.4rem;
   width: 100%;
   height: 200px; 
+}
+
+select{
+  text-align: center;
 }

@@ -1,11 +1,12 @@
 import axios from 'axios'
 
-const URL_PRODUCTS= "http://localhost:4000/products";  // temporal para las pruebas
+const URL_PRODUCTS = "http://localhost:4000/products";  // temporal para las pruebas
 
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
 export const GET_INSTRUMENT_BY_NAME = "GET_INSTRUMENT_BY_NAME";
+export const GET_INSTRUMENT_BY_ID = "GET_INSTRUMENT_BY_ID";
 
 export const getAllProducts = () => {
     return async function (dispatch) {
@@ -31,5 +32,12 @@ export const createProduct = () => {
 export const getInstrumentsByName = () => {
     return function (dispatch) {
         return dispatch({ type: GET_INSTRUMENT_BY_NAME, payload: null })
+    }
+}
+
+export const getInstrumentById = (id) => {
+    return async function (dispatch) {
+        const product = await axios(URL_PRODUCTS + "/" + id)
+        return dispatch({ type: GET_INSTRUMENT_BY_ID, payload: product.data });
     }
 }
