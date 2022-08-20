@@ -1,19 +1,25 @@
 import React, {useEffect} from "react";
 import {getAllProducts} from "../../redux/actions";
 import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import './ProductDetail.css';
 
 function ProductDetail() {
 
     const dispatch = useDispatch();
     const allInstruments = useSelector((state) => state.allInstruments);
-    const { id } = useParams();
+    const {id} = useParams();
+    const navigate = useNavigate();
 
-   useEffect( () =>{
-        if (allInstruments.length === 0 ) {
+    useEffect(() => {
+        if (allInstruments.length === 0) {
             dispatch(getAllProducts());
         }
     }, [dispatch, allInstruments])
+
+    function handleEdit() {
+        navigate(`/edit/${id}`);
+    }
 
     function renderInstrument() {
         if (allInstruments.length === 0) {
@@ -34,17 +40,25 @@ function ProductDetail() {
         }
         return (
             <div className="detailsInfo">
-                <h1>{instrumentItem.name}</h1>
-                <p><b>Name: </b>{instrumentItem.name}</p>
-                <p><b>Price: $</b>{instrumentItem.price}</p>
-                <p><b>Description: </b>{instrumentItem.description}</p>
-                <p><b>Image: </b>{instrumentItem.image}</p>
-                <p><b>Stock: </b>{instrumentItem.stock}</p>
-                <p><b>Color: </b>{instrumentItem.color}</p>
-                <p><b>Category: </b>{instrumentItem.categorie}</p>
-                <p><b>Brand: </b>{instrumentItem.brand}</p>
-                <p><b>Location: </b>{instrumentItem.location}</p>
-                <p><b>Status: </b>{instrumentItem.status}</p>
+                <div className="imageContainer">
+                    <img className="detailsImage" src={instrumentItem.image} alt="Instrument image"/>
+                </div>
+                <div className="infoContainer">
+                    <h1>{instrumentItem.name}</h1>
+                    <p><b>Name: </b>{instrumentItem.name}</p>
+                    <p><b>Price: $</b>{instrumentItem.price}</p>
+                    <p><b>Description: </b>{instrumentItem.description}</p>
+                    <p><b>Stock: </b>{instrumentItem.stock}</p>
+                    <p><b>Color: </b>{instrumentItem.color}</p>
+                    <p><b>Category: </b>{instrumentItem.categorie}</p>
+                    <p><b>Brand: </b>{instrumentItem.brand}</p>
+                    <p><b>Location: </b>{instrumentItem.location}</p>
+                    <p><b>Status: </b>{instrumentItem.status}</p>
+                    <button className='submitButton'
+                            type='button'
+                            onClick={() => handleEdit()}
+                    >Edit</button>
+                </div>
             </div>
         );
     }

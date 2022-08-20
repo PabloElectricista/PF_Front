@@ -1,0 +1,21 @@
+.detailsInfo {
+    border-radius: .5em;
+    background-color: white;
+    display: flex;
+    margin: 3em 5em;
+    box-shadow: .5em .5em 2em #282c34;
+}
+
+.imageContainer {
+    border-radius: .5em;
+    width: 40%;
+}
+
+.detailsImage {
+    width: 100%;
+    height: 100%;
+}
+
+.infoContainer {
+    margin: 1.5em;
+}
