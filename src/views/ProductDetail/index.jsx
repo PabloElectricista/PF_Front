@@ -13,7 +13,7 @@ function ProductDetail() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!instrumentItem || (id !== instrumentItem.id && !instrumentItem.error)) {
+        if (!instrumentItem || (id !== instrumentItem._id && !instrumentItem.error)) {
             dispatch(getProductById(id));
         }
     }, [dispatch, instrumentItem])
@@ -23,7 +23,8 @@ function ProductDetail() {
     }
 
     function renderInstrument() {
-        if (!instrumentItem || (id !== instrumentItem.id && !instrumentItem.error)) {
+        console.log("renderInstrument", instrumentItem)
+        if (!instrumentItem || (id !== instrumentItem._id && !instrumentItem.error)) {
             return <Loading />;
         }
         if (instrumentItem.error) {
@@ -36,7 +37,7 @@ function ProductDetail() {
         return (
             <div className="detailsInfo">
                 <div className="imageContainer">
-                    <img className="detailsImage" src={instrumentItem.img} alt="Instrument image"/>
+                    <img className="detailsImage" src={instrumentItem.image[0]} alt="Instrument image"/>
                 </div>
                 <div className="infoContainer">
                     <h1>{instrumentItem.name}</h1>
