@@ -8,7 +8,7 @@ class NavBar extends Component {
     
     render() {
         return (
-            <nav className="navbar shadow-lg mb-2 bg-light p-2 bg-body rounded">
+            <nav className="navbar shadow-lg mb-2 bg-light p-2 bg-body sticky-top rounded">
                 <div className="container-fluid justify-content-around ">
                     <div className="d-flex align-items-center">
                         <div className="me-5">
@@ -23,14 +23,14 @@ class NavBar extends Component {
                     </div>
                     <SearchBar />
                     <div>
-                        <a href="/login">
-                        <button className="btn btn-outline-success me-2" type="button">Log in</button>
-                        </a>
-                        <a href="/profile">
-                        <button className="btn btn-outline-success me-2" type="button">Profile</button>
-                        </a>
+                        <Link to="profile">
+                            <button className="btn btn-outline-success me-2" type="button">Profile</button>
+                        </Link>
+                        <Link to="login">
+                            <button className="btn btn-outline-success me-2" type="button">Log in</button>
+                        </Link>
                         <button className="btn btn-sm btn-outline-secondary" type="button">Sign in</button>
-                    </div>
+                        </div>
                 </div>
             </nav>
         );
