@@ -57,7 +57,7 @@ export const getProductById = (instrumentId) => {
 
 export const updateProduct = (instrumentItem) => {
     return async function (dispatch) {
-        const response = await axios.put(`${URL_PRODUCTS}/${instrumentItem.id}`,
+        const response = await axios.put(`${URL_PRODUCTS}/${instrumentItem._id}`,
                                           instrumentItem);
         return dispatch({
             type: UPDATE_PRODUCT,

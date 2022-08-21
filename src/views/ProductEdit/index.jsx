@@ -9,7 +9,7 @@ function ProductEdit() {
 
     const regexInteger = /^\d*$/;
     const regexDecimal = /^(\d+\.?\d*|\.\d+)$/;
-    const regexAlphanumeric = /^[\dA-Za-záéíóúüñç\s-]*$/;
+    const regexAlphanumeric = /^[\dA-Za-záéíóúüñç\-,:_;.'“”"/()\s]*$/;
     const regexUrl = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z\d@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z\d@:%_+.~#?&/=]*)/g;
 
     const dispatch = useDispatch();
@@ -35,7 +35,7 @@ function ProductEdit() {
         name: '',
         price: '',
         description: '',
-        img: '',
+        imagen: '',
         stock: '',
         color: '',
         categorie: '',
@@ -49,7 +49,7 @@ function ProductEdit() {
     }
 
     useEffect(() => {
-        if (!instrumentRetrieved || (id !== instrumentRetrieved.id && !instrumentRetrieved.error)) {
+        if (!instrumentRetrieved || (id !== instrumentRetrieved._id && !instrumentRetrieved.error)) {
             dispatch(getProductById(id));
         } else {
             setInstrumentItem(instrumentRetrieved);
@@ -57,7 +57,7 @@ function ProductEdit() {
     }, [dispatch, instrumentRetrieved, id]);
 
     function renderInstrument() {
-        if (!instrumentRetrieved || (id !== instrumentRetrieved.id && !instrumentRetrieved.error)) {
+        if (!instrumentRetrieved || (id !== instrumentRetrieved._id && !instrumentRetrieved.error)) {
             return <Loading />;
         }
         if (instrumentRetrieved.error) {
@@ -98,22 +98,23 @@ function ProductEdit() {
 
                     <div className='inputLabelField'>
                         <label>Description: </label>
-                        <input placeholder='Instrument description'
+                        <textarea placeholder='Instrument description'
                                onChange={(e) => handleChange(e)}
                                onBlur={() => validateAlpha('description', instrumentItem.description)}
                                value={instrumentItem.description}
-                               type='text' name={'description'}/>
+                               name={'description'}
+                               rows={4} />
                         <span className="errorMessage">{errorInfo.description}</span>
                     </div>
 
                     <div className='inputLabelField'>
                         <label>Image: </label>
-                        <input placeholder='Instrument image'
+                        <p>{instrumentItem.image} </p> {/*<input placeholder='Instrument image' //todo update - to handle array.
                                onChange={(e) => handleChange(e)}
-                               onBlur={() => validateUrl('img', instrumentItem.img)}
-                               value={instrumentItem.img}
-                               type='text' name={'img'}/>
-                        <span className="errorMessage">{errorInfo.img}</span>
+                               onBlur={() => validateUrl('imagen', instrumentItem.imagen)}
+                               value={instrumentItem.imagen}
+                               type='text' name={'imagen'}/>*/}
+                        <span className="errorMessage">{errorInfo.imagen}</span>
                     </div>
 
                     <div className='inputLabelField'>
@@ -138,11 +139,11 @@ function ProductEdit() {
 
                     <div className='inputLabelField'>
                         <label>Category: </label>
-                        <input placeholder='Instrument category'
+                        <p>{instrumentItem.categorie} </p> {/*<input placeholder='Instrument category' //todo update - to handle array.
                                onChange={(e) => handleChange(e)}
-                               onBlur={() => validateAlpha('category', instrumentItem.categorie)}
-                               value={instrumentItem.categorie}
-                               type='text' name={'categorie'}/>
+                               onBlur={() => validateAlpha('category', instrumentItem.categorie[0])}
+                               value={instrumentItem.categorie[0]}
+                               type='text' name={'categorie'}/>*/}
                         <span className="errorMessage">{errorInfo.categorie}</span>
                     </div>
 
@@ -207,10 +208,10 @@ function ProductEdit() {
         const errorName = validateAlpha('name', instrumentItem.name);
         const errorPrice = validateDecimal('price', instrumentItem.price);
         const errorDescription = validateAlpha('description', instrumentItem.description);
-        const errorImage = validateUrl('img', instrumentItem.img);
+        const errorImage = false; //validateUrl('imagen', instrumentItem.imagen[0]); //todo - update to handle array
         const errorStock = validateInteger('stock', instrumentItem.stock);
         const errorColor = validateAlpha('color', instrumentItem.color);
-        const errorCategory = validateAlpha('category', instrumentItem.categorie);
+        const errorCategory = false; //validateAlpha('category', instrumentItem.categorie[0]); //todo - update to handle array
         const errorBrand = validateAlpha('brand', instrumentItem.brand);
         const errorLocation = validateAlpha('location', instrumentItem.location);
         const errorStatus = validateAlpha('status', instrumentItem.status);
