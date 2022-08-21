@@ -7,19 +7,22 @@ import './CreateProduct.css'
 
 
 export default function CreateProduct() {
-    const allInstruments = useSelector(store => store.instruments)
-    const allCategories = useSelector(store => store.categories)
+    //const allInstruments = useSelector(store => store.instruments)
+    //const allCategories = useSelector(store => store.categories)
     const dispatch = useDispatch()
     const [error, setError] = useState({})
     const [inputForm, setInputForm] = useState({
         name: '',
+        description: '',
         image: '',
-        price: 0,
         categorie: [],
-        color: [],
-        descript: '',
+        color: '',
+        price: 0,
         stock: 0,
-        brand: ''
+        brand: '',
+        location: '',
+        status: '',
+
     })
 
 
@@ -28,6 +31,7 @@ export default function CreateProduct() {
     }, [dispatch])
 
     function validate(input) {
+
         let error = {}
         if (input.name.length >= 0 && !input.name.match(/^[a-zA-Z_]+( [a-zA-Z_]+)*$/)) {
             error.name = 'Only letters and no spaces are allowed at the end!'
@@ -37,25 +41,25 @@ export default function CreateProduct() {
             error.image = 'The image has to be a URL'
         } else error.image = null
 
-        if (input.descript && input.descript.length > 1000) {
-            error.descript = 'Must contain a maximum of 1000 characters'
-        } else error.type = null
-
-        if (input.brand && input.brand.length < 30) {
-            error.brand = 'Must contain a maximum of 30 characters'
-        } else error.brand = null
+        if (input.categorie && input.categorie.length === 0) {
+            error.categorie = 'You have to choose at least one category'
+        } else error.categorie = null
+        
+        if (input.color && input.color.length === 0) {
+            error.color = 'Must declare a color'
+        } else error.color = null
 
         if (input.price > 10000 || input.price < 0) {
             error.price = 'It has to be between 0 and 10000 dollars'
         } else error.price = null
-
+        
         if (input.stock > 30 || input.stock < 0) {
             error.stock = 'It has to be between 0 and 30'
         } else error.stock = null
-
-        if (input.categorie && input.categorie.length === 0) {
-            error.categorie = 'You have to choose at least one category'
-        } else error.categorie = null
+        
+        if (input.brand.length >= 0 && !input.brand.match(/^[a-zA-Z_]+( [a-zA-Z_]+)*$/)){
+            error.brand = 'Only letters and no spaces are allowed at the end!'
+        } else error.brand = null
         return error
     }
 
@@ -72,52 +76,47 @@ export default function CreateProduct() {
     function handleSelect(e) {
         setInputForm({
             ...inputForm,
-            diets: [...inputForm.categorie, e.target.value]
+            categorie: [...inputForm.categorie, e.target.value]
         })
         setError(validate({
             ...inputForm,
-            diets: [...inputForm.categorie, e.target.value]
+            categorie: [...inputForm.categorie, e.target.value]
         }))
     }
-    function deleteSelect(e, id) {
-        e.preventDefault();
-        setInputForm({
-            ...inputForm,
-            diets: inputForm.categorie.filter(d => d !== id)
-        })
-        setError(validate({
-            ...inputForm,
-            diets: inputForm.categorie.filter(d => d !== id)
-        }))
-    }
+   
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (error.name === null && error.image === null &&
-            error.descript === null && error.brand === null &&
-            error.price === null && error.stock === null &&
-            error.categorie === null) {
+        if(error.name === null && error.image === null && 
+        error.categorie === null && error.color === null && 
+        error.price === null && error.stock === null && 
+        error.brand === null){
+       
             dispatch(createProduct(inputForm))
             alert('Successfully created')
             setInputForm({
                 name: '',
+                description: '',
                 image: '',
-                price: 0,
                 categorie: [],
-                color: [],
-                descript: '',
+                color: '',
+                price: 0,
                 stock: 0,
-                brand: ''
+                brand: '',
+                location: '',
+                status: '',
             })
-        } else {
+        }else{
             alert('Fixes flagged errors and fills in required spaces')
         }
+      
     }
 
 
 
     return (
         <div id='container-create'>
+           
 
             <div id='cont-btn-home'>
                 <Link to='/home'>
@@ -139,9 +138,20 @@ export default function CreateProduct() {
                             value={inputForm.name}
                             name='name'
                             onChange={(e) => { handleChange(e) }} />
-                        {error.name && (
+                             {error.name&& (
                             <p>{error.name}</p>
                         )}
+                       
+                    </div>
+
+                    <div id='input-dsc' className='form-inputs'>
+                        <label>Description:</label>
+                        <input
+                            type='text'
+                            value={inputForm.description}
+                            name='description'
+                            onChange={(e) => { handleChange(e) }} />
+                       
                     </div>
 
                     <div id='input-name' className='form-inputs'>
@@ -151,71 +161,52 @@ export default function CreateProduct() {
                             value={inputForm.image}
                             name='image'
                             onChange={(e) => { handleChange(e) }} />
-                        {error.image && (
+                                {error.image&& (
                             <p>{error.image}</p>
                         )}
+                       
+                       
                     </div>
 
-                    <div id='input-name' className='form-inputs'>
-                        <label>Price:</label>
-                        <input
-                            type='text'
-                            value={inputForm.type}
-                            name='price'
-                            onChange={(e) => { handleChange(e) }} />
-                        {error.price && (
-                            <p>{error.price}</p>
-                        )}
-                    </div>
-                    <div id='select-diets' className='form-inputs' >
-                        <label>*Categorie:</label>
-                        <select onChange={(e) => { handleSelect(e) }}>
+                        <div id='input-name' className='form-inputs'>
+                        <label>*Category:</label>
+                        <select onChange={(e)=>{handleSelect(e)}}>
                             <option> -Select at least one- </option>
-                            {
-                                allCategories && allCategories.map(d => {
-                                    return (
-                                        <option value={d.id}>{d.name}</option>
-                                    )
-                                })
-                            }
-                        </select>
-                    </div>
-                    <div id='cont-diets'>
-                        <ul>
-                            {allCategories && allCategories.map((d) => {
-                                if (inputForm && inputForm.categorie.includes(d.id)) {
-                                    return (
-
-                                        <li>{d.name} <button onClick={(e) => { deleteSelect(e, d.id) }}>X</button></li>
-                                    )
-                                }
-                                return
-                            })}
-                        </ul>
+                            <option> Wind </option>
+                            <option> Electric </option>
+                            <option> Percussion </option>
+                            <option> String </option>
+                          </select> 
                     </div>
 
-                    <div id='select-diets' className='form-inputs'>
+                    <div id='select-cat' className='form-inputs'>
                         <label>Color:</label>
                         <input
                             type='color'
                             value={inputForm.color}
                             name='color'
                             onChange={(e) => { handleChange(e) }} />
+                                {error.color&& (
+                            <p>{error.color}</p>
+                        )}
+                       
 
                     </div>
 
-                    <div id='input-dsc' className='form-inputs'>
-                        <label>Description:</label>
+                    <div id='input-name' className='form-inputs'>
+                        <label>Price:</label>
                         <input
                             type='text'
-                            value={inputForm.descript}
-                            name='descript'
+                            value={inputForm.price}
+                            name='price'
                             onChange={(e) => { handleChange(e) }} />
-                        {error.descript && (
-                            <p>{error.descript}</p>
+                                {error.price&& (
+                            <p>{error.price}</p>
                         )}
+                       
+                     
                     </div>
-
+                    
                     <div id='input-stk' className='form-inputs'>
                         <label>*stock:</label>
                         <input
@@ -223,9 +214,11 @@ export default function CreateProduct() {
                             value={inputForm.stock}
                             name='stock'
                             onChange={(e) => { handleChange(e) }} />
-                        {error.stock && (
+                                {error.stock&& (
                             <p>{error.stock}</p>
                         )}
+                       
+                       
                     </div>
 
                     <div id='input-brn' className='form-inputs'>
@@ -235,9 +228,21 @@ export default function CreateProduct() {
                             value={inputForm.brand}
                             name='brand'
                             onChange={(e) => { handleChange(e) }} />
-                        {error.brand && (
+                                {error.brand&& (
                             <p>{error.brand}</p>
                         )}
+                       
+                      
+                    </div>
+
+                    <div id='input-brn' className='form-inputs'>
+                        <label >Status:</label>
+                        <input
+                            type='text'
+                            value={inputForm.status}
+                            name='status'
+                            onChange={(e) => { handleChange(e) }} />
+                      
                     </div>
 
                     <div id='cont-btn-submit'>

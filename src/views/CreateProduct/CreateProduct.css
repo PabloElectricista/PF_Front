@@ -1,6 +1,6 @@
 #container-create{
     font-family: var(--font-primary);
-    background-image: url('../../components/img/bateria.jpg');
+    background-image: url('../../components/img/7.png');
     background-repeat: no-repeat;
     background-size: 500px;
     background-position: right;
@@ -10,9 +10,17 @@
     width: 100vw;
     overflow: hidden;
 }
+.body{
+    background-image: url('../../components/img/wave.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
+}
+
 
 #cont-btn-home a button{ 
     
+  
     margin: 25px;
    
 }
