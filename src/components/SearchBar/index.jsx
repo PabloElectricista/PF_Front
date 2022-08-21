@@ -20,10 +20,10 @@ export default function SearchBar(){
     }
     
     return(
-        <div class='d-flex  w-25'>
-            <form class="d-flex input-group" role="search" onSubmit={(e)=>{handleSubmit(e)}} >
-                <button class="input-group-text" id="inputGroup-sizing-default" type='submit'><img src={iconSearch}  alt="search Icon" width="25" height="25"/></button>
-                <input class="form-control me-2" value={input} onChange={(e)=>{handleChange(e)}} placeholder='Type your search...' />
+        <div className='d-flex  w-25'>
+            <form className="d-flex input-group" role="search" onSubmit={(e)=>{handleSubmit(e)}} >
+                <button className="input-group-text" id="inputGroup-sizing-default" type='submit'><img src={iconSearch}  alt="search Icon" width="25" height="25"/></button>
+                <input className="form-control me-2" value={input} onChange={(e)=>{handleChange(e)}} placeholder='Type your search...' />
             </form>
         </div>
     )

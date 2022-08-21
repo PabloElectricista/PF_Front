@@ -25,7 +25,7 @@ export default function ContactUs() {
       <form action="" className="LogInForm">
         <label className="FormLabel">Issue</label>
         <select className="FormInput" type="text" name="subject" value={input.name} onChange={(e) => handleChange(e)} >
-          <option value="product" selected>Product</option>
+          <option value="product" defaultValue>Product</option>
           <option value="service" >Service</option>
           <option value="other">Other</option>
         </select>

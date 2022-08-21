@@ -121,7 +121,7 @@ export default function CreateProduct() {
 
             <div id='cont-btn-home'>
                 <Link to='/home'>
-                    <button class="btn btn-secondary" >Back</button>
+                    <button className="btn btn-secondary" >Back</button>
                 </Link>
             </div>
 
@@ -241,7 +241,7 @@ export default function CreateProduct() {
                     </div>
 
                     <div id='cont-btn-submit'>
-                        <button class="btn btn-secondary">Sell Product</button>
+                        <button className="btn btn-secondary">Sell Product</button>
                     </div>
 
                 </div>

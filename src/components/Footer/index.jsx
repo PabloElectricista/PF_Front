@@ -10,6 +10,7 @@ class Footer extends Component {
                     <p>Terms & Conditions</p>
                     <p>Your Privacy Rights</p>
                     <p>©2022 B. Goode</p>
+                    <a href="/about"><p>About us</p></a>
                 </div>
             </div>
         );
