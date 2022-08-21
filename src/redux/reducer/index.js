@@ -1,5 +1,6 @@
 const {
     GET_ALL_PRODUCTS,
+    GET_PRODUCT_BY_ID,
     UPDATE_PRODUCT
 } = require('../actions/index');
 
@@ -7,6 +8,7 @@ const initialState = {
     instruments: [],
     allInstruments: [],
     favoriteInstruments: [],
+    retrievedInstrument: null
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -16,6 +18,12 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 allInstruments: action.payload,
                 instruments: action.payload,
+            }
+
+        case GET_PRODUCT_BY_ID:
+            return {
+                ...state,
+                retrievedInstrument: action.payload
             }
 
         case UPDATE_PRODUCT:

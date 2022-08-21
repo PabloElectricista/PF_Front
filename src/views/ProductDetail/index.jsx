@@ -1,47 +1,42 @@
 import React, {useEffect} from "react";
-import {getAllProducts} from "../../redux/actions";
+import {getProductById} from "../../redux/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import './ProductDetail.css';
+import Loading from "../../components/Loading";
 
 function ProductDetail() {
 
     const dispatch = useDispatch();
-    const allInstruments = useSelector((state) => state.allInstruments);
+    const instrumentItem = useSelector((state) => state.retrievedInstrument);
     const {id} = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (allInstruments.length === 0) {
-            dispatch(getAllProducts());
+        if (!instrumentItem || (id !== instrumentItem.id && !instrumentItem.error)) {
+            dispatch(getProductById(id));
         }
-    }, [dispatch, allInstruments])
+    }, [dispatch, instrumentItem])
 
     function handleEdit() {
         navigate(`/edit/${id}`);
     }
 
     function renderInstrument() {
-        if (allInstruments.length === 0) {
-            return (
-                <h1 className='instrumentErrorMessage'>
-                    The store is empty...
-                </h1>
-            );
+        if (!instrumentItem || (id !== instrumentItem.id && !instrumentItem.error)) {
+            return <Loading />;
         }
-        const instrumentItem = allInstruments.find(item =>
-            item.id === id);
-        if (!instrumentItem) {
+        if (instrumentItem.error) {
             return (
-                <h1 className='instrumentErrorMessage'>
+                <h4 className='instrumentErrorMessage'>
                     The requested instrument was not found.
-                </h1>
+                </h4>
             );
         }
         return (
             <div className="detailsInfo">
                 <div className="imageContainer">
-                    <img className="detailsImage" src={instrumentItem.image} alt="Instrument image"/>
+                    <img className="detailsImage" src={instrumentItem.img} alt="Instrument image"/>
                 </div>
                 <div className="infoContainer">
                     <h1>{instrumentItem.name}</h1>
@@ -65,6 +60,7 @@ function ProductDetail() {
 
     return (
         <div className='Details'>
+            <h1>Product Details</h1>
             {renderInstrument()}
         </div>
     );

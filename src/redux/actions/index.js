@@ -6,6 +6,7 @@ export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
 export const GET_INSTRUMENT_BY_NAME = "GET_INSTRUMENT_BY_NAME";
+export const GET_PRODUCT_BY_ID= "GET_PRODUCT_BY_ID";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 
 export const getAllProducts = () => {
@@ -36,9 +37,27 @@ export const getInstrumentsByName = () => {
     }
 }
 
+export const getProductById = (instrumentId) => {
+    return function (dispatch) {
+        axios.get(`${URL_PRODUCTS}/${instrumentId}`)
+            .then(response =>
+                dispatch({
+                    type: GET_PRODUCT_BY_ID,
+                    payload: response.data
+                })
+            )
+            .catch(error =>
+                dispatch({
+                    type: GET_PRODUCT_BY_ID,
+                    payload: {error: error.message}
+                })
+            );
+    }
+}
+
 export const updateProduct = (instrumentItem) => {
     return async function (dispatch) {
-        const response = await axios.put(`http://localhost:3001/instruments/${instrumentItem.id}`,
+        const response = await axios.put(`${URL_PRODUCTS}/${instrumentItem.id}`,
                                           instrumentItem);
         return dispatch({
             type: UPDATE_PRODUCT,
