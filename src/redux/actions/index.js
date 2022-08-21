@@ -25,11 +25,11 @@ export const getAllCategories = () => {
         return dispatch({ type: GET_ALL_CATEGORIES, payload: null })
     }
 }
-export const createProduct = () => {
-    return function (dispatch) {
-        return dispatch({ type: CREATE_PRODUCT, payload: null })
-    }
-}
+// export const createProduct = () => {
+//     return function (dispatch) {
+//         return dispatch({ type: CREATE_PRODUCT, payload: null })
+//     }
+// }
 
 export const getInstrumentsByName = () => {
     return function (dispatch) {
@@ -65,3 +65,9 @@ export const updateProduct = (instrumentItem) => {
         });
     };
 };
+
+export function createProduct(payload){
+    return async function(dispatch){
+        await axios.post('http://localhost:4000/products',payload)
+    }
+}

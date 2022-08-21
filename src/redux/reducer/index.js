@@ -40,6 +40,12 @@ export default function rootReducer(state = initialState, action) {
                 retrievedInstrument: action.payload
             }
 
+        case 'CREATE_PRODUCT':
+                return{
+                    ...state,
+                    allInstruments: [action.payload,...state.allInstruments]
+                }
+
         default:
             return state
     }
