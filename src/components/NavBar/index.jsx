@@ -26,6 +26,9 @@ class NavBar extends Component {
                         <a href="/login">
                         <button className="btn btn-outline-success me-2" type="button">Log in</button>
                         </a>
+                        <a href="/profile">
+                        <button className="btn btn-outline-success me-2" type="button">Profile</button>
+                        </a>
                         <button className="btn btn-sm btn-outline-secondary" type="button">Sign in</button>
                     </div>
                 </div>
