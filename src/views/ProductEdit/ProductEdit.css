@@ -1,3 +1,7 @@
+.ProductEdit h1 {
+    margin-left: 3.3em;
+}
+
 .editInstrumentContainer {
     display: flex;
     justify-content: center;
