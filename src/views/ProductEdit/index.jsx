@@ -67,7 +67,7 @@ function ProductEdit() {
                 </h4>
             );
         }
-        return renderForm(instrumentRetrieved);
+        return renderForm(instrumentItem);
     }
 
     function renderForm(instrumentItem) {
