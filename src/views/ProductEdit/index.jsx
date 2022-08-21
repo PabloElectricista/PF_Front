@@ -9,7 +9,7 @@ function ProductEdit() {
 
     const regexInteger = /^\d*$/;
     const regexDecimal = /^(\d+\.?\d*|\.\d+)$/;
-    const regexAlphanumeric = /^[\dA-Za-záéíóúüñç\-,:_;.'“”"/()\s]*$/;
+    const regexAlphanumeric = /^[\dA-Za-záéíóúüñç\-,:_;.'“”"/()&\s]*$/;
     const regexUrl = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z\d@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z\d@:%_+.~#?&/=]*)/g;
 
     const dispatch = useDispatch();
