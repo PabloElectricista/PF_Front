@@ -1,3 +1,29 @@
+.containerAboutUs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dividerAboutUs {
+  height: 0.25rem;
+  width: 4rem;
+  opacity: 1;
+  margin-bottom: 1.5rem;
+  background-color:  black;
+  color: transparent;
+}
+
+.containerAboutUs span {
+  margin-bottom: 2.5rem;
+}
+
+.imageAboutUs {
+  width: 100%;
+  margin-top: 10px;
+  object-fit: cover;
+}
+
 .TeamDiv {
   display: grid;
   width: fit-content;
@@ -5,16 +31,15 @@
   justify-items: center;
   align-items: center;
   margin: 0 auto;
-  column-gap: 50px;
-  row-gap: 35px;
+  column-gap: 70px;
+  row-gap: 20px;
   border-radius: 0.3em;
-  margin-bottom: 100px;
 }
 
 .TeamCard {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   text-align: center;
-  width: 230px;
+  width: 250px;
   padding: 0 5% 0 5%;
   background-color: #FFFFFF;
 }
@@ -38,6 +63,6 @@
 }
 
 .PageTitle {
-  margin: 40px;
+  margin-top: 2rem;
   text-align: center;
 }

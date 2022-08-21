@@ -8,9 +8,6 @@ export default function Home() {
 
   return (
     <div>
-      {/* <span className="cont">
-      <Carousel/>
-      </span> */}
       <CardContainer/>
     </div>
   )
