@@ -1,14 +1,18 @@
 .containerHome {
-  padding: 1%;
+  margin: 0%;
+  padding: 0%;
+  width: 100%
 }
 
 .containerContent {
   display: flex;
+  justify-content: space-between;
 }
 
 .containerCards{
   display: flex;
-  flex-wrap: wrap;
-  margin-right: 7%;
+  flex-direction: column;
   justify-content: flex-end;
+  width: 70%;
+  margin-right: 2%;
 }

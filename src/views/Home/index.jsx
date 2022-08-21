@@ -8,9 +8,9 @@ export default function Home() {
 
   return (
     <div>
-      <span className="cont">
+      {/* <span className="cont">
       <Carousel/>
-      </span>
+      </span> */}
       <CardContainer/>
     </div>
   )
