@@ -19,6 +19,7 @@ class NavBar extends Component {
                             <Link to='/home' className="nav-link" >Home</Link>
                             <Link to='/create' className="nav-link" >Sell</Link>
                             <Link to='/contact' className="nav-link" >Contact us</Link>
+                            <Link to='/favorites' className="nav-link" >Favorites</Link>
                         </div>
                     </div>
                     <SearchBar />

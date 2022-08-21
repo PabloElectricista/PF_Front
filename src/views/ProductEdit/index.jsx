@@ -1,8 +1,9 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
-import {getAllProducts, updateProduct} from "../../redux/actions";
+import {getProductById, updateProduct} from "../../redux/actions";
 import './ProductEdit.css';
+import Loading from "../../components/Loading";
 
 function ProductEdit() {
 
@@ -12,7 +13,7 @@ function ProductEdit() {
     const regexUrl = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z\d@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z\d@:%_+.~#?&/=]*)/g;
 
     const dispatch = useDispatch();
-    const allInstruments = useSelector((state) => state.allInstruments)
+    const instrumentRetrieved = useSelector((state) => state.retrievedInstrument)
     const {id} = useParams();
     const navigate = useNavigate();
 
@@ -34,7 +35,7 @@ function ProductEdit() {
         name: '',
         price: '',
         description: '',
-        image: '',
+        img: '',
         stock: '',
         color: '',
         categorie: '',
@@ -48,28 +49,22 @@ function ProductEdit() {
     }
 
     useEffect(() => {
-        if (allInstruments.length === 0) {
-            dispatch(getAllProducts());
+        if (!instrumentRetrieved || (id !== instrumentRetrieved.id && !instrumentRetrieved.error)) {
+            dispatch(getProductById(id));
         } else {
-            const instrumentItem = allInstruments.find(item =>
-                item.id === id);
-            setInstrumentItem(instrumentItem);
+            setInstrumentItem(instrumentRetrieved);
         }
-    }, [dispatch, allInstruments, id]);
+    }, [dispatch, instrumentRetrieved, id]);
 
     function renderInstrument() {
-        if (allInstruments.length === 0) {
-            return (
-                <h1 className='instrumentErrorMessage'>
-                    The store is loading...
-                </h1>
-            );
+        if (!instrumentRetrieved || (id !== instrumentRetrieved.id && !instrumentRetrieved.error)) {
+            return <Loading />;
         }
-        if (!instrumentItem) {
+        if (instrumentRetrieved.error) {
             return (
-                <h1 className='instrumentErrorMessage'>
+                <h4 className='instrumentErrorMessage'>
                     The requested instrument was not found.
-                </h1>
+                </h4>
             );
         }
         return renderForm(instrumentItem);
@@ -78,7 +73,7 @@ function ProductEdit() {
     function renderForm(instrumentItem) {
         return (
             <div className='editInstrumentContainer'>
-                <h1 className='editInstrumentTitle'>Edit {instrumentItem.name}</h1>
+                <h1 className='editInstrumentTitle'>{instrumentItem.name}</h1>
 
                 <form onSubmit={e => handleSubmit(e)}>
                     <div className='inputLabelField'>
@@ -115,10 +110,10 @@ function ProductEdit() {
                         <label>Image: </label>
                         <input placeholder='Instrument image'
                                onChange={(e) => handleChange(e)}
-                               onBlur={() => validateUrl('image', instrumentItem.image)}
-                               value={instrumentItem.image}
-                               type='text' name={'image'}/>
-                        <span className="errorMessage">{errorInfo.image}</span>
+                               onBlur={() => validateUrl('img', instrumentItem.img)}
+                               value={instrumentItem.img}
+                               type='text' name={'img'}/>
+                        <span className="errorMessage">{errorInfo.img}</span>
                     </div>
 
                     <div className='inputLabelField'>
@@ -212,7 +207,7 @@ function ProductEdit() {
         const errorName = validateAlpha('name', instrumentItem.name);
         const errorPrice = validateDecimal('price', instrumentItem.price);
         const errorDescription = validateAlpha('description', instrumentItem.description);
-        const errorImage = validateUrl('image', instrumentItem.image);
+        const errorImage = validateUrl('img', instrumentItem.img);
         const errorStock = validateInteger('stock', instrumentItem.stock);
         const errorColor = validateAlpha('color', instrumentItem.color);
         const errorCategory = validateAlpha('category', instrumentItem.categorie);
@@ -284,6 +279,7 @@ function ProductEdit() {
 
     return (
         <div className='ProductEdit'>
+            <h1>Edit Product</h1>
             {renderInstrument()}
         </div>
     );
