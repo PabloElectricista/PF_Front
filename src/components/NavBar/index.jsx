@@ -8,25 +8,25 @@ class NavBar extends Component {
     
     render() {
         return (
-            <nav class="navbar shadow-lg mb-2 bg-light p-2 bg-body rounded">
-                <div class="container-fluid justify-content-around ">
-                    <div class="d-flex align-items-center">
-                        <div class="me-5">
+            <nav className="navbar shadow-lg mb-2 bg-light p-2 bg-body rounded">
+                <div className="container-fluid justify-content-around ">
+                    <div className="d-flex align-items-center">
+                        <div className="me-5">
                             <img src={goode_logo} alt="Logo B. Goode" width="40" height='40'/>
-                            <Link class="navbar-brand " to="/">B. Goode</Link>
+                            <Link className="navbar-brand " to="/">B. Goode</Link>
                         </div>
-                        <div class="navbar-nav hstack gap-3">
-                            <Link to='/home' class="nav-link" >Home</Link>
-                            <Link to='/create' class="nav-link" >Sell</Link>
-                            <Link to='/contact' class="nav-link" >Contact us</Link>
+                        <div className="navbar-nav hstack gap-3">
+                            <Link to='/home' className="nav-link" >Home</Link>
+                            <Link to='/create' className="nav-link" >Sell</Link>
+                            <Link to='/contact' className="nav-link" >Contact us</Link>
                         </div>
                     </div>
                     <SearchBar />
                     <div>
                         <a href="/login">
-                        <button class="btn btn-outline-success me-2" type="button">Log in</button>
+                        <button className="btn btn-outline-success me-2" type="button">Log in</button>
                         </a>
-                        <button class="btn btn-sm btn-outline-secondary" type="button">Sign in</button>
+                        <button className="btn btn-sm btn-outline-secondary" type="button">Sign in</button>
                     </div>
                 </div>
             </nav>

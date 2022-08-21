@@ -12,41 +12,41 @@ import 'bootstrap/dist/css/bootstrap.css';
 function Carrousel() {
   const navigate = useNavigate()
 
-return (
-       
-<div class= "container">
-        
-   
-        <Carousel class= "container">
-      <Carousel.Item interval={3000}>
-        <img className="d-block w-50 h-100px"
-          src={i1}
-          alt="First slide"
-          onClick={() =>navigate("/detail/:id")}/>
+  return (
 
-      </Carousel.Item>
-      <Carousel.Item interval={3000}>
-        <img className="d-block w-50 h-100px"
-          
-          src={i2}
-          alt="Second slide"
-          onClick={() =>navigate("/detail/:id")}/>
+    <div className="container">
 
-      </Carousel.Item>
-      <Carousel.Item interval={3000}>
-        <img className="d-block w-50 h-100px"
-          
-          src={i3}
-          alt="Third slide"
-          onClick={() =>navigate("/detail/:id")}/>
-      </Carousel.Item>
-    </Carousel>
 
- 
-     
-</div>
-     
-       
+      <Carousel className="container">
+        <Carousel.Item interval={3000}>
+          <img className="d-block w-50 h-100px"
+            src={i1}
+            alt="First slide"
+            onClick={() => navigate("/detail/:id")} />
+
+        </Carousel.Item>
+        <Carousel.Item interval={3000}>
+          <img className="d-block w-50 h-100px"
+
+            src={i2}
+            alt="Second slide"
+            onClick={() => navigate("/detail/:id")} />
+
+        </Carousel.Item>
+        <Carousel.Item interval={3000}>
+          <img className="d-block w-50 h-100px"
+
+            src={i3}
+            alt="Third slide"
+            onClick={() => navigate("/detail/:id")} />
+        </Carousel.Item>
+      </Carousel>
+
+
+
+    </div>
+
+
   );
 }
 
