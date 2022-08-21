@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {BrowserRouter as Router,  Routes, Route} from 'react-router-dom';
 import LandingPage from './views/LandingPage';
 import Home from './views/Home';
@@ -13,8 +14,18 @@ import Footer from "./components/Footer";
 import AboutUs from "./views/AboutUs";
 import ProductEdit from "./views/ProductEdit";
 import Favorites from "./components/Favorites";
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getAllProducts } from './redux/actions';
 
 function App() {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getAllProducts());
+    }, []);
+    
     return (
         <Router>
             <NavBar/>
