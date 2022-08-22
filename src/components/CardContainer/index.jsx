@@ -5,7 +5,6 @@ import Pagination from "../Pagination";
 import Loading from "../Loading";
 import Filters from "../../components/Filters/Filters";
 import ProductCard from '../Card/index';
-// import { allInstruments } from "../../primer mock";
 
 export default function CardContainer() {
   
@@ -15,6 +14,10 @@ export default function CardContainer() {
   useEffect(() => {
     setCurrentPage(1)
   }, [allInstruments])
+
+  useEffect(() => {
+    window.scrollTo({ behavior: 'smooth', top: '0px' }); 
+}, [currentPage]);
   
   let idxLastItem = currentPage * 15
   let ixdFirstItem = idxLastItem - 15

@@ -9,7 +9,7 @@ export default function Carrousel() {
   const navigate = useNavigate()
 
   return (
-    <Carousel className='containerCarousel'>
+    <Carousel className='containerCarousel' variant="dark">
       <Carousel.Item interval={3000}>
         <img className="imageCarousel"
           src={imageOne}

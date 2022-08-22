@@ -18,11 +18,11 @@
     background-attachment: scroll;
     background-size: cover;
     Background-color: transparent;
-    filter:alpha(opacity=85);
-    -moz-opacity:.85;opacity:.85;
+    filter:alpha(opacity=87);
+    -moz-opacity:.87;opacity:.87;
 }
 
-.firstContactLanding h1, span {
+.titleLanding, .textLanding {
     width: 50vw;
     text-align: center;
 }
