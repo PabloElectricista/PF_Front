@@ -1,13 +1,15 @@
 import axios from 'axios'
 
-const URL_PRODUCTS= "http://localhost:4000/products";  // temporal para las pruebas
+const URL_PRODUCTS = "http://localhost:4000/products";  // temporal para las pruebas
 
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
 export const GET_INSTRUMENT_BY_NAME = "GET_INSTRUMENT_BY_NAME";
-export const GET_PRODUCT_BY_ID= "GET_PRODUCT_BY_ID";
+export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
+export const FILTERED_INSTRUMENTS = "FILTERED_INSTRUMENTS";
+
 
 export const getAllProducts = () => {
     return async function (dispatch) {
@@ -49,7 +51,7 @@ export const getProductById = (instrumentId) => {
             .catch(error =>
                 dispatch({
                     type: GET_PRODUCT_BY_ID,
-                    payload: {error: error.message}
+                    payload: { error: error.message }
                 })
             );
     }
@@ -58,7 +60,7 @@ export const getProductById = (instrumentId) => {
 export const updateProduct = (instrumentItem) => {
     return async function (dispatch) {
         const response = await axios.put(`${URL_PRODUCTS}/${instrumentItem._id}`,
-                                          instrumentItem);
+            instrumentItem);
         return dispatch({
             type: UPDATE_PRODUCT,
             payload: response.data
@@ -66,8 +68,18 @@ export const updateProduct = (instrumentItem) => {
     };
 };
 
-export function createProduct(payload){
-    return async function(dispatch){
-        await axios.post('http://localhost:4000/products',payload)
+export function createProduct(payload) {
+    return async function (dispatch) {
+        await axios.post('http://localhost:4000/products', payload)
+    }
+}
+
+export function filteredIntruments(payload) {
+    return async function (dispatch) {
+        const filter = await axios.get(`http://localhost:4000/filter?${payload}`)
+        dispatch({
+            type: FILTERED_INSTRUMENTS,
+            payload: filter.data
+        })
     }
 }

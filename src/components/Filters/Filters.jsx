@@ -1,26 +1,78 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import './Filters.css';
+import { filteredIntruments } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function Filters (props) {
-    return(
+export default function Filters() {
+    const dispatch = useDispatch();
+    const filter = useSelector((state) => state.instruments)
+    // console.log(filter);
+    const [select, setSelect] = useState({ brand: '', location: '', categorie: '' });
+    // const [condicion, setCondicion] = useState('');
+    let condicion = [];
+
+
+    // const brands= ["Fender", "Ibanez","Carlo Robelli","Yamaha","Takamine","Sturgis","Sala Muzik", "Naad","MoonAngel","SUTILA","Jupiter","Honner","HandCraftoria","Pacific Drums","Tama","RockJam","Generic"]
+
+    function handleSelect(e) {
+        setSelect((prevState) => {
+            return {
+                ...prevState,
+                [e.target.name]: e.target.value
+            }
+        })
+        let actualSelect = { ...select, [e.target.name]: e.target.value }
+        for (const key in actualSelect) {
+            if (actualSelect[key]) {
+                condicion.push(`${key}=${actualSelect[key]}`)
+                console.log(condicion);
+            }
+        }
+        dispatch(filteredIntruments(condicion.join('&')))
+    }
+
+    return (
         <Accordion className="accordion" defaultActiveKey={['0']} alwaysOpen>
             <Accordion.Item eventKey="1">
-                <Accordion.Header>Filtro #1</Accordion.Header>
+                <Accordion.Header>Brand</Accordion.Header>
                 <Accordion.Body>
-                Esta es la prueba para el filtro 1
+                    <select onChange={(e) => { handleSelect(e) }} name="brand" id="select">
+                        <option value="All">All Brands</option>
+                        <option value="Fender">Fender</option>
+                        <option value="Ibanez">Ibanez</option>
+                        <option value="Carlo Robelli">Carlo Robelli</option>
+                        <option value="Yamaha">Yamaha</option>
+                        <option value="Takamine">Takamine</option>
+                        <option value="Sturgis">Sturgis</option>
+                        <option value="Sala Muzik">Sala Muzik</option>
+                        <option value="Naad">Naad</option>
+                        <option value="MoonAngel">MoonAngel</option>
+                        <option value="SUTILA">SUTILA</option>
+                        <option value="Jupiter">Jupiter</option>
+                        <option value="Honner">Honner</option>
+                        <option value="HandCraftoria">HandCraftoria</option>
+                        <option value="Pacific Drums">Pacific Drums</option>
+                        <option value="Tama">Tama</option>
+                        <option value="RockJam">RockJam</option>
+                        <option value="Generic">Generic</option>
+                    </select>
                 </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="2">
-                <Accordion.Header>Filtro #2</Accordion.Header>
+                <Accordion.Header>Categories</Accordion.Header>
                 <Accordion.Body>
-                Esta es la prueba para el filtro 2
+                    <select onChange={(e) => { handleSelect(e) }} name="categorie" id="select">
+                        <option value="All">All Categories</option>
+                        <option value="String">String</option>
+                        <option value="Percussion">Percussion</option>
+                    </select>
                 </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="3">
                 <Accordion.Header>Filtro #3</Accordion.Header>
                 <Accordion.Body>
-                Esta es la prueba para el filtro 3
+                    Esta es la prueba para el filtro 3
                 </Accordion.Body>
             </Accordion.Item>
         </Accordion>
