@@ -1,25 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { toTheTop } from "../../customScripts";
+import logo from '../img/assets/ChuckBerry.png';
+import Navbar from 'react-bootstrap/Navbar';
 import './Footer.css';
 
 export default function Footer () {
 
-    const handlerClick = () => {
-        setTimeout(function () {
-            window.scrollTo({ behavior: 'smooth', top: '0px' });  
-        }, 100)
-    }
-
     return (
-        <div className="Footer">
-            <div className="contactLinks">
-                <p>Terms & Conditions</p>
-                <p>Your Privacy Rights</p>
-                <p>©2022 B. Goode</p>
-                <Link to="/about" onClick={(e) => handlerClick(e)}>
-                    <p>About us</p>
-                </Link>
-            </div>
-        </div>
+        <Navbar className="footer" bg="dark" variant="dark">
+            <Navbar.Brand>
+                <img
+                    alt="Logo B. Goode"
+                    src={logo}
+                    width="40"
+                    height="40"
+                    />
+                    B. Goode
+                </Navbar.Brand>
+                <Navbar.Text className="terms">
+                    <div>© B. Goode, 2022. All rights reserved.</div>
+                </Navbar.Text>
+                <Navbar.Text>
+                    <Link to='/about' onClick={() => toTheTop()}>
+                        <div>About Us</div>
+                    </Link>
+                </Navbar.Text>
+        </Navbar>
     );
 }
