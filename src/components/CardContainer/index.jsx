@@ -1,25 +1,31 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import './CardContainer.css';
 import Pagination from "../Pagination";
 import Loading from "../Loading";
 import Filters from "../../components/Filters/Filters";
 import ProductCard from '../Card/index';
 import Dropdown from 'react-bootstrap/Dropdown';
-import './CardContainer.css';
+
+
 
 export default function CardContainer() {
-  
+  const dispatch = useDispatch()
   const allInstruments = useSelector(state => state.instruments)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [refresh, setRefresh] = useState(1)
 
   useEffect(() => {
+    
     setCurrentPage(1)
+    setRefresh(refresh + 1)
   }, [allInstruments])
 
   useEffect(() => {
-    window.scrollTo({ behavior: 'smooth', top: '0px' }); 
-}, [currentPage]);
-  
+    window.scrollTo({ behavior: 'smooth', top: '0px' });
+  }, [currentPage]);
+
   let idxLastItem = currentPage * 15
   let ixdFirstItem = idxLastItem - 15
   let pageInstruments = allInstruments.slice(ixdFirstItem, idxLastItem)
@@ -49,16 +55,16 @@ export default function CardContainer() {
         </Dropdown.Menu>
       </Dropdown>
 
-      {mapInstruments ? 
+      {mapInstruments ?
         <div className="containerContent">
-          <Filters/>
+          <Filters />
           <div className="containerCards">
             {mapInstruments}
           </div>
-        </div> 
-      : <Loading />}
+        </div>
+        : <Loading />}
 
-      <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} />
+      <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} refresh={refresh}/>
     </div>
   )
 }
