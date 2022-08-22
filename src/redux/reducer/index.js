@@ -53,6 +53,11 @@ export default function rootReducer(state = initialState, action) {
                 ...state, 
                 instruments: action.payload
             }
+            case 'GET_INSTRUMENTS_BY_NAME':
+                return{
+                    ...state,
+                    instruments: action.payload
+                }
 
         default:
             return state

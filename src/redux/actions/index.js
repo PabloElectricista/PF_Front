@@ -5,7 +5,7 @@ const URL_PRODUCTS = "http://localhost:4000/products";  // temporal para las pru
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
-export const GET_INSTRUMENT_BY_NAME = "GET_INSTRUMENT_BY_NAME";
+export const GET_INSTRUMENT_BY_NAME = "GET_INSTRUMENTS_BY_NAME";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const FILTERED_INSTRUMENTS = "FILTERED_INSTRUMENTS";
@@ -33,11 +33,11 @@ export const getAllCategories = () => {
 //     }
 // }
 
-export const getInstrumentsByName = () => {
-    return function (dispatch) {
-        return dispatch({ type: GET_INSTRUMENT_BY_NAME, payload: null })
-    }
-}
+// export const getInstrumentsByName = () => {
+//     return function (dispatch) {
+//         return dispatch({ type: GET_INSTRUMENT_BY_NAME, payload: null })
+//     }
+// }
 
 export const getProductById = (instrumentId) => {
     return function (dispatch) {
@@ -80,6 +80,15 @@ export function filteredIntruments(payload) {
         dispatch({
             type: FILTERED_INSTRUMENTS,
             payload: filter.data
+        })
+    }
+}
+export function getInstrumentsByName (name) {
+    return async function (dispatch) {
+        const search = await axios.get(`http://localhost:4000/filter?name=${name}`)
+        dispatch({
+            type: "GET_INSTRUMENTS_BY_NAME",
+            payload: search.data
         })
     }
 }
