@@ -8,7 +8,7 @@ export default function Filters() {
     const dispatch = useDispatch();
     const filter = useSelector((state) => state.instruments)
     // console.log(filter);
-    const [select, setSelect] = useState({ brand: '', status: '', categorie: '' });
+    const [select, setSelect] = useState({ brand: '', status: '', category: '' });
     // const [condicion, setCondicion] = useState('');
     let condicion = [];
 
@@ -62,7 +62,7 @@ export default function Filters() {
             <Accordion.Item eventKey="2">
                 <Accordion.Header>Categories</Accordion.Header>
                 <Accordion.Body>
-                    <select onChange={(e) => { handleSelect(e) }} name="categorie" id="cat">
+                    <select onChange={(e) => { handleSelect(e) }} name="category" id="cat">
                         <option value="">All Categories</option>
                         <option value="String">String</option>
                         <option value="Percussion">Percussion</option>
