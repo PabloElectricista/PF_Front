@@ -17,7 +17,7 @@ export default function CardContainer() {
   useEffect(() => {
     
     setCurrentPage(1)
-    // setRefresh(refresh + 1)
+    setRefresh(refresh + 1)
   }, [allInstruments])
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export default function CardContainer() {
         </div>
         : <Loading />}
 
-      <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} />
+      <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} refresh={refresh}/>
     </div>
   )
 }

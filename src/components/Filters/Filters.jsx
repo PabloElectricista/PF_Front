@@ -8,7 +8,7 @@ export default function Filters() {
     const dispatch = useDispatch();
     const filter = useSelector((state) => state.instruments)
     // console.log(filter);
-    const [select, setSelect] = useState({ brand: '', location: '', categorie: '' });
+    const [select, setSelect] = useState({ brand: '', status: '', categorie: '' });
     // const [condicion, setCondicion] = useState('');
     let condicion = [];
 
@@ -38,7 +38,7 @@ export default function Filters() {
                 <Accordion.Header>Brand</Accordion.Header>
                 <Accordion.Body>
                     <select onChange={(e) => { handleSelect(e) }} name="brand" id="select">
-                        <option value="All">All Brands</option>
+                        <option value=''>All Brands</option>
                         <option value="Fender">Fender</option>
                         <option value="Ibanez">Ibanez</option>
                         <option value="Carlo Robelli">Carlo Robelli</option>
@@ -62,17 +62,23 @@ export default function Filters() {
             <Accordion.Item eventKey="2">
                 <Accordion.Header>Categories</Accordion.Header>
                 <Accordion.Body>
-                    <select onChange={(e) => { handleSelect(e) }} name="categorie" id="select">
-                        <option value="All">All Categories</option>
+                    <select onChange={(e) => { handleSelect(e) }} name="categorie" id="cat">
+                        <option value="">All Categories</option>
                         <option value="String">String</option>
                         <option value="Percussion">Percussion</option>
+                        <option value="Wind">Wind</option>
+                        <option value="Electric">Electric</option>
                     </select>
                 </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="3">
-                <Accordion.Header>Filtro #3</Accordion.Header>
+                <Accordion.Header>Status</Accordion.Header>
                 <Accordion.Body>
-                    Esta es la prueba para el filtro 3
+                    <select onChange={(e) => { handleSelect(e) }} name="status" id="stat">
+                        <option value="">All</option>
+                        <option value="New">New</option>
+                        <option value="Used">Used</option>
+                    </select>
                 </Accordion.Body>
             </Accordion.Item>
         </Accordion>

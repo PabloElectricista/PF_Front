@@ -51,7 +51,7 @@ export default function rootReducer(state = initialState, action) {
             console.log(action.payload);
                 return{
                 ...state, 
-                intruments: action.payload
+                instruments: action.payload
             }
 
         default:
