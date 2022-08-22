@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import './CardContainer.css';
 import Pagination from "../Pagination";
 import Loading from "../Loading";
 import Filters from "../../components/Filters/Filters";
 import ProductCard from '../Card/index';
+import Dropdown from 'react-bootstrap/Dropdown';
+import './CardContainer.css';
 
 export default function CardContainer() {
   
@@ -36,7 +37,17 @@ export default function CardContainer() {
 
   return (
     <div className="containerHome">
-      <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} />
+      <Dropdown className="orderButton" size="sm">
+        <Dropdown.Toggle variant="success" className="toglleDropDown" id="dropdown-basic">
+          Order By
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item >Ordenamiento 1</Dropdown.Item>
+          <Dropdown.Item >Ordenamiento 2</Dropdown.Item>
+          <Dropdown.Item >ORdenamiento 3</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
 
       {mapInstruments ? 
         <div className="containerContent">
