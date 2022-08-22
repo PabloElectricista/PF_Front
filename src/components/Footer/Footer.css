@@ -1,26 +1,10 @@
-.Footer {
-    margin-top: 3rem;
-    padding: 0.5em;
-    box-shadow: 5px 0 8px #9095A1;
-    background-color: white;
+.footer {
+    margin-top: 2rem;
+    padding: 0.5rem;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
+    justify-content: space-around;
 }
 
-.contactLinks {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    gap: 2em;
-}
-
-.contactLinks p {
-    margin: 0px;
-}
-
-.contactLink {
-    width: 2.5em;
-    height: 2.5em;
+.terms {
+    font-size: 0.7rem;
 }
