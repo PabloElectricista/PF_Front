@@ -17,6 +17,7 @@ import Favorites from "./components/Favorites";
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllProducts } from './redux/actions';
+import CookieCard from './components/CookieCard';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
     
     return (
         <Router>
+            <CookieCard/>
             <NavBar/>
             <Routes>
                 <Route exact path="/" element={<LandingPage/>}/>
