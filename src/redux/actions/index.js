@@ -1,5 +1,4 @@
 import axios from 'axios'
-
 const URL_PRODUCTS = "http://localhost:4000/products";  // temporal para las pruebas
 
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
@@ -74,21 +73,24 @@ export function createProduct(payload) {
     }
 }
 
+let queries={
+    name:"",
+    categorie:"",
+    status:"",
+    brand:""
+}
 export function filteredIntruments(payload) {
     return async function (dispatch) {
-        const filter = await axios.get(`http://localhost:4000/filter?${payload}`)
+        let condition=[];
+        queries={...queries,...payload}
+        for(const key in queries){
+            if(queries[key]) condition.push(`${key}=${queries[key]}`)
+        }
+        const filter = await axios.get(`http://localhost:4000/filter?${condition.join('&')}`)
         dispatch({
             type: FILTERED_INSTRUMENTS,
             payload: filter.data
         })
     }
 }
-export function getInstrumentsByName (name) {
-    return async function (dispatch) {
-        const search = await axios.get(`http://localhost:4000/filter?name=${name}`)
-        dispatch({
-            type: "GET_INSTRUMENTS_BY_NAME",
-            payload: search.data
-        })
-    }
-}
+
