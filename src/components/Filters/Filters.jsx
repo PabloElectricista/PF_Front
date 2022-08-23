@@ -66,7 +66,7 @@ export default function Filters() {
             <Accordion.Item eventKey="3">
                 <Accordion.Header>Status</Accordion.Header>
                 <Accordion.Body>
-                    <select /*value={select.status}*/ onChange={(e) => { handleSelect(e) }} name="status" id="stat">
+                    <select value={select.status} onChange={(e) => { handleSelect(e) }} name="status" id="stat">
                         <option value="">All</option>
                         <option value="New">New</option>
                         <option value="Used">Used</option>
