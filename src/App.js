@@ -3,7 +3,6 @@ import {BrowserRouter as Router,  Routes, Route} from 'react-router-dom';
 import LandingPage from './views/LandingPage';
 import Home from './views/Home';
 import NavBar from "./components/NavBar";
-import LogIn from "./views/LogIn";
 import ContactUs from "./views/ContactUs";
 import ProductDetail from "./views/ProductDetail";
 import CreateProduct from "./views/CreateProduct";
@@ -34,7 +33,6 @@ function App() {
             <Routes>
                 <Route exact path="/" element={<LandingPage/>}/>
                 <Route path="/home" element={<Home/>}/>
-                <Route exact path='/login' element={<LogIn/>}/>
                 <Route exact path='/contact' element={<ContactUs/>}/>
                 <Route path='/detail/:id' element={<ProductDetail/>}/>
                 <Route path='/edit/:id' element={<ProductEdit/>}/>
