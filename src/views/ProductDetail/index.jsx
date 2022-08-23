@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from "react";
 import {getProductById} from "../../redux/actions";
 import {useDispatch, useSelector} from "react-redux";
