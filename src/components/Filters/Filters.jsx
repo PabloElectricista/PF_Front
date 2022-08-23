@@ -7,8 +7,6 @@ export default function Filters() {
     const dispatch = useDispatch();
     const filter = useSelector((state) => state.instruments)
     const [select, setSelect] = useState({ brand: '', status: '', categorie: '' });
-    
-
 
     // const brands= ["Fender", "Ibanez","Carlo Robelli","Yamaha","Takamine","Sturgis","Sala Muzik", "Naad","MoonAngel","SUTILA","Jupiter","Honner","HandCraftoria","Pacific Drums","Tama","RockJam","Generic"]
 
