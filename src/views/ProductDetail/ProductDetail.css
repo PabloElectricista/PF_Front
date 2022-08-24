@@ -2,12 +2,15 @@
     margin-left: 2.1em;
 }
 
-.detailsInfo {
+.detailsContainer {
     border-radius: .5em;
     background-color: white;
-    display: flex;
     margin: 3em 5em;
     box-shadow: .5em .5em 2em #282c34;
+}
+
+.detailsInfo {
+    display: flex;
 }
 
 .imageContainer {
@@ -24,4 +27,16 @@
 
 .infoContainer {
     margin: 1.5em;
+}
+
+.imageList {
+    margin: 2em;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.imageItem {
+    width: 40%;
+    margin: auto auto 1em;
+    height: auto;
 }
