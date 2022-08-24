@@ -17,7 +17,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllProducts } from './redux/actions';
 import CookieCard from './components/CookieCard';
-
+import Administrator from './components/Administrator'
 function App() {
 
     const dispatch = useDispatch();
@@ -42,6 +42,7 @@ function App() {
                 <Route exact path='/profile/*' element={<UserProfile/>}/>
                 <Route exact path='/payment' element={<Payment/>}/>
                 <Route exact path='/about' element={<AboutUs/>}/>
+                <Route path='/admin' element={<Administrator/>}/>
                 <Route path='*' element={<NotFound/>}/>
             </Routes>
             <Footer/>

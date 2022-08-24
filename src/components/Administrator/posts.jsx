@@ -28,13 +28,13 @@ export const PostList = () => (
     </List>
 );
 
-const PostTitle = () => {
-        const record = useRecordContext();
-        return <span>Post {record ? `"${record.title}"` : ''}</span>;
-    };
+// const PostTitle = () => {
+//         const record = useRecordContext();
+//         return <span>Post {record ? `"${record.title}"` : ''}</span>;
+//     };
     
 export const PostEdit = () => (
-    <Edit title={<PostTitle />}>
+    <Edit>
         <SimpleForm>
             <ReferenceInput source="userId" reference="users">
                 <SelectInput optionText="name" />
