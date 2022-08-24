@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { createProduct, getAllCategories } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button';
 import './CreateProduct.css'
 
 
@@ -26,9 +28,7 @@ export default function CreateProduct() {
     })
 
 
-    useEffect(() => {
-        dispatch(getAllCategories())
-    }, [dispatch])
+ 
 
     function validate(input) {
 
@@ -154,44 +154,39 @@ export default function CreateProduct() {
                        
                     </div>
 
-                    <div id='input-name' className='form-inputs'>
-                        <label>image:</label>
-                        <input
-                            type='text'
-                            value={inputForm.image}
-                            name='image'
-                            onChange={(e) => { handleChange(e) }} />
-                                {error.image&& (
-                            <p>{error.image}</p>
-                        )}
-                       
-                       
-                    </div>
-
-                        <div id='input-name' className='form-inputs'>
+                   <div id='input-name' className='form-inputs'>
                         <label>*Category:</label>
-                        <select onChange={(e)=>{handleSelect(e)}}>
-                            <option> -Select at least one- </option>
-                            <option> Wind </option>
-                            <option> Electric </option>
-                            <option> Percussion </option>
-                            <option> String </option>
+                        <select  onChange={(e)=>{handleSelect(e)}} placeholder= "-Select at least one-" >
+
+                        <option value="default"> -Select one</option> 
+                            <option value="Wind"> Wind </option>
+                            <option value="Electric"> Electric </option>
+                            <option value="Percussion"> Percussion </option>
+                            <option value="String"> String </option>
                           </select> 
                     </div>
 
-                    <div id='select-cat' className='form-inputs'>
+                    <div id='input-name' className='form-inputs'>
                         <label>Color:</label>
-                        <input
-                            type='color'
-                            value={inputForm.color}
-                            name='color'
-                            onChange={(e) => { handleChange(e) }} />
-                                {error.color&& (
-                            <p>{error.color}</p>
-                        )}
-                       
-
+                        <select  onChange={(e)=>{handleSelect(e)}}>
+                            
+                            <option value="default"> -Select at least one</option> 
+                            <option value="Yellow "> Yellow </option>
+                            <option value="Green"> Green </option>
+                            <option value="Purple"> Purple </option>
+                            <option value="Brown"> Brown </option>
+                            <option value="Orange"> Orange </option>
+                            <option value="Lightblue"> Lightblue </option>
+                            <option value="Pink"> Pink </option>
+                            <option value="Gray"> Gray </option>
+                            <option value="White"> White </option>
+                            <option value="Black"> Black </option>
+                            <option value="Other"> Other </option>
+                            <option value="Art Graph"> Art Graph </option>
+                        
+                          </select> 
                     </div>
+
 
                     <div id='input-name' className='form-inputs'>
                         <label>Price:</label>
@@ -235,14 +230,14 @@ export default function CreateProduct() {
                       
                     </div>
 
-                    <div id='input-brn' className='form-inputs'>
-                        <label >Status:</label>
-                        <input
-                            type='text'
-                            value={inputForm.status}
-                            name='status'
-                            onChange={(e) => { handleChange(e) }} />
-                      
+                    <div id='input-name' className='form-inputs'>
+                        <label>Status:</label>
+                        <select  onChange={(e)=>{handleSelect(e)}} placeholder= "-Select at least one-" >
+                            
+                            <option value="default"> -Select one</option> 
+                            <option value="New"> New </option>
+                            <option value="Used"> Used </option>
+                        </select> 
                     </div>
 
                     <div id='cont-btn-submit'>
@@ -252,6 +247,22 @@ export default function CreateProduct() {
                 </div>
 
             </form>
+             {/* <form onSubmit={handleSubmitFile} className="form">
+                <input
+                    id="fileInput"
+                    type="file"
+                    name="image"
+                    onChange={handleFileInputChange}
+                    value={fileInputState}
+                    className="form-input"
+                />
+                <button className="btn" type="submit">
+                    Submit
+                </button>
+            </form> */}
+                       
+            
+
         </div>
     )
 }
