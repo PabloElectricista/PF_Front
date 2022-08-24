@@ -13,6 +13,7 @@ import Footer from "./components/Footer";
 import AboutUs from "./views/AboutUs";
 import ProductEdit from "./views/ProductEdit";
 import Favorites from "./components/Favorites";
+// import StripeComponent from './components/StripeComponent';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllProducts } from './redux/actions';
@@ -42,6 +43,7 @@ function App() {
                 <Route exact path='/profile/*' element={<UserProfile/>}/>
                 <Route exact path='/payment' element={<Payment/>}/>
                 <Route exact path='/about' element={<AboutUs/>}/>
+                {/* <Route path='/stripe/:id' element={<StripeComponent/>}/> en progreso*/}
                 <Route path='*' element={<NotFound/>}/>
             </Routes>
             <Footer/>
