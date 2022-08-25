@@ -1,45 +1,51 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import './CardContainer.css';
+
+import { getAllProducts } from "../../redux/actions";
+
 import Pagination from "../Pagination";
 import Loading from "../Loading";
 import Filters from "../../components/Filters/Filters";
 import ProductCard from '../Card/index';
+
 import Dropdown from 'react-bootstrap/Dropdown';
-
-
+import './CardContainer.css';
 
 export default function CardContainer() {
-  const dispatch = useDispatch()
+
+  const dispatch = useDispatch();
+
   const allInstruments = useSelector(state => state.instruments)
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [refresh, setRefresh] = useState(1)
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, [dispatch]);
 
   useEffect(() => {
-    
-    setCurrentPage(1)
-    setRefresh(refresh + 1)
-  }, [allInstruments])
-
-  useEffect(() => {
-    window.scrollTo({ behavior: 'smooth', top: '0px' });
+    window.scrollTo({ top: '0px', behavior: 'smooth' });
   }, [currentPage]);
 
-  let idxLastItem = currentPage * 15
-  let ixdFirstItem = idxLastItem - 15
-  let pageInstruments = allInstruments.slice(ixdFirstItem, idxLastItem)
-
-  let mapInstruments = pageInstruments.map(instrument => <ProductCard
-    key={instrument._id}
-    id={instrument._id}
-    name={instrument.name}
-    price={instrument.price}
-    brand={instrument.brand}
-    rating={1}
-    image={instrument.image} />)
+  let idxLastItem = currentPage * 15;
+  let ixdFirstItem = idxLastItem - 15;
+  let pageInstruments = allInstruments.slice(ixdFirstItem, idxLastItem);
 
   const paginate = (number) => { setCurrentPage(number) }
+
+  let mapInstruments = pageInstruments.map(instrument => {
+    return (
+        <ProductCard
+          key={instrument._id}
+          id={instrument._id}
+          name={instrument.name}
+          price={instrument.price}
+          brand={instrument.brand}
+          rating={Math.floor((Math.random() * 6 ))}
+          image={instrument.image} 
+        />
+      )
+    }
+  )
 
   return (
     <div className="containerHome">
@@ -57,16 +63,14 @@ export default function CardContainer() {
         </Dropdown.Menu>
       </Dropdown>
 
-      {mapInstruments ?
-        <div className="containerContent">
-          <Filters />
-          <div className="containerCards">
-            {mapInstruments}
-          </div>
+      <div className="containerContent">
+        <Filters />
+        <div className="containerCards">
+          {mapInstruments ? mapInstruments : <h3>No instruments found</h3>}
         </div>
-        : <Loading />}
+      </div>
 
-      <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} refresh={refresh}/>
+      <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} />
     </div>
   )
 }

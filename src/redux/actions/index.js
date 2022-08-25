@@ -1,5 +1,4 @@
 import axios from 'axios'
-const URL_PRODUCTS = "http://localhost:4000/products";  // temporal para las pruebas
 
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
@@ -12,7 +11,7 @@ export const FILTERED_INSTRUMENTS = "FILTERED_INSTRUMENTS";
 
 export const getAllProducts = () => {
     return async function (dispatch) {
-        const products = await axios(URL_PRODUCTS)  // temporal para las pruebas
+        const products = await axios('/products');
 
         return dispatch({
             type: GET_ALL_PRODUCTS,
@@ -24,23 +23,12 @@ export const getAllProducts = () => {
 export const getAllCategories = () => {
     return function (dispatch) {
         return dispatch({ type: GET_ALL_CATEGORIES, payload: null })
-    }
-}
-// export const createProduct = () => {
-//     return function (dispatch) {
-//         return dispatch({ type: CREATE_PRODUCT, payload: null })
-//     }
-// }
-
-// export const getInstrumentsByName = () => {
-//     return function (dispatch) {
-//         return dispatch({ type: GET_INSTRUMENT_BY_NAME, payload: null })
-//     }
-// }
+    };
+};
 
 export const getProductById = (instrumentId) => {
     return function (dispatch) {
-        axios.get(`${URL_PRODUCTS}/${instrumentId}`)
+        axios.get(`/products/${instrumentId}`)
             .then(response =>
                 dispatch({
                     type: GET_PRODUCT_BY_ID,
@@ -58,7 +46,7 @@ export const getProductById = (instrumentId) => {
 
 export const updateProduct = (instrumentItem) => {
     return async function (dispatch) {
-        const response = await axios.put(`${URL_PRODUCTS}/${instrumentItem._id}`,
+        const response = await axios.put(`/products/${instrumentItem._id}`,
             instrumentItem);
         return dispatch({
             type: UPDATE_PRODUCT,
@@ -69,7 +57,7 @@ export const updateProduct = (instrumentItem) => {
 
 export function createProduct(payload) {
     return async function (dispatch) {
-        await axios.post('http://localhost:4000/products', payload)
+        await axios.post('/products', payload)
     }
 }
 
@@ -86,11 +74,10 @@ export function filteredIntruments(payload) {
         for(const key in queries){
             if(queries[key]) condition.push(`${key}=${queries[key]}`)
         }
-        const filter = await axios.get(`http://localhost:4000/filter?${condition.join('&')}`)
+        const filter = await axios.get(`/filter?${condition.join('&')}`)
         dispatch({
             type: FILTERED_INSTRUMENTS,
             payload: filter.data
         })
     }
 }
-
