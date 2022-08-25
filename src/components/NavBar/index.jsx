@@ -15,7 +15,7 @@ export default function NavBar() {
 
     return (
         <nav className="navbar mb-2 p-2 bg-dark sticky-top rounded">
-            <div className="container-fluid justify-content-around ">
+            <div className="containerNavBar container-fluid justify-content-around ">
                 <div className="d-flex align-items-center">
                     <div className="d-flex me-5">
                         <img className="navbarLogo" src={goode_logo} alt="Logo B. Goode" width="40" height='40' />
@@ -23,14 +23,16 @@ export default function NavBar() {
                             B. Goode
                         </Link>
                     </div>
-                    <div className="navbar-nav hstack gap-3">
-                        <Link to='/home' className="nav-link" onClick={() => toTheTop()} >Home</Link>
-                        <Link to='/create' className="nav-link" onClick={() => toTheTop()}>Sell</Link>
-                        <Link to='/contact' className="nav-link" onClick={() => toTheTop()}>Contact us</Link>
-                        <Link to='/favorites' className="nav-link" onClick={() => toTheTop()}>Favorites</Link>
-                    </div>
                 </div>
+
+                <div className="navbar-nav hstack gap-3">
+                    <Link to='/home' className="nav-link" onClick={() => toTheTop()} >Products</Link>
+                    <Link to='/contact' className="nav-link" onClick={() => toTheTop()}>Contact us</Link>
+                    <Link to='/create' className="nav-link" onClick={() => toTheTop()}>Sell</Link>
+                </div>
+
                 <SearchBar />
+
                 <div>
                     {isAuthenticated ?
                         <>

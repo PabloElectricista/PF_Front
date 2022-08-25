@@ -1,3 +1,7 @@
+.containerNavBar {
+    padding-right: 5%;
+}
+
 .navbar-brand {
     color: #169E85 !important;
     font-weight: 600;
@@ -18,6 +22,22 @@
     background-color: #169E85;
 }
 
+.btn-outline-success:focus {
+    box-shadow: none;
+    background-color: #169E85 !important;
+    color: white !important;
+}
+
+.btn-outline-success:active {
+    box-shadow: none;
+    background-color: #169E85 !important;
+    color: white !important;
+}
+
+.btn-outline-success:active:focus {
+    box-shadow: none;
+}
+
 .btn-outline-secondary {
     color: white !important;
     border-color: white !important;
@@ -28,9 +48,26 @@
     background-color: white !important;
 }
 
+.btn-outline-secondary:focus {
+    box-shadow: none;
+    background-color: white !important;
+    color: black !important;
+}
+
+.btn-outline-secondary:active {
+    box-shadow: none;
+    background-color: white !important;
+    color: black !important;
+}
+
+.btn-outline-secondary:active:focus {
+    box-shadow: none;
+}
+
 .ProfileImg {
     height: 50px;    
     border-radius: 50%;
     margin: 0 20px;
 }
+
 .Loading{ color: red;}
