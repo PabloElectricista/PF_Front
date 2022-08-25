@@ -16,14 +16,20 @@ export default function ProductCard({ id, name, price, rating, image, brand }) {
           <Card.Title className='containerName'>{name}</Card.Title>
         </Link>
         <ListGroup className='containerListDescription' variant="flush">
-          <ListGroup.Item>${price}</ListGroup.Item>
-          <ListGroup.Item>{brand}</ListGroup.Item>
-          <ListGroup.Item>Rating: {rating}/5</ListGroup.Item>
+          <ListGroup.Item className='cardBrand'>{brand}</ListGroup.Item>
+          <ListGroup.Item className='cardPrice'>${price}</ListGroup.Item>
+          <ListGroup.Item className='cardRating'>
+            <p className={rating >= 1 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
+            <p className={rating >= 2 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
+            <p className={rating >= 3 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
+            <p className={rating >= 4 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
+            <p className={rating === 5 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
+          </ListGroup.Item>
         </ListGroup>
       </Card.Body>
       <div className='containerButton'>
-        <BsCartFill className='CardIcon' />
         <BsStarFill className='CardIcon' />
+        <BsCartFill className='CardIcon' />
       </div>
     </Card>
   )
