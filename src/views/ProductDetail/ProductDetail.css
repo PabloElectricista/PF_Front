@@ -5,12 +5,9 @@
 .detailsContainer {
     border-radius: .5em;
     background-color: white;
+    display: flex;
     margin: 3em 5em;
     box-shadow: .5em .5em 2em #282c34;
-}
-
-.detailsInfo {
-    display: flex;
 }
 
 .imageContainer {
@@ -23,6 +20,13 @@
     height: 100%;
     width: 15rem;
     object-fit: contain;
+}
+
+.productDetailCarousel {
+    width: 20rem;
+    height: 30rem;
+    transition: all ease 0.5s;
+    margin-bottom: 1rem;
 }
 
 .infoContainer {
