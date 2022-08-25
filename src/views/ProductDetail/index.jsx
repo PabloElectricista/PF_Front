@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import './ProductDetail.css';
 import Loading from "../../components/Loading";
+import Carousel from "react-bootstrap/Carousel";
 
 function ProductDetail() {
 
@@ -34,15 +35,20 @@ function ProductDetail() {
         return instrumentItem.category.join(', ');
     }
 
-    function renderImageList() {
-        const imageList = instrumentItem.image.slice(1);
+    function renderImageItem() {
+        if (!instrumentItem ||
+            !instrumentItem.image ||
+            instrumentItem.image.length === 0) {
+            return '';
+        }
         return (
-            imageList.map((imageItem, index) => {
-                return <img
-                    className="imageItem"
-                    key={index}
-                    src={imageItem}
-                    alt="Instrument"/>
+            instrumentItem.image.map((imageItem, index) => {
+                return <Carousel.Item interval={3000} key={index}>
+                            <img className="imageCarousel"
+                                 src={imageItem}
+                                 alt={index}
+                            />
+                       </Carousel.Item>
             })
         );
     }
@@ -60,30 +66,27 @@ function ProductDetail() {
         }
         return (
             <div className='detailsContainer'>
-                <div className="detailsInfo">
-                    <div className="imageContainer">
-                        <img className="detailsImage" src={instrumentItem.image[0]} alt="Instrument"/>
-                    </div>
-                    <div className="infoContainer">
-                        <h1>{instrumentItem.name}</h1>
-                        <p><b>Name: </b>{instrumentItem.name}</p>
-                        <p><b>Price: $</b>{instrumentItem.price}</p>
-                        <p><b>Description: </b>{instrumentItem.description}</p>
-                        <p><b>Stock: </b>{instrumentItem.stock}</p>
-                        <p><b>Color: </b>{instrumentItem.color}</p>
-                        <p><b>Categories: </b>{renderCategories()}</p>
-                        <p><b>Brand: </b>{instrumentItem.brand}</p>
-                        <p><b>Location: </b>{instrumentItem.location}</p>
-                        <p><b>Status: </b>{instrumentItem.status}</p>
-                        <button className='submitButton'
-                                type='button'
-                                onClick={() => handleEdit()}
-                        >Edit
-                        </button>
-                    </div>
+                <div className="imageContainer">
+                    <Carousel className='productDetailCarousel' variant="dark">
+                        {renderImageItem()}
+                    </Carousel>
                 </div>
-                <div className="imageList">
-                    {renderImageList()}
+                <div className="infoContainer">
+                    <h1>{instrumentItem.name}</h1>
+                    <p><b>Name: </b>{instrumentItem.name}</p>
+                    <p><b>Price: $</b>{instrumentItem.price}</p>
+                    <p><b>Description: </b>{instrumentItem.description}</p>
+                    <p><b>Stock: </b>{instrumentItem.stock}</p>
+                    <p><b>Color: </b>{instrumentItem.color}</p>
+                    <p><b>Categories: </b>{renderCategories()}</p>
+                    <p><b>Brand: </b>{instrumentItem.brand}</p>
+                    <p><b>Location: </b>{instrumentItem.location}</p>
+                    <p><b>Status: </b>{instrumentItem.status}</p>
+                    <button className='submitButton'
+                            type='button'
+                            onClick={() => handleEdit()}
+                    >Edit
+                    </button>
                 </div>
             </div>
         );
