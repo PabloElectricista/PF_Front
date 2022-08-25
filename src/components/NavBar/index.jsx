@@ -8,6 +8,7 @@ import './NavBar.css';
 import LogInBtn from "../LogInBtn";
 import LogOutBtn from "../LogOutBtn";
 import { useAuth0 } from '@auth0/auth0-react'
+import LightDarktn from "../LightDarkBtn";
 
 
 export default function NavBar() {
@@ -44,6 +45,7 @@ export default function NavBar() {
                         </>
                         : (!isLoading && <LogInBtn />)}
                 </div>
+                <LightDarktn/>
             </div>
         </nav>
     );
