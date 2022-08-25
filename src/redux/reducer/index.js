@@ -3,7 +3,8 @@ const {
     GET_PRODUCT_BY_ID,
     UPDATE_PRODUCT,
     FILTERED_INSTRUMENTS,
-    CREATE_PRODUCT
+    CREATE_PRODUCT,
+    GET_ORDERS
 } = require('../actions/index');
 
 const initialState = {
@@ -12,7 +13,8 @@ const initialState = {
     favoriteInstruments: [],
     retrievedInstrument: null,
     filteredIntruments: [],
-    
+    orders: []
+
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -32,7 +34,7 @@ export default function rootReducer(state = initialState, action) {
 
         case UPDATE_PRODUCT:
             const allInstrumentsUpdated = state.allInstruments.map(item =>
-            item._id === action.payload._id ? action.payload : item);
+                item._id === action.payload._id ? action.payload : item);
 
             const instrumentsUpdated = state.instruments.map(item =>
                 item._id === action.payload._id ? action.payload : item);
@@ -45,15 +47,21 @@ export default function rootReducer(state = initialState, action) {
             }
 
         case CREATE_PRODUCT:
-                return{
-                    ...state,
-                    allInstruments: [action.payload,...state.allInstruments]
-                }
+            return {
+                ...state,
+                allInstruments: [action.payload, ...state.allInstruments]
+            }
         case FILTERED_INSTRUMENTS:
             console.log(action.payload);
-                return{
-                ...state, 
+            return {
+                ...state,
                 instruments: action.payload
+            }
+        case GET_ORDERS:
+            console.log(action.payload);
+            return {
+                ...state,
+                orders: action.payload
             }
         default:
             return state

@@ -8,6 +8,7 @@ export const GET_INSTRUMENT_BY_NAME = "GET_INSTRUMENTS_BY_NAME";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const FILTERED_INSTRUMENTS = "FILTERED_INSTRUMENTS";
+export const GET_ORDERS = "GET_ORDERS";
 
 
 export const getAllProducts = () => {
@@ -94,3 +95,13 @@ export function filteredIntruments(payload) {
     }
 }
 
+export const getOrders = () => {
+    return async function (dispatch) {
+        const orders = await axios.get('http://localhost:4000/orders')  
+
+        return dispatch({
+            type: GET_ORDERS,
+            payload: orders.data
+        });
+    };
+};
