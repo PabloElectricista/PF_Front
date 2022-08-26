@@ -9,20 +9,18 @@ const {
 } = require('../actions/index');
 
 function orderMayMen(array, prop) {
-    let newArray = array.sort((a, b) => {
+    array.sort((a, b) => {
         if (a[prop] < b[prop]) return 1;
         if (a[prop] > b[prop]) return -1;
         return 0;
     });
-    return newArray;
 }
 function orderMenMay(array, prop) {
-    let newArray = array.sort((a, b) => {
+    array.sort((a, b) => {
         if (a[prop] < b[prop]) return -1;
         if (a[prop] > b[prop]) return 1;
         return 0;
     });
-    return newArray;
 }
 
 const initialState = {
@@ -83,7 +81,6 @@ export default function rootReducer(state = initialState, action) {
             }
             let sortedName = JSON.parse(JSON.stringify(state.allInstruments))
             action.payload === "Up to Down" ? orderMayMen(sortedName, "name") : orderMenMay(sortedName, "name");
-            console.log(sortedName);
             return {
                 ...state,
                 instruments: sortedName,
@@ -97,10 +94,9 @@ export default function rootReducer(state = initialState, action) {
             }
             let sortedPrice = JSON.parse(JSON.stringify(state.allInstruments))
             action.payload === "Higher price" ? orderMayMen(sortedPrice, "price") : orderMenMay(sortedPrice, "price");
-            console.log(sortedPrice)
             return {
                 ...state,
-                instruments: sortedPrice
+                instruments: sortedPrice,
             };
         default:
             return state

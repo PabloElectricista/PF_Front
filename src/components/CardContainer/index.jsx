@@ -39,7 +39,7 @@ export default function CardContainer() {
   }
   function handleOrderName(e) {
     e.preventDefault();
-    dispatch(orderComponentsByPrice(e.target.value))
+    dispatch(orderComponentsByName(e.target.value))
 }
 
   let mapInstruments = pageInstruments.map(instrument => {
@@ -67,8 +67,8 @@ export default function CardContainer() {
               <select onChange={(e) => { handleOrderPrice(e) }}>
                 <option disabled>"Price"</option>
                 <option value="All" >"All"</option>
-                <option value="Higher price">"Higher price"</option>
-                <option value="Lower price">"Lower price"</option>
+                <option value="Higher price">"Higher to lower"</option>
+                <option value="Lower price">"Lower to higher"</option>
               </select>
             </div>
             <div>
@@ -90,7 +90,7 @@ export default function CardContainer() {
         </div>
       </div>
 
-      <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} refresh={refresh} />
+      <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} />
     </div>
   )
 }
