@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { createProduct, getAllCategories } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button';
 import './CreateProduct.css'
 
 
@@ -16,13 +14,12 @@ export default function CreateProduct() {
     const [inputForm, setInputForm] = useState({
         name: '',
         description: '',
-        image: '',
-        categorie: [],
+        image: [],
+        category: [],
         color: '',
         price: 0,
         stock: 0,
-        brand: '',
-        location: '',
+        brand: '', 
         status: '',
 
     })
@@ -37,13 +34,11 @@ export default function CreateProduct() {
             error.name = 'Only letters and no spaces are allowed at the end!'
         } else error.name = null
 
-        if (input.image.length > 0 && !input.image.match(/^(ftp|http|https):\/\/[^ "]+$/)) {
-            error.image = 'The image has to be a URL'
-        } else error.image = null
+    
 
-        if (input.categorie && input.categorie.length === 0) {
-            error.categorie = 'You have to choose at least one category'
-        } else error.categorie = null
+        if (input.category && input.category.length === 0) {
+            error.category = 'You have to choose at least one category'
+        } else error.category = null
         
         if (input.color && input.color.length === 0) {
             error.color = 'Must declare a color'
@@ -76,19 +71,57 @@ export default function CreateProduct() {
     function handleSelect(e) {
         setInputForm({
             ...inputForm,
-            categorie: [...inputForm.categorie, e.target.value]
+            category: [...inputForm.category, e.target.value]
         })
         setError(validate({
             ...inputForm,
-            categorie: [...inputForm.categorie, e.target.value]
+            category: [...inputForm.category, e.target.value]
         }))
     }
+    function handleSelectC(e) {
+        setInputForm({
+            ...inputForm,
+            color: [...inputForm.color, e.target.value]
+        })
+        setError(validate({
+            ...inputForm,
+            color: [...inputForm.color, e.target.value]
+        }))
+    }
+    function handleSelectS(e) {
+        setInputForm({
+            ...inputForm,
+            status: [...inputForm.status, e.target.value]
+        })
+        setError(validate({
+            ...inputForm,
+            status: [...inputForm.status, e.target.value]
+        }))
+    }
+    async function uploadImage(e) {
+        const files = e.target.files;
+        const data = new FormData();
+        data.append("file", files[0]);
+        data.append("upload_preset", "images");
+        const res = await fetch(
+          "https://api.cloudinary.com/v1_1/deqxuoyrc/upload",
+          {
+            method: "POST",
+            body: data,
+          }
+        );
+        const file = await res.json();
+        const aux = file.secure_url;
+        setInputForm({
+          ...inputForm,
+          image: aux,
+        });
+      }
    
 
     function handleSubmit(e) {
         e.preventDefault();
-        if(error.name === null && error.image === null && 
-        error.categorie === null && error.color === null && 
+        if(error.name === null && error.category === null && error.color === null && 
         error.price === null && error.stock === null && 
         error.brand === null){
        
@@ -97,13 +130,12 @@ export default function CreateProduct() {
             setInputForm({
                 name: '',
                 description: '',
-                image: '',
-                categorie: [],
+                image: [],
+                category: [],
                 color: '',
                 price: 0,
                 stock: 0,
-                brand: '',
-                location: '',
+                brand: '', 
                 status: '',
             })
         }else{
@@ -166,9 +198,25 @@ export default function CreateProduct() {
                           </select> 
                     </div>
 
+                    <div>
+                
+          
+                <div>
+                <label>*Image:</label>
+                  <input
+                    type='file'
+                    id='file'
+                    name='image'
+                    onChange={uploadImage}
+                  />
+                </div>
+                <br />
+              </div>
+
+
                     <div id='input-name' className='form-inputs'>
                         <label>Color:</label>
-                        <select  onChange={(e)=>{handleSelect(e)}}>
+                        <select  onChange={(e)=>{handleSelectC(e)}}>
                             
                             <option value="default"> -Select at least one</option> 
                             <option value="Yellow "> Yellow </option>
@@ -232,7 +280,7 @@ export default function CreateProduct() {
 
                     <div id='input-name' className='form-inputs'>
                         <label>Status:</label>
-                        <select  onChange={(e)=>{handleSelect(e)}} placeholder= "-Select at least one-" >
+                        <select  onChange={(e)=>{handleSelectS(e)}} placeholder= "-Select at least one-" >
                             
                             <option value="default"> -Select one</option> 
                             <option value="New"> New </option>

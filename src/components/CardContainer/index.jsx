@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {orderComponentsByPrice, orderComponentsByName } from '../../redux/actions'
+import {orderComponentsByPrice, orderComponentsByName } from '../../redux/actions';
 import Accordion from 'react-bootstrap/Accordion';
 import './CardContainer.css';
-
 import { getAllProducts } from "../../redux/actions";
-
 import Pagination from "../Pagination";
 import Loading from "../Loading";
 import Filters from "../../components/Filters/Filters";
 import ProductCard from '../Card/index';
-import Dropdown from 'react-bootstrap/Dropdown';
 import './CardContainer.css';
 
 export default function CardContainer() {
@@ -19,7 +16,8 @@ export default function CardContainer() {
 
   const allInstruments = useSelector(state => state.instruments)
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [refresh, setRefresh] = useState(1)
+ 
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch]);
@@ -38,13 +36,13 @@ export default function CardContainer() {
 
 function handleOrderPrice(e){
     e.preventDefault();
-    setRefresh(refresh+1)
+    setRefresh(refresh + 1)
     dispatch(orderComponentsByPrice(e.target.value))
 }
 function handleOrderName(e){
   e.preventDefault();
-  setRefresh(refresh+1)
-    dispatch(orderComponentsByName(e.target.value))
+  setRefresh(refresh + 1)
+  dispatch(orderComponentsByName(e.target.value))
 }
 
   let mapInstruments = pageInstruments.map(instrument => {
@@ -65,7 +63,7 @@ function handleOrderName(e){
   return (
     <div className="containerHome">
       <Accordion>
-    <Accordion.Item eventKey="3">
+    <Accordion.Item>
     <Accordion.Header>Order By</Accordion.Header>
     <Accordion.Body>
     <div>
@@ -87,20 +85,7 @@ function handleOrderName(e){
     </Accordion.Body>
 </Accordion.Item>
 </Accordion>
-      <Dropdown className="orderButton" size="sm">
-        <Dropdown.Toggle variant="success" className="toglleDropDown" id="dropdown-basic">
-          Order By
-        </Dropdown.Toggle>
-
-        <Dropdown.Menu>
-          <Dropdown.Item >Featured</Dropdown.Item>
-          <Dropdown.Item >Price: Low to High</Dropdown.Item>
-          <Dropdown.Item >Price: High to Low</Dropdown.Item>
-          <Dropdown.Item >Average Rating</Dropdown.Item>
-          <Dropdown.Item >Newest</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-
+   
       <div className="containerContent">
         <Filters />
         <div className="containerCards">
@@ -108,7 +93,7 @@ function handleOrderName(e){
         </div>
       </div>
 
-      <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} />
+      <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} refresh={refresh}/>
     </div>
   )
 }
