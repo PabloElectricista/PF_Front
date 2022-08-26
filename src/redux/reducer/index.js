@@ -3,8 +3,27 @@ const {
     GET_PRODUCT_BY_ID,
     UPDATE_PRODUCT,
     FILTERED_INSTRUMENTS,
-    CREATE_PRODUCT
+    CREATE_PRODUCT,
+    ORDER_NAME,
+	ORDER_PRICE,
 } = require('../actions/index');
+
+function orderMayMen(array, prop) {
+	let newArray = array.sort((a, b) => {
+		if (a[prop] < b[prop]) return 1;
+		if (a[prop] > b[prop]) return -1;
+		return 0;
+	});
+	return newArray;
+}
+function orderMenMay(array, prop) {
+	let newArray = array.sort((a, b) => {
+		if (a[prop] < b[prop]) return -1;
+		if (a[prop] > b[prop]) return 1;
+		return 0;
+	});
+	return newArray;
+}
 
 const initialState = {
     instruments: [],
@@ -55,7 +74,32 @@ export default function rootReducer(state = initialState, action) {
                 ...state, 
                 instruments: action.payload
             }
+
+            case ORDER_NAME:
+			let sortedName =
+				action.payload === "Up to Down"
+					? orderMayMen(state.instruments, "name")
+					: orderMenMay(state.instruments, "name");
+			return {
+				...state,
+				allInstruments:
+					action.payload === "All"
+						? [...state.instruments]
+						: sortedName,
+			};
+		case ORDER_PRICE:
+			let sortedPrice =
+				action.payload === "Higher price"
+					? orderMayMen(state.instruments, "price")
+					: orderMenMay(state.instruments, "price");
+			return {
+				...state,
+				allInstruments:
+					action.payload === "All" ? [...state.instruments] : sortedPrice,
+			};
         default:
             return state
     }
+
+   
 }

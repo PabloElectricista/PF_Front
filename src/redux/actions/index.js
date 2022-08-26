@@ -7,6 +7,8 @@ export const GET_INSTRUMENT_BY_NAME = "GET_INSTRUMENTS_BY_NAME";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const FILTERED_INSTRUMENTS = "FILTERED_INSTRUMENTS";
+export const ORDER_NAME = "ORDER_NAME";
+export const ORDER_PRICE = "ORDER_PRICE";
 
 
 export const getAllProducts = () => {
@@ -80,4 +82,18 @@ export function filteredIntruments(payload) {
             payload: filter.data
         })
     }
+}
+export function orderComponentsByName(payload) {
+	return {
+		type: ORDER_NAME,
+		payload,
+	};
+}
+
+
+export function orderComponentsByPrice(payload) {
+	return {
+		type: ORDER_PRICE,
+		payload,
+	};
 }
