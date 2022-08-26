@@ -1,6 +1,7 @@
 .containerHome {
   margin: 0%;
-  padding: 0%;
+  padding-left: 2em;
+  padding-right: 2em;
   width: 100%
 }
 
@@ -27,18 +28,20 @@
 }
 
 .toglleDropDown {
-  background-color: #169E85;
-  border-color: #169E85;
+  background-color: #169E85 !important;
+  border-color: #169E85 !important;
   font-size: 0.8rem !important;
 }
+
 .toglleDropDown:hover {
-  background-color: #4DAE9C;
-  border-color: #4DAE9C;
+  background-color: #4DAE9C !important;
+  border-color: #4DAE9C !important;
 }
 
 .toglleDropDown:focus {
   background-color: #4DAE9C;
   border-color: #4DAE9C;
+  box-shadow: none !important;
 }
 
 .dropdown-item {
@@ -46,6 +49,27 @@
 }
 
 .dropdown-item:active {
-  background-color: #4DAE9C;
-  color: white !important;
+  background-color: #e9ecef !important;
+  font-size: 0;
+}
+
+.cardRating {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 2.5em !important;
+  width: 7.5em !important;
+}
+
+.cardStar {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #888;
+}
+
+.cardStarActive {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #169E85;
 }
