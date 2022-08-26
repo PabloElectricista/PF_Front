@@ -63,18 +63,18 @@ export function createProduct(payload) {
     }
 }
 
-let queries={
-    name:"",
-    categorie:"",
-    status:"",
-    brand:""
+let queries = {
+    name: "",
+    categorie: "",
+    status: "",
+    brand: ""
 }
 export function filteredIntruments(payload) {
     return async function (dispatch) {
-        let condition=[];
-        queries={...queries,...payload}
-        for(const key in queries){
-            if(queries[key]) condition.push(`${key}=${queries[key]}`)
+        let condition = [];
+        queries = { ...queries, ...payload }
+        for (const key in queries) {
+            if (queries[key]) condition.push(`${key}=${queries[key]}`)
         }
         const filter = await axios.get(`/filter?${condition.join('&')}`)
         dispatch({
@@ -83,17 +83,21 @@ export function filteredIntruments(payload) {
         })
     }
 }
-export function orderComponentsByName(payload) {
-	return {
-		type: ORDER_NAME,
-		payload,
-	};
+export const orderComponentsByName = (payload) => {
+    return async function(dispatch) {
+        return dispatch({
+            type: ORDER_NAME,
+            payload,
+        })
+    }
 }
 
 
-export function orderComponentsByPrice(payload) {
-	return {
-		type: ORDER_PRICE,
-		payload,
-	};
+export const orderComponentsByPrice = (payload) => {
+    return async function(dispatch) {
+        return dispatch({
+            type: ORDER_PRICE,
+            payload,
+        })
+    }
 }

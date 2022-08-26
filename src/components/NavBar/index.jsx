@@ -37,15 +37,14 @@ export default function NavBar() {
                 <div>
                     {isAuthenticated ?
                         <>
-                            <img className="ProfileImg" src={user.picture} alt="user" />
                             <Link to="profile">
-                                <button className="btn btn-outline-success me-2" onClick={() => toTheTop()} type="button">Profile</button>
+                                <img className="ProfileImg" src={user.picture} alt="user" />
                             </Link>
                             <LogOutBtn />
                         </>
                         : (!isLoading && <LogInBtn />)}
                 </div>
-                <LightDarktn/>
+                <LightDarktn />
             </div>
         </nav>
     );
