@@ -1,21 +1,13 @@
-import './Card.css'
 import { Link } from 'react-router-dom'
-import { BsCartFill, BsStarFill } from 'react-icons/bs';
+import { TiDelete } from 'react-icons/ti';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 
-export default function ProductCard({ id, name, price, rating, image, brand }) {
+export default function FavCard({ id, name, price, rating, image, brand }) {
 
-  const addToFav = () => {
+  const removeFromFav = () => {
     let favs = JSON.parse(localStorage.getItem('favList'))
-    if (favs) {
-      if (favs.length <= 10 && favs.every(item => item.id !== id)) {
-        favs.push({ id, name, price, rating, image, brand })
-      }
-    } else {
-      favs = [{ id, name, price, rating, image, brand }]
-    }
-    localStorage.setItem('favList', JSON.stringify(favs))
+    localStorage.setItem('favList', JSON.stringify(favs.filter(fav => fav.id !== id)))
   }
 
   return (
@@ -40,8 +32,7 @@ export default function ProductCard({ id, name, price, rating, image, brand }) {
         </ListGroup>
       </Card.Body>
       <div className='containerButton'>
-        <BsStarFill className='CardIcon' onClick={addToFav} />
-        <BsCartFill className='CardIcon' />
+        <TiDelete className='CardIcon' onClick={removeFromFav} />
       </div>
     </Card>
   )
