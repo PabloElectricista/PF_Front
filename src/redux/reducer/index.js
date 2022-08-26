@@ -78,8 +78,8 @@ export default function rootReducer(state = initialState, action) {
             case ORDER_NAME:
 			let sortedName =
 				action.payload === "Up to Down"
-					? orderMayMen(state.instruments, "name")
-					: orderMenMay(state.instruments, "name");
+					? orderMayMen(state.allInstruments, "name")
+					: orderMenMay(state.allInstruments, "name");
 			return {
 				...state,
 				allInstruments:
@@ -90,8 +90,8 @@ export default function rootReducer(state = initialState, action) {
 		case ORDER_PRICE:
 			let sortedPrice =
 				action.payload === "Higher price"
-					? orderMayMen(state.instruments, "price")
-					: orderMenMay(state.instruments, "price");
+					? orderMayMen(state.allInstruments, "price")
+					: orderMenMay(state.allInstruments, "price");
 			return {
 				...state,
 				allInstruments:
