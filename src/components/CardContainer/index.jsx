@@ -38,12 +38,10 @@ export default function CardContainer() {
 
 function handleOrderPrice(e){
     e.preventDefault();
-    setRefresh(refresh+1)
     dispatch(orderComponentsByPrice(e.target.value))
 }
 function handleOrderName(e){
   e.preventDefault();
-  setRefresh(refresh+1)
     dispatch(orderComponentsByName(e.target.value))
 }
 

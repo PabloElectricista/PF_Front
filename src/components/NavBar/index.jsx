@@ -20,16 +20,16 @@ export default function NavBar() {
                 <div className="d-flex align-items-center">
                     <div className="d-flex me-5">
                         <img className="navbarLogo" src={goode_logo} alt="Logo B. Goode" width="40" height='40' />
-                        <Link className="navbar-brand" to="/" onClick={() => toTheTop()}>
+                        <Link className="navbar-brand" to="/">
                             B. Goode
                         </Link>
                     </div>
                 </div>
 
                 <div className="navbar-nav hstack gap-3">
-                    <Link to='/home' className="nav-link" onClick={() => toTheTop()} >Products</Link>
-                    <Link to='/contact' className="nav-link" onClick={() => toTheTop()}>Contact us</Link>
-                    <Link to='/create' className="nav-link" onClick={() => toTheTop()}>Sell</Link>
+                    <Link to='/home' className="nav-link"  >Products</Link>
+                    <Link to='/contact' className="nav-link" >Contact us</Link>
+                    <Link to='/create' className="nav-link" >Sell</Link>
                 </div>
 
                 <SearchBar />
@@ -39,7 +39,7 @@ export default function NavBar() {
                         <>
                             <img className="ProfileImg" src={user.picture} alt="user" />
                             <Link to="profile">
-                                <button className="btn btn-outline-success me-2" onClick={() => toTheTop()} type="button">Profile</button>
+                                <button className="btn btn-outline-success me-2" type="button">Profile</button>
                             </Link>
                             <LogOutBtn />
                         </>
