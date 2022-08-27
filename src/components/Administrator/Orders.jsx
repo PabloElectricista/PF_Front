@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
-import {getOrders} from '../../redux/actions/index'
+import {getUsers} from '../../redux/actions/index'
 import { useParams} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -64,7 +64,7 @@ export default function Orders() {
   const [estado, setEstado] = useState(orders?.status)
 
   useEffect(() => {
-    dispatch(getOrders())
+    dispatch(getUsers())
   }, [])
 
   return (
