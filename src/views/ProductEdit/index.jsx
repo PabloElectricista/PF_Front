@@ -338,7 +338,6 @@ function ProductEdit() {
         const errorName = validateAlpha('name', instrumentItem.name);
         const errorPrice = validateDecimal('price', instrumentItem.price);
         const errorDescription = validateAlpha('description', instrumentItem.description);
-        const errorImage = false; //validateUrl('image', instrumentItem.image[0]); //todo - update to handle array
         const errorStock = validateInteger('stock', instrumentItem.stock);
         const errorColor = validateAlpha('color', instrumentItem.color);
         const errorBrand = validateAlpha('brand', instrumentItem.brand);
@@ -346,8 +345,8 @@ function ProductEdit() {
         const errorStatus = validateAlpha('status', instrumentItem.status);
 
         return errorName || errorPrice || errorDescription ||
-            errorImage || errorStock || errorColor ||
-            errorBrand || errorLocation || errorStatus;
+               errorStock || errorColor || errorBrand ||
+               errorLocation || errorStatus;
     }
 
     function validateInteger(key, value) {

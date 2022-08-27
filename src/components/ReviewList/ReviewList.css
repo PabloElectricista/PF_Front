@@ -1,0 +1,13 @@
+.reviewListContainer {
+    display: grid;
+    grid-template-columns: auto auto;
+    border-radius: 0.5em;
+    justify-content: space-around;
+    background-color: white;
+    margin: 3em 5em;
+    box-shadow: 0.5em 0.5em 2em #282c34;
+}
+
+.reviewItem {
+    margin: 1em;
+}

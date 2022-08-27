@@ -6,6 +6,8 @@ const {
     CREATE_PRODUCT,
     ORDER_NAME,
     ORDER_PRICE,
+    GET_REVIEWS_BY_PRODUCT_ID,
+    ADD_REVIEW,
 } = require('../actions/index');
 
 function orderMayMen(array, prop) {
@@ -29,7 +31,7 @@ const initialState = {
     favoriteInstruments: [],
     retrievedInstrument: null,
     filteredIntruments: [],
-
+    productReviewList: [],
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -98,9 +100,23 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 instruments: sortedPrice,
             };
+
+        case GET_REVIEWS_BY_PRODUCT_ID:
+            return {
+                ...state,
+                productReviewList: action.payload
+            }
+
+        case ADD_REVIEW:
+            return {
+                ...state,
+                productReviewList: [
+                    action.payload,
+                    ...state.productReviewList]
+            }
+
         default:
             return state
     }
-
 
 }

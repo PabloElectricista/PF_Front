@@ -7,6 +7,8 @@ import {useNavigate, useParams} from "react-router-dom";
 import './ProductDetail.css';
 import Loading from "../../components/Loading";
 import Carousel from "react-bootstrap/Carousel";
+import ReviewList from "../../components/ReviewList";
+import ReviewForm from "../../components/ReviewForm";
 
 function ProductDetail() {
 
@@ -24,7 +26,6 @@ function ProductDetail() {
     function handleEdit() {
         navigate(`/edit/${id}`);
     }
-
 
     function renderCategories() {
         if (!instrumentItem ||
@@ -64,6 +65,7 @@ function ProductDetail() {
                 </h4>
             );
         }
+
         return (
             <div className='detailsContainer'>
                 <div className="imageContainer">
@@ -93,9 +95,13 @@ function ProductDetail() {
     }
 
     return (
-        <div className='Details'>
-            <h1>Product Details</h1>
-            {renderInstrument()}
+        <div>
+            <div className='Details'>
+                <h1>Product Details</h1>
+                {renderInstrument()}
+            </div>
+            <ReviewForm productId={id}/>
+            <ReviewList productId={id}/>
         </div>
     );
 }
