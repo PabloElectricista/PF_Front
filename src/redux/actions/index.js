@@ -107,19 +107,9 @@ export const orderComponentsByPrice = (payload) => {
 export const getReviewsByProduct = (productId) => {
     return async function (dispatch) {
         const response = await axios(`/reviews/${productId}`);
-        let reviewList;
-        if(!response.data || response.data.length === 0) {
-            reviewList = [{ //default object
-                userName: 'Admin User',
-                rating: 5,
-                comment: 'Be the first one to add a review!'
-            }];
-        } else {
-            reviewList = response.data;
-        }
         return dispatch({
             type: GET_REVIEWS_BY_PRODUCT_ID,
-            payload: reviewList
+            payload: response.data
         })
     }
 }

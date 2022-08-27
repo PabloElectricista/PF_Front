@@ -1,29 +1,33 @@
-import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React from "react";
+import ReactStars from 'react-stars'; //source: https://www.npmjs.com/package/react-stars
+import {connect} from "react-redux";
 import {getReviewsByProduct} from "../../redux/actions";
 import './ReviewList.css';
 
-function ReviewList(props) {
+class ReviewList extends React.Component {
 
-    const dispatch = useDispatch();
-    const productReviewList = useSelector((state) => state.productReviewList);
-    const productId = props.productId;
-
-    useEffect(() => {
-        if (!productReviewList ||
-            productReviewList.length === 0
+    componentDidMount() {
+        if (!this.props.productReviewList ||
+            this.props.productReviewList.length === 0
         ) {
-            dispatch(getReviewsByProduct(productId));
+            this.props.getReviewsByProduct(this.props.productId);
         }
-    }, [dispatch, productId, productReviewList])
+    }
 
-    function renderReviewItem() {
+    renderReviewItem(reviewList) {
         return (
-            productReviewList.map((item, index) => {
+            reviewList.map((item, index) => {
                 return (
                     <div className='reviewItem' key={index}>
                         <h1>{item.userName}</h1>
-                        <p><b>Rating: </b>{item.rating}</p>
+                        <p><b>Rating: </b></p>
+                        <ReactStars
+                            value={item.rating}
+                            edit={false}
+                            size={30}
+                            color1={'#888'}
+                            color2={'#169E85'}
+                        />
                         <p><b>Comment: </b>{item.comment}</p>
                     </div>
                 )
@@ -31,24 +35,40 @@ function ReviewList(props) {
         );
     }
 
-    function renderReviewList() {
-        if (!productReviewList ||
-            productReviewList.length === 0) {
-            return '';
+    renderReviewList() {
+        let reviewList;
+        if(!this.props.productReviewList || this.props.productReviewList.length === 0) {
+            reviewList = [{ //default object
+                userName: 'Admin User',
+                rating: 2.5,
+                comment: 'Be the first one to add a review!'
+            }];
+        } else {
+            reviewList = this.props.productReviewList;
         }
         return (
             <div className='reviewListContainer'>
-                {renderReviewItem()}
+                {this.renderReviewItem(reviewList)}
             </div>
         );
     }
 
-    return (
-        <div className='Details'>
-            <h1>Review List</h1>
-            {renderReviewList()}
-        </div>
-    );
+    render() {
+        return (
+            <div className='Details'>
+                <h1>Review List</h1>
+                {this.renderReviewList()}
+            </div>
+        );
+    }
 }
 
-export default ReviewList;
+const mapStateToProps = state => {
+    return {
+        productReviewList: state.productReviewList
+    }
+}
+
+export const mapDispatchToProps = {getReviewsByProduct};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewList);

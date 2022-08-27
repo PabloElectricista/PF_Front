@@ -75,10 +75,10 @@
 }
 
 .addImageButton {
-    background-color: #198754;
+    background-color: #169E85;
     color: white;
     border-radius: .5em;
-    border: .3em solid #198754;
+    border: .3em solid #169E85;
 }
 
 .removeImageButton {
@@ -91,10 +91,10 @@
 }
 
 .submitButton {
-    background-color: #198754;
+    background-color: #169E85;
     color: white;
     border-radius: .5em;
-    border: .3em solid #198754;
+    border: .3em solid #169E85;
 }
 
 .cancelButton {
