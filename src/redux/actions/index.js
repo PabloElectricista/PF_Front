@@ -9,6 +9,8 @@ export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const FILTERED_INSTRUMENTS = "FILTERED_INSTRUMENTS";
 export const ORDER_NAME = "ORDER_NAME";
 export const ORDER_PRICE = "ORDER_PRICE";
+export const GET_REVIEWS_BY_PRODUCT_ID = "GET_REVIEWS_BY_PRODUCT_ID";
+export const ADD_REVIEW = "ADD_REVIEW";
 
 
 export const getAllProducts = () => {
@@ -101,3 +103,24 @@ export const orderComponentsByPrice = (payload) => {
         })
     }
 }
+
+export const getReviewsByProduct = (productId) => {
+    return async function (dispatch) {
+        const response = await axios(`/reviews/${productId}`);
+        return dispatch({
+            type: GET_REVIEWS_BY_PRODUCT_ID,
+            payload: response.data
+        })
+    }
+}
+
+export const addReview = (reviewItem) => { //add one review to product
+    return async function(dispatch) {
+        const response = await axios.post('reviews', reviewItem);
+        dispatch({
+            type: ADD_REVIEW,
+            payload: response.data
+        });
+    }
+}
+
