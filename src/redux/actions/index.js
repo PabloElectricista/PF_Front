@@ -7,8 +7,7 @@ export const GET_INSTRUMENT_BY_NAME = "GET_INSTRUMENTS_BY_NAME";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const FILTERED_INSTRUMENTS = "FILTERED_INSTRUMENTS";
-export const ORDER_NAME = "ORDER_NAME";
-export const ORDER_PRICE = "ORDER_PRICE";
+export const ORDER_PRODUCTS = "ORDER_PRODUCTS";
 export const GET_REVIEWS_BY_PRODUCT_ID = "GET_REVIEWS_BY_PRODUCT_ID";
 export const ADD_REVIEW = "ADD_REVIEW";
 
@@ -85,24 +84,15 @@ export function filteredIntruments(payload) {
         })
     }
 }
-export const orderComponentsByName = (payload) => {
+
+export const orderProducts = (payload) => {
     return async function(dispatch) {
         return dispatch({
-            type: ORDER_NAME,
+            type: ORDER_PRODUCTS,
             payload,
-        })
-    }
-}
-
-
-export const orderComponentsByPrice = (payload) => {
-    return async function(dispatch) {
-        return dispatch({
-            type: ORDER_PRICE,
-            payload,
-        })
-    }
-}
+        });
+    };
+};
 
 export const getReviewsByProduct = (productId) => {
     return async function (dispatch) {

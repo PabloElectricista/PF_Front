@@ -1,15 +1,17 @@
-.containerNavBar {
-    padding-right: 5%;
-}
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
 .navbar-brand {
     color: #169E85 !important;
-    font-weight: 600;
-    font-style: italic;
+    font-family: 'Satisfy', cursive;
+    font-size: 20px !important;
 }
 
 .nav-link {
     color: white !important;
+}
+
+.nav-link:hover {
+    color: #dddddd !important; 
 }
 
 .btn-outline-success {

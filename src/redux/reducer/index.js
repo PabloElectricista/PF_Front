@@ -4,8 +4,7 @@ const {
     UPDATE_PRODUCT,
     FILTERED_INSTRUMENTS,
     CREATE_PRODUCT,
-    ORDER_NAME,
-    ORDER_PRICE,
+    ORDER_PRODUCTS,
     GET_REVIEWS_BY_PRODUCT_ID,
     ADD_REVIEW,
 } = require('../actions/index');
@@ -75,31 +74,28 @@ export default function rootReducer(state = initialState, action) {
                 instruments: action.payload
             }
 
-        case ORDER_NAME:
-            if (action.payload === "All") {
-                return {
-                    ...state,
-                }
+        case ORDER_PRODUCTS:
+            let sortedProducts = JSON.parse(JSON.stringify(state.instruments))
+            switch (action.payload) {
+                case "Up to Down":
+                    orderMayMen(sortedProducts, "name");
+                    break;
+                case "Down to Up":
+                    orderMenMay(sortedProducts, "name");
+                    break;
+                case "Higher price":
+                    orderMayMen(sortedProducts, "price")
+                    break;
+                case "Lower price":
+                    orderMenMay(sortedProducts, "price");
+                    break;
+                default:
+                    break;
             }
-            let sortedName = JSON.parse(JSON.stringify(state.allInstruments))
-            action.payload === "Up to Down" ? orderMayMen(sortedName, "name") : orderMenMay(sortedName, "name");
             return {
                 ...state,
-                instruments: sortedName,
+                instruments: sortedProducts,
             }
-
-        case ORDER_PRICE:
-            if (action.payload === "All") {
-                return {
-                    ...state,
-                }
-            }
-            let sortedPrice = JSON.parse(JSON.stringify(state.allInstruments))
-            action.payload === "Higher price" ? orderMayMen(sortedPrice, "price") : orderMenMay(sortedPrice, "price");
-            return {
-                ...state,
-                instruments: sortedPrice,
-            };
 
         case GET_REVIEWS_BY_PRODUCT_ID:
             return {

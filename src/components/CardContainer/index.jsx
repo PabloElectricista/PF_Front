@@ -1,22 +1,29 @@
+// Hooks from React and Redux
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { orderComponentsByPrice, orderComponentsByName } from '../../redux/actions';
-import Accordion from 'react-bootstrap/Accordion';
-import './CardContainer.css';
-import { getAllProducts } from "../../redux/actions";
+// Components
 import Pagination from "../Pagination";
-import Loading from "../Loading";
 import Filters from "../../components/Filters/Filters";
 import ProductCard from '../Card/index';
+import Loading from "../Loading";
+// Actions
+import { 
+  orderProducts,
+  getAllProducts 
+} from '../../redux/actions';
+// Styles
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import './CardContainer.css';
 
 export default function CardContainer() {
-
+  // Hooks 
   const dispatch = useDispatch();
-
   const allInstruments = useSelector(state => state.instruments)
   const [currentPage, setCurrentPage] = useState(1);
-
+  
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch]);
@@ -25,63 +32,53 @@ export default function CardContainer() {
     window.scrollTo({ top: '0px', behavior: 'smooth' });
   }, [currentPage]);
 
+  // Pagination logic
   let idxLastItem = currentPage * 15;
   let ixdFirstItem = idxLastItem - 15;
   let pageInstruments = allInstruments.slice(ixdFirstItem, idxLastItem);
+  const paginate = (number) => { 
+    setCurrentPage(number) 
+  };
 
-  const paginate = (number) => { setCurrentPage(number) };
-
-
-
-  function handleOrderPrice(e) {
+  // Order's Dispatch
+  function handleOrder(e) {
     e.preventDefault();
-    dispatch(orderComponentsByPrice(e.target.value))
+    dispatch(orderProducts(e.target.value));
   }
-  function handleOrderName(e) {
-    e.preventDefault();
-    dispatch(orderComponentsByName(e.target.value))
-}
 
+  // Array of all products cards
   let mapInstruments = pageInstruments.map(instrument => {
-    return (
-      <ProductCard
-        key={instrument._id}
-        id={instrument._id}
-        name={instrument.name}
-        price={instrument.price}
-        brand={instrument.brand}
-        rating={Math.floor((Math.random() * 6))}
-        image={instrument.image}
-      />
-    )
-  }
+      return (
+        <ProductCard
+          key={instrument._id}
+          id={instrument._id}
+          name={instrument.name}
+          price={instrument.price}
+          brand={instrument.brand}
+          rating={Math.floor((Math.random() * 6))}
+          image={instrument.image}
+        />
+      )
+    }
   )
 
   return (
     <div className="containerHome">
-      <Accordion>
-        <Accordion.Item>
-          <Accordion.Header>Order By</Accordion.Header>
-          <Accordion.Body>
-            <div>
-              <select onChange={(e) => { handleOrderPrice(e) }}>
-                <option disabled>"Price"</option>
-                <option value="All" >"All"</option>
-                <option value="Higher price">"Higher to lower"</option>
-                <option value="Lower price">"Lower to higher"</option>
-              </select>
-            </div>
-            <div>
-              <select onChange={(e) => { handleOrderName(e) }}>
-                <option disabled>"Name"</option>
-                <option value="All">"All"</option>
-                <option value="Up to Down">"Up to Down"</option>
-                <option value="Down to Up">"Down to Up"</option>
-              </select>
-            </div>
-          </Accordion.Body>
-        </Accordion.Item>
-      </Accordion>
+
+      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }} size="small">
+        <InputLabel id="demo-simple-select-label">Order by</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          label="Order by"
+          onChange={(e) => { handleOrder(e) }}
+        >
+          <MenuItem value="Lower price">Price: Low to High</MenuItem>
+          <MenuItem value="Higher price">Price: Hig to Low</MenuItem>
+          <MenuItem value="Down to Up">Name: A-Z</MenuItem>
+          <MenuItem value="Up to Down">Name: Z-A</MenuItem>
+        </Select>
+      </FormControl>
 
       <div className="containerContent">
         <Filters />
