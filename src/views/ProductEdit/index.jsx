@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import {getProductById, updateProduct} from "../../redux/actions";
 import './ProductEdit.css';
-import Loading from "../../components/Loading";
+import Loading from "../../components/Loading/Loading";
 
 function ProductEdit() {
 

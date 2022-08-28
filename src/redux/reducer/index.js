@@ -29,7 +29,6 @@ const initialState = {
     allInstruments: [],
     favoriteInstruments: [],
     retrievedInstrument: null,
-    filteredIntruments: [],
     productReviewList: [],
 }
 
@@ -67,8 +66,8 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 allInstruments: [action.payload, ...state.allInstruments]
             }
+
         case FILTERED_INSTRUMENTS:
-            console.log(action.payload);
             return {
                 ...state,
                 instruments: action.payload
