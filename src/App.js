@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {BrowserRouter as Router,  Routes, Route} from 'react-router-dom';
 
-import LandingPage from './views/LandingPage';
-import Home from './views/Home';
-import NavBar from "./components/NavBar";
+import LandingPage from './views/LandingPage/LandingPage';
+import Home from './views/Home/Home';
+import NavBar from "./components/NavBar/NavBar";
 import ContactUs from "./views/ContactUs";
 import ProductDetail from "./views/ProductDetail";
 import CreateProduct from "./views/CreateProduct";
 import UserProfile from "./views/UserProfile";
 import Payment from "./views/Payment";
 import NotFound from "./views/NotFound";
-import Footer from "./components/Footer";
-import AboutUs from "./views/AboutUs";
+import Footer from "./components/Footer/Footer";
+import AboutUs from "./views/AboutUs/AboutUs";
 import ProductEdit from "./views/ProductEdit";
 import Favorites from "./components/Favorites";
 import History from './components/History/History';

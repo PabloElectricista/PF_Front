@@ -1,36 +1,57 @@
-// Hooks from React and Redux
+// React utilities
+import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 // Components
-import Pagination from "../Pagination";
+import ProductCard from "../../components/Card/Card";
+import Pagination from "../../components/Pagination/Pagination";
 import Filters from "../../components/Filters/Filters";
-import ProductCard from '../Card/index';
-import Loading from "../Loading";
 // Actions
 import { 
   orderProducts,
-  getAllProducts 
+  getAllProducts,
+  filteredIntruments
 } from '../../redux/actions';
 // Styles
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import './CardContainer.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import './Home.css';
 
-export default function CardContainer() {
-  // Hooks 
+export default function Home() {
+  
+  //Hooks
+  // Getting value of the query from the url
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search");
   const dispatch = useDispatch();
   const allInstruments = useSelector(state => state.instruments)
   const [currentPage, setCurrentPage] = useState(1);
-  
+
   useEffect(() => {
-    dispatch(getAllProducts());
-  }, [dispatch]);
+    if (search) {
+      dispatch(filteredIntruments({name: search}));
+    } else {
+      dispatch(getAllProducts());
+    }
+  }, [dispatch, search]);
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [allInstruments]);
 
   useEffect(() => {
     window.scrollTo({ top: '0px', behavior: 'smooth' });
   }, [currentPage]);
+
+  //Order's Dispatch
+  function handleOrder(e) {
+    e.preventDefault();
+    dispatch(orderProducts(e.target.value));
+  }
 
   // Pagination logic
   let idxLastItem = currentPage * 15;
@@ -40,31 +61,9 @@ export default function CardContainer() {
     setCurrentPage(number) 
   };
 
-  // Order's Dispatch
-  function handleOrder(e) {
-    e.preventDefault();
-    dispatch(orderProducts(e.target.value));
-  }
-
-  // Array of all products cards
-  let mapInstruments = pageInstruments.map(instrument => {
-      return (
-        <ProductCard
-          key={instrument._id}
-          id={instrument._id}
-          name={instrument.name}
-          price={instrument.price}
-          brand={instrument.brand}
-          rating={Math.floor((Math.random() * 6))}
-          image={instrument.image}
-        />
-      )
-    }
-  )
-
   return (
     <div className="containerHome">
-
+      {/* Order's Select */}
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }} size="small">
         <InputLabel id="demo-simple-select-label">Order by</InputLabel>
         <Select
@@ -79,15 +78,29 @@ export default function CardContainer() {
           <MenuItem value="Up to Down">Name: Z-A</MenuItem>
         </Select>
       </FormControl>
-
+      
       <div className="containerContent">
         <Filters />
         <div className="containerCards">
-          {mapInstruments ? mapInstruments : <h3>No instruments found</h3>}
+          {
+            pageInstruments?.map(instrument => {
+              return (
+                <ProductCard
+                  key={instrument._id}
+                  id={instrument._id}
+                  name={instrument.name}
+                  price={instrument.price}
+                  brand={instrument.brand}
+                  rating={Math.floor((Math.random() * 6))}
+                  image={instrument.image}
+                />
+              )
+            })
+          }
         </div>
       </div>
-
       <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} />
+
     </div>
   )
 }

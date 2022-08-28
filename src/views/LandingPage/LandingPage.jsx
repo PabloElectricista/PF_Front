@@ -1,8 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import './index.css';
 import Carrousel from '../Carousel';
-import AboutUs from '../AboutUs';
+import AboutUs from '../AboutUs/AboutUs';
+import './LandingPage.css';
 
 export default function LandingPage(){
 

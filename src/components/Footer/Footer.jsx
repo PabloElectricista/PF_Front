@@ -1,7 +1,10 @@
+// React utilities
 import React from "react";
 import { Link } from "react-router-dom";
-import { toTheTop } from "../../customScripts";
+// // Files and extra code
 import logo from '../img/assets/ChuckBerry.png';
+import { toTheTop } from "../../customScripts";
+// Styles
 import Navbar from 'react-bootstrap/Navbar';
 import './Footer.css';
 
@@ -23,7 +26,7 @@ export default function Footer () {
                 </Navbar.Text>
                 <Navbar.Text>
                     <Link to='/about' onClick={() => toTheTop()}>
-                        <div>About Us</div>
+                        <div className="footerAboutUs">About Us</div>
                     </Link>
                 </Navbar.Text>
         </Navbar>
