@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "../SearchBar";
 import goode_logo from '../../components/img/assets/ChuckBerry.png'
-import toTheTop from '../../customScripts';
 import 'bootstrap/dist/css/bootstrap.css';
 import './NavBar.css';
 import LogInBtn from "../LogInBtn";

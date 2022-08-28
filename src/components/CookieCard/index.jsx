@@ -5,7 +5,6 @@ export default function CookieCard() {
 
   useEffect(() => {
     if (localStorage.getItem('localstorage') === 'true') {
-      console.log('localstorage === true');
       const CookieDiv = document.getElementById('Cookie')
       CookieDiv.classList.add('Accepted')
     }

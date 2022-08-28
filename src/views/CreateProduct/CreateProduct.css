@@ -1,4 +1,4 @@
-#container-create{
+#container-create {
     font-family: var(--font-primary);
     background-image: url('../../components/img/7.png');
     background-repeat: no-repeat;
@@ -6,11 +6,11 @@
     background-position: right;
     margin: 0;
     padding: 0;
-    height: 150vh;
-    width: 100vw;
+    width: 90vw;
     overflow: hidden;
 }
-.body{
+
+.body {
     background-image: url('../../components/img/wave.png');
     background-repeat: no-repeat;
     background-size: cover;
@@ -18,14 +18,11 @@
 }
 
 
-#cont-btn-home a button{ 
-    
-  
+#cont-btn-home a button {
     margin: 25px;
-   
 }
 
-#cont-title-form{
+#cont-title-form {
     font-size: 1.5em;
     display: flex;
     justify-content: center;
@@ -35,20 +32,21 @@
 }
 
 
-#form-create{
-    
+#form-create {
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     height: 100vh;
     width: 100vw;
 }
-#form-create p{
+
+#form-create p {
     color: gray;
     margin-top: 0px;
 }
 
-#form-cont-left{
+#form-cont-left {
     height: 75%;
     width: 36%;
     margin-top: -5%;
@@ -56,7 +54,7 @@
     padding: 60px;
 }
 
-.form-inputs{
+.form-inputs {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,13 +62,15 @@
     height: 65px;
     width: 100%;
 }
-.form-inputs label{
+
+.form-inputs label {
     color: var(--color-primary);
     font-size: 1.2em;
     font-weight: bold;
-    
+
 }
-.form-inputs input{
+
+.form-inputs input {
     color: var(--color-secundary);
     background-color: var(--color-primary);
     height: 40px;
@@ -78,28 +78,29 @@
     border: 2px solid gray;
     border-radius: 10px;
     padding-left: 2px;
-    margin:0px;
+    margin: 0px;
 }
 
-#select-diets select{
+#select-diets select {
     color: black;
-    background-color:white;
+    background-color: white;
     height: 45px;
     width: 200px;
     border: 2px solid var(--color-primary);
     border-radius: 15px;
 }
 
-#cont-diets{
+#cont-diets {
     color: rgb(241, 233, 229);
     display: flex;
     justify-content: center;
     height: 20px;
     width: 100%;
-    margin-top:-25px;
-    margin-left:-100px;
+    margin-top: -25px;
+    margin-left: -100px;
 }
-#cont-diets ul li button{
+
+#cont-diets ul li button {
     background-color: red;
     height: 20px;
     width: 10px;
@@ -109,7 +110,7 @@
 
 }
 
-#cont-btn-submit{
+#cont-btn-submit {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,7 +119,8 @@
     margin-top: 160px;
     margin-left: 300px;
 }
-#cont-btn-submit button{
+
+#cont-btn-submit button {
     font-size: 1.2em;
     font-weight: bold;
     align-items: center;
@@ -126,8 +128,8 @@
     transition: .3s;
     margin-top: -250px;
 }
-#cont-btn-submit button:hover{
+
+#cont-btn-submit button:hover {
     font-size: 1.25em;
     box-shadow: 0px 5px 5px #555;
 }
-

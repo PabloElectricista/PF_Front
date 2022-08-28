@@ -8,14 +8,17 @@ export default function ProductCard({ id, name, price, rating, image, brand }) {
 
   const addToFav = () => {
     let favs = JSON.parse(localStorage.getItem('favList'))
-    if (favs) {
-      if (favs.length <= 10 && favs.every(item => item.id !== id)) {
-        favs.push({ id, name, price, rating, image, brand })
-      }
-    } else {
+    if (!favs) {
       favs = [{ id, name, price, rating, image, brand }]
+      localStorage.setItem('favList', JSON.stringify(favs))
+      return
+    }    
+    if (favs.length < 10 && favs.every(item => item.id !== id)) {
+      favs.push({ id, name, price, rating, image, brand })
+      localStorage.setItem('favList', JSON.stringify(favs))
+      return
     }
-    localStorage.setItem('favList', JSON.stringify(favs))
+    alert("Can't add the item, is alredy in the FavList or you have 10 Favs.")
   }
 
   return (
