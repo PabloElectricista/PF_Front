@@ -1,8 +1,9 @@
 .containerHome {
-  margin: 0%;
-  padding-left: 2em;
-  padding-right: 2em;
-  width: 100%
+  display: flex;
+  flex-direction: column;
+  padding-left: 3em;
+  padding-right: 3em;
+  width: 100%;
 }
 
 .containerContent {
@@ -14,43 +15,8 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  width: 70%;
-  margin-right: 2%;
-}
-
-.orderButton {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  margin-right: 2%;
-  display: flex;
-  justify-content: flex-end;
-  padding: 0px;
-}
-
-.toglleDropDown {
-  background-color: #169E85 !important;
-  border-color: #169E85 !important;
-  font-size: 0.8rem !important;
-}
-
-.toglleDropDown:hover {
-  background-color: #4DAE9C !important;
-  border-color: #4DAE9C !important;
-}
-
-.toglleDropDown:focus {
-  background-color: #4DAE9C;
-  border-color: #4DAE9C;
-  box-shadow: none !important;
-}
-
-.dropdown-item {
-  font-size: 0.7rem;
-}
-
-.dropdown-item:active {
-  background-color: #e9ecef !important;
-  font-size: 0;
+  width: 72%;
+  gap: 1em;
 }
 
 .cardRating {
@@ -72,4 +38,27 @@
   margin: 0;
   font-size: 1.2rem;
   color: #169E85;
+}
+
+.MuiFormControl-root {
+  display: flex !important;
+  margin-left: auto !important;
+  margin-top: 0 !important;
+  border: none !important;
+}
+
+.css-a3l6o-MuiInputBase-root-MuiInput-root-MuiSelect-root:hover:not(.Mui-disabled)::before {
+  border-bottom: none !important;
+}
+
+.css-a3l6o-MuiInputBase-root-MuiInput-root-MuiSelect-root::before {
+  border-bottom: none !important;
+}
+
+.css-a3l6o-MuiInputBase-root-MuiInput-root-MuiSelect-root::after {
+  border-bottom: none !important;
+}
+
+.css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+  color: rgba(0, 0, 0, 0.6) !important; 
 }
