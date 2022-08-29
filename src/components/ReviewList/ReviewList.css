@@ -1,6 +1,4 @@
 .reviewListContainer {
-    display: grid;
-    grid-template-columns: auto auto;
     border-radius: 0.5em;
     justify-content: space-around;
     background-color: white;
@@ -10,4 +8,28 @@
 
 .reviewItem {
     margin: 1em;
+}
+
+.reviewListGrid {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.ratingTotal {
+    display: flex;
+    text-align: center;
+    margin: 1em;
+    padding-top: 1em;
+    align-items: flex-end;
+    flex-direction: row;
+    align-content: center;
+}
+
+.ratingText {
+    padding-top: 1%;
+}
+
+.ratingUserItem {
+    display: flex;
+    margin-bottom: 0;
 }
