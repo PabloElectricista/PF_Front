@@ -7,6 +7,7 @@ const {
     ORDER_PRODUCTS,
     GET_REVIEWS_BY_PRODUCT_ID,
     ADD_REVIEW,
+    ACTIVE_LOADING
 } = require('../actions/index');
 
 function orderMayMen(array, prop) {
@@ -30,6 +31,7 @@ const initialState = {
     favoriteInstruments: [],
     retrievedInstrument: null,
     productReviewList: [],
+    isLoading: true
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -39,12 +41,14 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 allInstruments: action.payload,
                 instruments: action.payload,
+                isLoading: false
             }
 
         case GET_PRODUCT_BY_ID:
             return {
                 ...state,
-                retrievedInstrument: action.payload
+                retrievedInstrument: action.payload,
+                isLoading: false
             }
 
         case UPDATE_PRODUCT:
@@ -70,7 +74,8 @@ export default function rootReducer(state = initialState, action) {
         case FILTERED_INSTRUMENTS:
             return {
                 ...state,
-                instruments: action.payload
+                instruments: action.payload,
+                isLoading: false
             }
 
         case ORDER_PRODUCTS:
@@ -94,6 +99,7 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 instruments: sortedProducts,
+                isLoading: false
             }
 
         case GET_REVIEWS_BY_PRODUCT_ID:
@@ -108,6 +114,12 @@ export default function rootReducer(state = initialState, action) {
                 productReviewList: [
                     action.payload,
                     ...state.productReviewList]
+            }
+
+        case ACTIVE_LOADING:
+            return {
+                ...state,
+                isLoading: true
             }
 
         default:
