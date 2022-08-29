@@ -28,7 +28,7 @@ export default function FavCard({ id, name, price, rating, image, brand, deleteF
         </ListGroup>
       </Card.Body>
       <div className='containerButton'>
-        <TiDelete className='CardIcon' onClick={() => deleteFav(id)} />
+        <TiDelete className='CardIcon EditIcon' onClick={() => deleteFav(id)} />
       </div>
     </Card>
   )

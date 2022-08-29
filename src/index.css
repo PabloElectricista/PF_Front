@@ -22,3 +22,7 @@ body {
 :any-link:hover{
   color: #333333;
 }
+
+.Dark {
+  background-color: #333333;
+}

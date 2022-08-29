@@ -16,6 +16,7 @@ import ProductEdit from "./views/ProductEdit";
 import Favorites from "./components/Favorites";
 import History from './components/History/History';
 import CookieCard from './components/CookieCard';
+import Dashboard from './components/Administrator/admin';
 // import StripeComponent from './components/StripeComponent';
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
                 <Route exact path='/payment' element={<Payment/>}/>
                 <Route exact path='/about' element={<AboutUs/>}/>
                 <Route exact path='/history' element={<History/>}/>
+                <Route exact path='/administrator' element={<Dashboard/>}/>
                 {/* <Route path='/stripe/:id' element={<StripeComponent/>}/> en progreso*/}
                 <Route path='*' element={<NotFound/>}/>
             </Routes>

@@ -32,7 +32,7 @@ const initialState = {
     retrievedInstrument: null,
     filteredIntruments: [],
     productReviewList: [],
-    newOrder: [],
+    myProducts: [],
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -41,7 +41,8 @@ export default function rootReducer(state = initialState, action) {
     case GET_MY_PRODUCTS:
         const NewOrders = action.payload.orders.map(element => element.products[0].products)
         console.log(NewOrders)
-        return {...state,newOrder: NewOrders}
+        
+        return {...state,myProducts: NewOrders}
     
         case GET_ALL_PRODUCTS:
             return {
