@@ -49,7 +49,7 @@ class ReviewList extends React.Component {
                                 color2={'#169E85'}
                             />
                         </div>
-                        <p><b>Date: </b>{itemDate}</p>
+                        {item.updatedAt && <p><b>Date: </b>{itemDate}</p>}
                         <p><b>Comment: </b>{item.comment}</p>
                     </div>
                 )
