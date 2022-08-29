@@ -10,6 +10,7 @@ export const FILTERED_INSTRUMENTS = "FILTERED_INSTRUMENTS";
 export const ORDER_PRODUCTS = "ORDER_PRODUCTS";
 export const GET_REVIEWS_BY_PRODUCT_ID = "GET_REVIEWS_BY_PRODUCT_ID";
 export const ADD_REVIEW = "ADD_REVIEW";
+export const GET_MY_PRODUCTS = "GET_MY_PRODUCTS";
 
 
 export const getAllProducts = () => {
@@ -114,3 +115,11 @@ export const addReview = (reviewItem) => { //add one review to product
     }
 }
 
+export const getMyProducts = (userId) => {
+    return async function(dispatch) {
+        const response = await axios.get('/orders/user/'+userId);
+        dispatch({
+            type: GET_MY_PRODUCTS,
+            payload: response.data
+        });}
+}

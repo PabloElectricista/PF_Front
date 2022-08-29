@@ -7,6 +7,7 @@ const {
     ORDER_PRODUCTS,
     GET_REVIEWS_BY_PRODUCT_ID,
     ADD_REVIEW,
+    GET_MY_PRODUCTS,
 } = require('../actions/index');
 
 function orderMayMen(array, prop) {
@@ -31,10 +32,17 @@ const initialState = {
     retrievedInstrument: null,
     filteredIntruments: [],
     productReviewList: [],
+    newOrder: [],
 }
 
 export default function rootReducer(state = initialState, action) {
     switch (action.type) {
+
+    case GET_MY_PRODUCTS:
+        const NewOrders = action.payload.orders.map(element => element.products[0].products)
+        console.log(NewOrders)
+        return {...state,newOrder: NewOrders}
+    
         case GET_ALL_PRODUCTS:
             return {
                 ...state,

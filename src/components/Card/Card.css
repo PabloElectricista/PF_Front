@@ -44,6 +44,7 @@
 }
 
 .CardIcon {
+  cursor: pointer;
   margin: 0.5em !important;
   width: 1.9em !important;
   height: 1.9em !important;
