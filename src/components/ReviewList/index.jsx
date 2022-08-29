@@ -6,6 +6,8 @@ import './ReviewList.css';
 
 class ReviewList extends React.Component {
 
+    state = {reviews: 0, rating: 0.0};
+
     componentDidMount() {
         if (!this.props.productReviewList ||
             this.props.productReviewList.length === 0
@@ -14,20 +16,40 @@ class ReviewList extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {productReviewList} = this.props;
+        if (prevProps.productReviewList.length !== productReviewList.length &&
+            productReviewList &&
+            productReviewList.length !== 0
+        ) {
+            const reviewCount = productReviewList.length;
+            const reviewSum = productReviewList.reduce((sum, item) => sum + item.rating, 0);
+            this.setState({
+                reviews: productReviewList.length,
+                rating: (reviewSum / reviewCount)
+            })
+        }
+    }
+
     renderReviewItem(reviewList) {
         return (
             reviewList.map((item, index) => {
+                const milliseconds = Date.parse(item.updatedAt);
+                const itemDate = new Date(milliseconds).toLocaleString()
                 return (
                     <div className='reviewItem' key={index}>
-                        <h1>{item.userName}</h1>
-                        <p><b>Rating: </b></p>
-                        <ReactStars
-                            value={item.rating}
-                            edit={false}
-                            size={30}
-                            color1={'#888'}
-                            color2={'#169E85'}
-                        />
+                        <h4>{item.userName}</h4>
+                        <div className="ratingUserItem">
+                            <h6 className='ratingText'><b>Rating: {item.rating.toFixed(1)}</b></h6>
+                            <ReactStars
+                                value={item.rating}
+                                edit={false}
+                                size={20}
+                                color1={'#888'}
+                                color2={'#169E85'}
+                            />
+                        </div>
+                        {item.updatedAt && <p><b>Date: </b>{itemDate}</p>}
                         <p><b>Comment: </b>{item.comment}</p>
                     </div>
                 )
@@ -37,7 +59,7 @@ class ReviewList extends React.Component {
 
     renderReviewList() {
         let reviewList;
-        if(!this.props.productReviewList || this.props.productReviewList.length === 0) {
+        if (!this.props.productReviewList || this.props.productReviewList.length === 0) {
             reviewList = [{ //default object
                 userName: 'Admin User',
                 rating: 2.5,
@@ -48,7 +70,20 @@ class ReviewList extends React.Component {
         }
         return (
             <div className='reviewListContainer'>
-                {this.renderReviewItem(reviewList)}
+                <div className="ratingTotal">
+                    <h4>Rating: {this.state.rating.toFixed(1)}</h4>
+                    <ReactStars
+                        value={this.state.rating}
+                        edit={false}
+                        size={30}
+                        color1={'#888'}
+                        color2={'#169E85'}
+                    />
+                    <h4>({this.state.reviews} reviews)</h4>
+                </div>
+                <div className='reviewListGrid'>
+                    {this.renderReviewItem(reviewList)}
+                </div>
             </div>
         );
     }
