@@ -51,6 +51,10 @@
     border: none !important;
 }
 
+.ocult {
+    opacity: 0;
+}
+
 .css-a3l6o-MuiInputBase-root-MuiInput-root-MuiSelect-root:hover:not(.Mui-disabled)::before {
     border-bottom: none !important;
 }
@@ -65,4 +69,17 @@
 
 .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
     color: rgba(0, 0, 0, 0.6) !important; 
+}
+
+.aditionalContent {
+    display: flex;
+    align-items: center;
+}
+
+.numberOfResults {
+    font-size: .9em;
+}
+
+.numberOfResults span {
+    font-weight: 600;
 }
