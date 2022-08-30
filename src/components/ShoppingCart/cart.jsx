@@ -17,11 +17,11 @@ const Cart = ({name, stock, id}) => {
 
     const handleAddToCart = (e) => {
         e.preventDefault();
-        if (userLogged.length === 0) return loginWithRedirect();
-        if (algo.length) return alert('Producto ya agregado al carrito', 'cart');
-        dispatch(addToCart(id));
-        dispatch(updateAmount(productsAmount + 1));
-        alert('Producto agregado al carrito!', 'cart');
+        // if (userLogged.length === 0) return loginWithRedirect();
+        // if (algo.length) return alert('Producto ya agregado al carrito', 'cart');
+        // dispatch(addToCart(id));
+        // dispatch(updateAmount(productsAmount + 1));
+        // alert('Producto agregado al carrito!', 'cart');
         setTimeout(function () {
           dispatch(
             purchaseOrder({

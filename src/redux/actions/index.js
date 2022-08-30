@@ -144,34 +144,35 @@ export function getUserNameOrders(payload) {
 
 //COMPRAS
 
-export function addToCart(id) {
-  console.log('id en action :', id)
+export function addToCart() {
   return async (dispatch) => {
     const NewOrder = await axios.get(
-      'http://localhost:4000/orders' + id
-    )
+      'http://localhost:4000/orders/user/62fe63c53c42cd4281febdbe'
+      )
+      console.log(NewOrder.data)
+    // const productsInCart = NewOrder.data.orders[0].products[0]
       return dispatch({
       type: ADD_TO_CART,
       payload: NewOrder.data,
     })
   }
 }
-// export function removeOneFromCart(id) {
-//   return (dispatch) => {
-//     return dispatch({
-//       type: REMOVE_ONE_FROM_CART,
-//       payload: id,
-//     })
-//   }
-// }
-// export function removeAllFromCart(id) {
-//   return (dispatch) => {
-//     return dispatch({
-//       type: REMOVE_ALL_FROM_CART,
-//       payload: id,
-//     })
-//   }
-// }
+export function removeOneFromCart(id) {
+  return (dispatch) => {
+    return dispatch({
+      type: REMOVE_ONE_FROM_CART,
+      payload: id,
+    })
+  }
+}
+export function removeAllFromCart(id) {
+  return (dispatch) => {
+    return dispatch({
+      type: REMOVE_ALL_FROM_CART,
+      payload: id,
+    })
+  }
+}
 export function updateAmount(amount) {
   return (dispatch) => {
     return dispatch({
@@ -191,9 +192,10 @@ export function clearCart() {
 }
 
 export function purchaseOrder(payload) {
+  console.log('PURCHASE', payload)
   return (dispatch) => {
     return dispatch({
-      type: PURCHASE_ORDER,
+      type: 'PURCHASE_ORDER',
       payload: payload,
     })
   }
@@ -208,20 +210,20 @@ export function addToCartPurchaseOrder(payload) {
   }
 }
 
-// export function removeOneFromCartPurchaseOrder(payload) {
-//   return (dispatch) => {
-//     return dispatch({
-//       type: REMOVE_ONE_FROM_CART_PURCHASE_ORDER,
-//       payload: payload,
-//     })
-//   }
-// }
+export function removeOneFromCartPurchaseOrder(payload) {
+  return (dispatch) => {
+    return dispatch({
+      type: REMOVE_ONE_FROM_CART_PURCHASE_ORDER,
+      payload: payload,
+    })
+  }
+}
 
-// export function removeAllFromCartPurchaseOrder(payload) {
-//   return (dispatch) => {
-//     return dispatch({
-//       type: REMOVE_ALL_FROM_CART_PURCHASE_ORDER,
-//       payload: payload,
-//     })
-//   }
-// }
+export function removeAllFromCartPurchaseOrder(payload) {
+  return (dispatch) => {
+    return dispatch({
+      type: REMOVE_ALL_FROM_CART_PURCHASE_ORDER,
+      payload: payload,
+    })
+  }
+}

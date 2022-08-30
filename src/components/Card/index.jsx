@@ -13,50 +13,50 @@ import Cart from '../../components/ShoppingCart/cart';
 
 export default function ProductCard({ id, name, price, rating, image, brand }) {
 
-  const dispatch = useDispatch()
-  const { userLogged } = useSelector((state) => state)
-  console.log('usuarioLogueado:', userLogged)
-  const productsAmount = useSelector((state) => state.cartAmount)
-  const products = useSelector((state) => state.cart)
-  const filteredInstruments = products.filter((e) => e.name === name)
+//   const dispatch = useDispatch()
+//   const { userLogged } = useSelector((state) => state)
+//   // console.log('usuarioLogueado:', userLogged)
+//   const productsAmount = useSelector((state) => state.cartAmount)
+//   const products = useSelector((state) => state.cart)
+//   const filteredInstruments = products.filter((e) => e.name === name)
 
-  const { loginWithRedirect } = useAuth0()
-
-
-  const isBuy = changeBuy(id)
+//   const { loginWithRedirect } = useAuth0()
 
 
-  function changeBuy(id) {
-    if (userLogged.length > 0 && userLogged[0].buyInstrument.length > 0) {
-      let result = userLogged[0].buyInstrument.indexOf(id)
-      if (result === -1) {
-        return false
-      } else {
-        return true
-      }
-    }
-    if (userLogged.length === 0) {
-      return false
-    }
-  }
-function handleAddToCart(e) {
-    e.preventDefault()
-    if (userLogged.length === 0) return loginWithRedirect()
-    if (filteredInstruments.length) return alert('ya esta agregado')
-    console.log('filteredInstruments2', filteredInstruments)
-    dispatch(addToCart(id))
-    dispatch(updateAmount(productsAmount + 1))
-    alert('Instrumento agregado al carrito!', 'cart')
-    dispatch(
-        purchaseOrder({
-          email: userLogged[0].email,
-          name: userLogged[0].name,
-          name: products[products.length - 1].name,
-          unit_price: products[products.length - 1].price,
-          quantity: products[products.length - 1].stock,
-        })
-      )
-    }
+//   const isBuy = changeBuy(id)
+
+
+//   function changeBuy(id) {
+//     if (userLogged.length > 0 && userLogged[0].buyInstrument.length > 0) {
+//       let result = userLogged[0].buyInstrument.indexOf(id)
+//       if (result === -1) {
+//         return false
+//       } else {
+//         return true
+//       }
+//     }
+//     if (userLogged.length === 0) {
+//       return false
+//     }
+//   }
+// function handleAddToCart(e) {
+//     e.preventDefault()
+//     if (userLogged.length === 0) return loginWithRedirect()
+//     if (filteredInstruments.length) return alert('ya esta agregado')
+//     console.log('filteredInstruments2', filteredInstruments)
+//     dispatch(addToCart(id))
+//     dispatch(updateAmount(productsAmount + 1))
+//     alert('Instrumento agregado al carrito!', 'cart')
+//     dispatch(
+//         purchaseOrder({
+//           email: userLogged[0].email,
+//           name: userLogged[0].name,
+//           name: products[products.length - 1].name,
+//           unit_price: products[products.length - 1].price,
+//           quantity: products[products.length - 1].stock,
+//         })
+//       )
+//     }
 
     return (
     <Card className="card" >
@@ -80,7 +80,7 @@ function handleAddToCart(e) {
         </ListGroup>
       </Card.Body>
       <div className='containerButton'>
-        <BsCartFill className='CardIcon' onClick={(e) => handleAddToCart(e)} >
+        <BsCartFill className='CardIcon' >
           <Cart />
         </BsCartFill>
         <BsStarFill className='CardIcon' />

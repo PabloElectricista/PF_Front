@@ -1,63 +1,62 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate, useLocation  } from 'react-router-dom'
+import {  useParams  } from 'react-router-dom'
 import {
   addToCart,
-  updateAmount,
-  addToCartPurchaseOrder,
-  clearCart,
-  removeAllFromCart,
-  removeAllFromCartPurchaseOrder,
-  removeOneFromCart,
-  removeOneFromCartPurchaseOrder,
+  purchaseOrder,
+  getProductById,
 } from '../../redux/actions'
-import axios from 'axios'
-// import Alert from './../functions/Alert'
+import ProductCard from '../Card'
 
 export default function ShoopingCart() {
   const dispatch = useDispatch()
+  const allInstruments = useSelector((state) => state.allInstruments)
   const products = useSelector((state) => state.cart)
-  console.log(products);
-  // const render = useSelector((state) => state.render)
-  const location = useLocation()
-  const isLogged = useSelector((state) => state.userLogged)
-  const order = useSelector((state) => state.purchaseOrder)
-  const allUsers = useSelector((state) => state.users)
-  const userId = allUsers.filter((u) => u._id === isLogged[0]._id)
-  console.log(userId);
-  const navigate = useNavigate()
+  // console.log(allInstruments)
+  console.log(products)
 
   let price = 0
   let productsAmount = 0
 
-  for (let i = 0; i < products.length; i++) {
-    price = price + products[i].price * products[i].stock
-    productsAmount = productsAmount + products[i].stock
-  }
-
   useEffect(() => {
-    dispatch(updateAmount(productsAmount))
-    console.log(productsAmount);
-  }, [dispatch, productsAmount])
+    dispatch(addToCart())
+  }, [dispatch])
 
-  function handleAdd(e) {
-    e.preventDefault()
-    dispatch(addToCart(e.target.value))
-    dispatch(addToCartPurchaseOrder(e.target.value))
-  }
-  function handleRemoveOne(e) {
-    e.preventDefault()
-    dispatch(removeOneFromCartPurchaseOrder(e.target.value))
-    dispatch(removeOneFromCart(e.target.value))
-  }
-  function handleRemoveAll(e) {
-    e.preventDefault()
-    dispatch(removeAllFromCartPurchaseOrder(e.target.value))
-    dispatch(removeAllFromCart(e.target.value))
-  }
-  function handleClear() {
-    dispatch(clearCart())
-  }
+  let mapInstruments = products.map(instrument => <ProductCard
+    key={instrument._id}
+    id={instrument._id}
+    name={instrument.name}
+    price={instrument.price}
+    brand={instrument.brand}
+    rating={1}
+    image={instrument.image}
+    />)
+  
+
+    for (let i = 0; i < mapInstruments.length; i++) {
+      price = price + mapInstruments[i].price * mapInstruments[i].stock
+      productsAmount = productsAmount + mapInstruments[i].stock
+    }
+
+
+  // function handleAdd(e) {
+  //   e.preventDefault()
+  //   dispatch(addToCart(e.target.value))
+  //   dispatch(addToCartPurchaseOrder(e.target.value))
+  // }
+  // function handleRemoveOne(e) {
+  //   e.preventDefault()
+  //   dispatch(removeOneFromCartPurchaseOrder(e.target.value))
+  //   dispatch(removeOneFromCart(e.target.value))
+  // }
+  // function handleRemoveAll(e) {
+  //   e.preventDefault()
+  //   dispatch(removeAllFromCartPurchaseOrder(e.target.value))
+  //   dispatch(removeAllFromCart(e.target.value))
+  // }
+  // function handleClear() {
+  //   dispatch(clearCart())
+  // }
 
   // const handleClick = async () => {
   //   if (
@@ -77,34 +76,31 @@ export default function ShoopingCart() {
   //   location.assign(json.data.init_point)
   // }
 
-  useEffect(() => {}, [products])
+  // useEffect(() => {}, [order])
 
-  return products.length === 0 ? (
-    <h1>El carrito esta vacio!</h1>
+  return mapInstruments.length === 0 ? (
+    <h1>El carrito esta vacío!</h1>
   ) : (
     <div>
       <h3>Productos :</h3>
-      {products.map((e) => {
-        return (
+      {mapInstruments.map((e) => {
+        return ( 
           <div>
-            <h4>
-              {e.title} - ${e.price}
+            <ProductCard/>
+             <h4>
+              {e.name} - ${e.price}
             </h4>
             <div >
               <button
                 value={e._id}
-                onClick={(e) => handleRemoveOne(e)}
                 
               >
                 {' '}
                 -{' '}
               </button>
-              <h4 >{e.amount}</h4>
+              <h4 >{e.stock}</h4>
               <button
                 value={e._id}
-                onClick={(e) => {
-                  handleAdd(e)
-                }}
                 
               >
                 {' '}
@@ -114,23 +110,22 @@ export default function ShoopingCart() {
             <div >
               <button
                 value={e._id}
-                onClick={(e) => handleRemoveAll(e)}
                 
               >
                 Quitar
               </button>
-              <h4>Total: ${e.price * e.amount}</h4>
+              <h4>Total: ${e.price * e.stock}</h4>
             </div>
           </div>
         )
       })}
-      <p className=''>Cantidad de productos : {productsAmount}</p>
-      <p className=''>Precio Total: ${price}</p>
+      <p className=''>Cantidad de productos : </p>
+      <p className=''>Precio Total: $</p>
       <div className=''>
-        <button onClick={handleClear} className=''>
+        <button  className=''>
           Vaciar carrito
         </button>
-        {products.length > 0 ? (
+        {mapInstruments.length > 0 ? (
           <button type='submit'>
             Realizar compra
           </button>

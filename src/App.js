@@ -20,7 +20,7 @@ import { useEffect } from 'react';
 import { getAllProducts } from './redux/actions';
 import CookieCard from './components/CookieCard';
 import Dashboard from './components/Administrator/admin';
-import Cart from './components/ShoppingCart'
+import ShoopingCart from './components/ShoppingCart'
 
 function App() {
 
@@ -46,7 +46,7 @@ function App() {
                 <Route exact path='/profile/*' element={<UserProfile/>}/>
                 <Route exact path='/payment' element={<Payment/>}/>
                 <Route exact path='/about' element={<AboutUs/>}/>
-                <Route exact path='/cart' element={<Cart/>}/>
+                <Route exact path='/cart' element={<ShoopingCart/>}/>
                 <Route exact path='/admin/*' element={<Dashboard/>}/>
                 <Route exact path='/history' element={<History/>}/>
                 {/* <Route path='/stripe/:id' element={<StripeComponent/>}/> en progreso*/}
