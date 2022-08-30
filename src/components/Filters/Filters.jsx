@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import Accordion from 'react-bootstrap/Accordion';
-import './Filters.css';
-import { filteredIntruments,setFilterPath } from '../../redux/actions';
+import { filteredIntruments, setFilterPath } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
-export default function Filters() {
-    const dispatch = useDispatch();
-    const filter = useSelector((state) => state.instruments)
-    const [select, setSelect] = useState({ brand: '', status: '', categorie: '' });
+import Accordion from 'react-bootstrap/Accordion';
+import AccordionHeader from 'react-bootstrap/esm/AccordionHeader';
+import AccordionBody from 'react-bootstrap/esm/AccordionBody';
+import Form from 'react-bootstrap/Form';
+import './Filters.css';
 
-    // const brands= ["Fender", "Ibanez","Carlo Robelli","Yamaha","Takamine","Sturgis","Sala Muzik", "Naad","MoonAngel","SUTILA","Jupiter","Honner","HandCraftoria","Pacific Drums","Tama","RockJam","Generic"]
+export default function Filters() {
+
+    const dispatch = useDispatch();
+    const [select, setSelect] = useState({ 
+        price: '',
+        brand: '', 
+        status: '', 
+        categorie: '' });
 
     function handleSelect(e) {
         setSelect((prevState) => {
@@ -24,7 +30,13 @@ export default function Filters() {
 
     return (
         <Accordion className="accordion" defaultActiveKey={['0']} alwaysOpen>
-            <Accordion.Item eventKey="1">
+            <Accordion.Item className="itemAccordion" eventKey="1">
+                <AccordionHeader>Price</AccordionHeader>
+                    <AccordionBody>
+                        <p>Filtro de precio, pronto disponible</p>
+                    </AccordionBody>
+            </Accordion.Item>
+            <Accordion.Item eventKey="2">
                 <Accordion.Header>Brand</Accordion.Header>
                 <Accordion.Body>
                     <select value={select.brand} onChange={(e) => { handleSelect(e) }} name="brand" id="select">
@@ -49,7 +61,7 @@ export default function Filters() {
                     </select>
                 </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item eventKey="2">
+            <Accordion.Item eventKey="3">
                 <Accordion.Header>Categories</Accordion.Header>
                 <Accordion.Body>
                     <select value={select.categorie} onChange={(e) => { handleSelect(e) }} name="categorie" id="cat">
@@ -61,7 +73,7 @@ export default function Filters() {
                     </select>
                 </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item eventKey="3">
+            <Accordion.Item eventKey="4">
                 <Accordion.Header>Status</Accordion.Header>
                 <Accordion.Body>
                     <select value={select.status} onChange={(e) => { handleSelect(e) }} name="status" id="stat">

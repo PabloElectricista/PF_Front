@@ -23,10 +23,35 @@
     justify-content: center;
     align-content: center;
     flex-direction: column;
-    margin: 0 25em;
+    margin: 0 20%;
+}
+
+.addImageField {
+    display: flex;
+    justify-content: space-between;
+}
+
+.addImageField input {
+    width: 85%;
+}
+
+.addImageField select {
+    width: 85%;
+}
+
+.selectLabelField {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    margin: 0;
 }
 
 .inputLabelField label {
+    font-weight: bold;
+}
+
+.selectLabelField label {
     font-weight: bold;
 }
 
@@ -39,6 +64,30 @@
     margin: 1em;
     justify-content: center;
     gap: 1em;
+}
+
+.selectGroup {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    gap: 30%;
+    margin: 0 10%;
+}
+
+.addImageButton {
+    background-color: #198754;
+    color: white;
+    border-radius: .5em;
+    border: .3em solid #198754;
+}
+
+.removeImageButton {
+    margin: 1em 0;
+    background-color: #b50505;
+    color: white;
+    border-radius: .5em;
+    height: 2.5em;
+    border: 1px solid #b50505;
 }
 
 .submitButton {

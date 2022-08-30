@@ -13,7 +13,7 @@ function ProductEdit() {
     const regexUrl = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z\d@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z\d@:%_+.~#?&/=]*)/g;
 
     const dispatch = useDispatch();
-    const instrumentRetrieved = useSelector((state) => state.retrievedInstrument)
+    const instrumentRetrieved = useSelector((state) => state.retrievedInstrument);
     const {id} = useParams();
     const navigate = useNavigate();
 
@@ -22,10 +22,10 @@ function ProductEdit() {
         name: '',
         price: 1.0,
         description: '',
-        image: '',
+        image: [],
         stock: 0,
         color: '',
-        categorie: '',
+        category: [],
         brand: '',
         location: '',
         status: '',
@@ -35,14 +35,16 @@ function ProductEdit() {
         name: '',
         price: '',
         description: '',
-        imagen: '',
+        image: '',
         stock: '',
         color: '',
-        categorie: '',
         brand: '',
         location: '',
         status: '',
     });
+
+    const [selectedImage, setSelectedImage] = React.useState('');
+    const [newImage, setNewImage] = React.useState('');
 
     function handleChange(event) {
         setInstrumentItem({...instrumentItem, [event.target.name]: event.target.value})
@@ -58,7 +60,7 @@ function ProductEdit() {
 
     function renderInstrument() {
         if (!instrumentRetrieved || (id !== instrumentRetrieved._id && !instrumentRetrieved.error)) {
-            return <Loading />;
+            return <Loading/>;
         }
         if (instrumentRetrieved.error) {
             return (
@@ -68,6 +70,95 @@ function ProductEdit() {
             );
         }
         return renderForm(instrumentItem);
+    }
+
+    function renderProductCategories() {
+        if (!instrumentItem.category || instrumentItem.category.length === 0) {
+            return '';
+        }
+        return instrumentItem.category.map((item, index) =>
+            <option key={index}
+                    value={item}
+            >{item}</option>
+        );
+    }
+
+    function handleChangeNewImage(event) {
+        setNewImage(event.target.value);
+    }
+
+    function renderImageList() {
+        if (!instrumentItem.image || instrumentItem.image.length === 0) {
+            return '';
+        }
+        return instrumentItem.image.map((item, index) =>
+            <option key={index}
+                    value={item}
+            >{item}</option>
+        );
+    }
+
+    function handleSelectedImage(event) {
+        setSelectedImage(event.target.value);
+    }
+
+    function handleImageRemoveChange() {
+        if (selectedImage.length === 0) {
+            setErrorInfo({
+                ...errorInfo,
+                image: 'Please select an image before click the Remove button.'
+            });
+            return;
+        }
+        setErrorInfo({
+            ...errorInfo,
+            image: ''
+        });
+        setSelectedImage('');
+        setInstrumentItem({
+            ...instrumentItem,
+            image: instrumentItem.image.filter(item =>
+                item !== selectedImage)
+        });
+    }
+
+    function handleImageAddChange() {
+        if (newImage.length === 0) {
+            setErrorInfo({
+                ...errorInfo,
+                image: "Please add a valid image's url before click the Add button."
+            });
+            return;
+        }
+        setErrorInfo({
+            ...errorInfo,
+            image: ''
+        });
+        setNewImage('');
+        setInstrumentItem({
+            ...instrumentItem,
+            image: [...instrumentItem.image, newImage]
+        });
+    }
+
+    function handleCategoryPlusChange(event) {
+        const result = instrumentItem.category.find(item =>
+            item.toLowerCase() === event.target.value.toLowerCase())
+        if (result) {
+            return;
+        }
+        setInstrumentItem({
+            ...instrumentItem,
+            category: [...instrumentItem.category, event.target.value]
+        })
+    }
+
+    function handleCategoryMinusChange(event) {
+        setInstrumentItem({
+            ...instrumentItem,
+            category: instrumentItem.category.filter(item =>
+                item.toLowerCase() !== event.target.value.toLowerCase())
+        })
     }
 
     function renderForm(instrumentItem) {
@@ -99,22 +190,48 @@ function ProductEdit() {
                     <div className='inputLabelField'>
                         <label>Description: </label>
                         <textarea placeholder='Instrument description'
-                               onChange={(e) => handleChange(e)}
-                               onBlur={() => validateAlpha('description', instrumentItem.description)}
-                               value={instrumentItem.description}
-                               name={'description'}
-                               rows={4} />
+                                  onChange={(e) => handleChange(e)}
+                                  onBlur={() => validateAlpha('description', instrumentItem.description)}
+                                  value={instrumentItem.description}
+                                  name={'description'}
+                                  rows={4}/>
                         <span className="errorMessage">{errorInfo.description}</span>
                     </div>
 
                     <div className='inputLabelField'>
-                        <label>Image: </label>
-                        <p>{instrumentItem.image} </p> {/*<input placeholder='Instrument image' //todo update - to handle array.
-                               onChange={(e) => handleChange(e)}
-                               onBlur={() => validateUrl('imagen', instrumentItem.imagen)}
-                               value={instrumentItem.imagen}
-                               type='text' name={'imagen'}/>*/}
-                        <span className="errorMessage">{errorInfo.imagen}</span>
+                        <label>Url Image: </label>
+                        <div className="addImageField">
+                            <input placeholder='Instrument image'
+                                   onChange={(e) => handleChangeNewImage(e)}
+                                   onBlur={() => validateUrl('image', newImage)}
+                                   value={newImage}
+                                   type='text' name={'image'}/>
+                            <button className='addImageButton'
+                                    type='button'
+                                    onClick={() => handleImageAddChange()}
+
+                            >Add Image
+                            </button>
+                        </div>
+                        <span className="errorMessage">{errorInfo.image}</span>
+
+                    </div>
+
+                    <div className='inputLabelField'>
+                        <label>Added Images: </label>
+                        <div className="addImageField">
+                            <select size={5}
+                                    onChange={(e) => handleSelectedImage(e)}
+                            >
+                                {renderImageList()}
+                            </select>
+                            <button className='removeImageButton'
+                                    type='button'
+                                    onClick={() => handleImageRemoveChange()}
+                            >Remove Image
+                            </button>
+                        </div>
+
                     </div>
 
                     <div className='inputLabelField'>
@@ -137,14 +254,27 @@ function ProductEdit() {
                         <span className="errorMessage">{errorInfo.color}</span>
                     </div>
 
-                    <div className='inputLabelField'>
-                        <label>Category: </label>
-                        <p>{instrumentItem.categorie} </p> {/*<input placeholder='Instrument category' //todo update - to handle array.
-                               onChange={(e) => handleChange(e)}
-                               onBlur={() => validateAlpha('category', instrumentItem.categorie[0])}
-                               value={instrumentItem.categorie[0]}
-                               type='text' name={'categorie'}/>*/}
-                        <span className="errorMessage">{errorInfo.categorie}</span>
+                    <div className="selectGroup">
+                        <div className='selectLabelField'>
+                            <label>Available Categories:</label>
+                            <select size={5}
+                                    onChange={(e) => handleCategoryPlusChange(e)}
+                            >
+                                <option> Wind</option>
+                                <option> Electric</option>
+                                <option> Percussion</option>
+                                <option> String</option>
+                            </select>
+                        </div>
+
+                        <div className='selectLabelField'>
+                            <label>Selected Categories: </label>
+                            <select size={5}
+                                    onChange={(e) => handleCategoryMinusChange(e)}
+                            >
+                                {renderProductCategories()}
+                            </select>
+                        </div>
                     </div>
 
                     <div className='inputLabelField'>
@@ -208,25 +338,23 @@ function ProductEdit() {
         const errorName = validateAlpha('name', instrumentItem.name);
         const errorPrice = validateDecimal('price', instrumentItem.price);
         const errorDescription = validateAlpha('description', instrumentItem.description);
-        const errorImage = false; //validateUrl('imagen', instrumentItem.imagen[0]); //todo - update to handle array
+        const errorImage = false; //validateUrl('image', instrumentItem.image[0]); //todo - update to handle array
         const errorStock = validateInteger('stock', instrumentItem.stock);
         const errorColor = validateAlpha('color', instrumentItem.color);
-        const errorCategory = false; //validateAlpha('category', instrumentItem.categorie[0]); //todo - update to handle array
         const errorBrand = validateAlpha('brand', instrumentItem.brand);
         const errorLocation = validateAlpha('location', instrumentItem.location);
         const errorStatus = validateAlpha('status', instrumentItem.status);
 
         return errorName || errorPrice || errorDescription ||
-               errorImage || errorStock || errorColor ||
-               errorCategory || errorBrand || errorLocation ||
-               errorStatus;
+            errorImage || errorStock || errorColor ||
+            errorBrand || errorLocation || errorStatus;
     }
 
     function validateInteger(key, value) {
         let message = ''
         let result = false;
         if (!regexInteger.test(value)) {
-            message = 'The value should contain only numbers.'
+            message = 'The value should contain only whole numbers.'
             result = true;
         }
         setErrorInfo({
@@ -268,7 +396,7 @@ function ProductEdit() {
         let message = ''
         let result = false;
         if (!regexUrl.test(value)) {
-            message = 'The value should contain only a Url.'
+            message = 'The value should contain a valid Url.'
             result = true;
         }
         setErrorInfo({

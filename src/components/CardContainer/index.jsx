@@ -49,9 +49,11 @@ export default function CardContainer() {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-          <Dropdown.Item >Ordenamiento 1</Dropdown.Item>
-          <Dropdown.Item >Ordenamiento 2</Dropdown.Item>
-          <Dropdown.Item >ORdenamiento 3</Dropdown.Item>
+          <Dropdown.Item >Featured</Dropdown.Item>
+          <Dropdown.Item >Price: Low to High</Dropdown.Item>
+          <Dropdown.Item >Price: High to Low</Dropdown.Item>
+          <Dropdown.Item >Average Rating</Dropdown.Item>
+          <Dropdown.Item >Newest</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
 
