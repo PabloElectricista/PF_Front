@@ -42,7 +42,7 @@ function App() {
                 <Route exact path='/cart' element={<ShoopingCart/>}/>
                 <Route exact path='/admin/*' element={<Dashboard/>}/>
                 <Route exact path='/history' element={<History/>}/>
-                {/* <Route path='/stripe/:id' element={<StripeComponent/>}/> en progreso*/}
+                {/* <Route path='/stripe' element={<StripeComponent/>}/> en progreso*/}
                 <Route path='*' element={<NotFound/>}/>
             </Routes>
             <Footer/>
