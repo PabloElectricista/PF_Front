@@ -37,7 +37,7 @@ function App() {
                 <Route exact path='/payment' element={<Payment/>}/>
                 <Route exact path='/about' element={<AboutUs/>}/>
                 <Route exact path='/history' element={<History/>}/>
-                {/* <Route path='/stripe/:id' element={<StripeComponent/>}/> en progreso*/}
+                {/* <Route path='/stripe' element={<StripeComponent/>}/> en progreso*/}
                 <Route path='*' element={<NotFound/>}/>
             </Routes>
             <Footer/>
