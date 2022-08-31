@@ -7,6 +7,8 @@ export const GET_INSTRUMENT_BY_NAME = "GET_INSTRUMENTS_BY_NAME";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const FILTERED_INSTRUMENTS = "FILTERED_INSTRUMENTS";
+export const ADD_TO_CART = "ADD_TO_CART";
+
 
 
 export const getAllProducts = () => {
@@ -82,3 +84,17 @@ export function filteredIntruments(payload) {
     }
 }
 
+
+export function addToCart() {
+    return async (dispatch) => {
+      const NewOrder = await axios.get(
+        'http://localhost:4000/orders/user/630e5167d4480e5b45e82970'
+        )
+        // console.log(NewOrder.data.orders)
+      const productsInCart = NewOrder.data.orders
+        return dispatch({
+        type: ADD_TO_CART,
+        payload: productsInCart,
+      })
+    }
+  }
