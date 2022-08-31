@@ -18,7 +18,7 @@ const {
     GET_USERS,
     // POST_USER,
     GET_USER_NAME,
-   
+
 
 } = require('../actions/index');
 
@@ -30,7 +30,7 @@ const initialState = {
     filteredIntruments: [],
     orders: [],
     ordersCopy: [],
-    cart: [],
+    cart: {},
     cartAmount: 0,
     purchaseOrder: [],
     comments: [],
@@ -43,7 +43,7 @@ const initialState = {
     usersFavAll: [],
     usersFavShowed: [],
     userLoggedFavsShowed: [],
-    
+
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -160,14 +160,30 @@ export default function rootReducer(state = initialState, action) {
             }
 
         case ADD_TO_CART:
-            console.log(action.payload, 'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
-            const NewOrders = state.allInstruments.find(instrument => instrument._id === action.payload.orders[0].products[0].products)
-            const noEntiendoNada = NewOrders[1]
-            
-            console.log(NewOrders, 'SOY LA ORDEN')
+            // console.log(action.payload, 'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
+            let newOrders = action.payload
+            let productsOnly = []
+            productsOnly = newOrders.map(function (elem) {
+                let returnProducts = { product: elem.products }
+                return returnProducts
+            })
+            let newArray = []
+            for (let i = 0; i < productsOnly.length; i++) {
+                newArray.push(productsOnly[i].product)
+
+            }
+
+            function flattenDeep(newArray) {
+                return newArray.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), []);
+            }
+            flattenDeep(newArray)
+            console.log(flattenDeep(newArray))
+
+            // console.log(productsOnly, 'SOY LA ORDEN')
+            // console.log(finalInstruments, 'SOY LA ORDEN')
             return {
                 ...state,
-                cart: [...state.cart, NewOrders],
+                cart: flattenDeep(newArray),
             }
         case ADD_TO_CART_PURCHASE_ORDER:
             let newCart4 = state.purchaseOrder

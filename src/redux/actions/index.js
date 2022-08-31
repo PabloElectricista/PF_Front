@@ -147,13 +147,13 @@ export function getUserNameOrders(payload) {
 export function addToCart() {
   return async (dispatch) => {
     const NewOrder = await axios.get(
-      'http://localhost:4000/orders/user/62fe63c53c42cd4281febdbe'
+      'http://localhost:4000/orders/user/630e5167d4480e5b45e82970'
       )
-      console.log(NewOrder.data)
-    // const productsInCart = NewOrder.data.orders[0].products[0]
+      // console.log(NewOrder.data.orders)
+    const productsInCart = NewOrder.data.orders
       return dispatch({
       type: ADD_TO_CART,
-      payload: NewOrder.data,
+      payload: productsInCart,
     })
   }
 }
