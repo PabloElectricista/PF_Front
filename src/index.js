@@ -1,12 +1,20 @@
-import { authCredentials } from './auth';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+
+import reportWebVitals from './reportWebVitals';
+import axios from 'axios';
+import dotenv from 'dotenv';
+
+import { authCredentials } from './auth';
 import { Auth0Provider } from '@auth0/auth0-react'
+import App from './App';
+
+import './index.css';
+
+dotenv.config();
+axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:4000";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

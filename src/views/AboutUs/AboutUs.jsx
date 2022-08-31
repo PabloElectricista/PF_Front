@@ -8,7 +8,7 @@ export default function AboutUs() {
     <div className='containerAboutUs'>
       <h1 className='PageTitle'>OUR STAFF</h1>
       <hr className='dividerAboutUs' />
-      <span>We are a team of web developers that wants to make your dreams come true.</span>
+      <span className='textAboutUs'>We are a team of web developers that wants to make your dreams come true.</span>
       <div className="TeamDiv">
         <div className='TeamCard'>
           <img className='imageAboutUs' src="https://avatars.githubusercontent.com/u/100927307?v=4" alt="Mariana Stocco" />

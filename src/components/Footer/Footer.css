@@ -8,3 +8,7 @@
 .terms {
     font-size: 0.7rem;
 }
+
+.footerAboutUs:hover {
+    color: #dddddd;
+}

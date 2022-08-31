@@ -1,34 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {BrowserRouter as Router,  Routes, Route} from 'react-router-dom';
-import LandingPage from './views/LandingPage';
-import Home from './views/Home';
-import NavBar from "./components/NavBar";
+
+import LandingPage from './views/LandingPage/LandingPage';
+import Home from './views/Home/Home';
+import NavBar from "./components/NavBar/NavBar";
 import ContactUs from "./views/ContactUs";
-import ProductDetail from "./views/ProductDetail";
+import ProductDetail from "./views/ProductDetail/ProductDetail";
 import CreateProduct from "./views/CreateProduct";
 import UserProfile from "./views/UserProfile";
 import Payment from "./views/Payment";
 import NotFound from "./views/NotFound";
-import Footer from "./components/Footer";
-import AboutUs from "./views/AboutUs";
-import ProductEdit from "./views/ProductEdit";
-import Favorites from "./components/Favorites";
+import Footer from "./components/Footer/Footer";
+import AboutUs from "./views/AboutUs/AboutUs";
+import ProductEdit from "./views/ProductEdit/ProductEdit";
+import Favorites from "./components/Favorites/Favorites";
 import History from './components/History/History';
 // import StripeComponent from './components/StripeComponent';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllProducts } from './redux/actions';
 import CookieCard from './components/CookieCard';
-import Dashboard from './components/Administrator/admin';
-import ShoopingCart from './components/ShoppingCart'
 
 function App() {
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getAllProducts());
-    }, []);
     
     return (
         <Router>

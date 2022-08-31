@@ -1,20 +1,25 @@
-.containerNavBar {
-    padding-right: 5%;
-}
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
 .navbar-brand {
     color: #169E85 !important;
-    font-weight: 600;
-    font-style: italic;
+    font-family: 'Satisfy', cursive;
+    font-size: 20px !important;
+    font-weight: 600 !important;
 }
 
 .nav-link {
     color: white !important;
+    font-weight: 600 !important;
+}
+
+.nav-link:hover {
+    color: #dddddd !important; 
 }
 
 .btn-outline-success {
     color: #169E85 !important;
     border-color: #169E85 !important;
+    font-weight: 600 !important;
 }
 
 .btn-outline-success:hover {
@@ -38,36 +43,12 @@
     box-shadow: none;
 }
 
-.btn-outline-secondary {
-    color: white !important;
-    border-color: white !important;
-}
-
-.btn-outline-secondary:hover {
-    color: black !important;
-    background-color: white !important;
-}
-
-.btn-outline-secondary:focus {
-    box-shadow: none;
-    background-color: white !important;
-    color: black !important;
-}
-
-.btn-outline-secondary:active {
-    box-shadow: none;
-    background-color: white !important;
-    color: black !important;
-}
-
-.btn-outline-secondary:active:focus {
-    box-shadow: none;
-}
-
 .ProfileImg {
     height: 50px;    
     border-radius: 50%;
     margin: 0 20px;
 }
 
-.Loading{ color: red;}
+.Loading{ 
+    color: red;
+}
