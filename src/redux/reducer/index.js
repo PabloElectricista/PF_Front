@@ -7,9 +7,12 @@ const {
     ORDER_PRODUCTS,
     GET_REVIEWS_BY_PRODUCT_ID,
     ADD_REVIEW,
+    ACTIVE_LOADING,
+    CREATE_CONTACT,
     GET_MY_ORDERS,
     ACTIVE_LOADING,
     SHOW_ALERT,
+
 } = require('../actions/index');
 
 function orderMayMen(array, prop) {
@@ -145,6 +148,13 @@ export default function rootReducer(state = initialState, action) {
                 isLoading: true
             }
 
+
+            case CREATE_CONTACT:
+                return {
+                    ...state,
+                    
+                }
+
         case SHOW_ALERT:
             return {
                 ...state,
@@ -153,6 +163,7 @@ export default function rootReducer(state = initialState, action) {
                     ...action.payload
                 }
             };
+
 
         default:
             return state

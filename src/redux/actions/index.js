@@ -12,7 +12,9 @@ export const GET_REVIEWS_BY_PRODUCT_ID = "GET_REVIEWS_BY_PRODUCT_ID";
 export const ADD_REVIEW = "ADD_REVIEW";
 export const GET_MY_ORDERS = "GET_MY_ORDERS";
 export const ACTIVE_LOADING = "ACTIVE_LOADING"; 
+export const CREATE_CONTACT = "CREATE_CONTACT"; 
 export const SHOW_ALERT = "SHOW_ALERT";
+
 
 
 
@@ -139,9 +141,20 @@ export const activeLoading = () => {
     };
 }
 
+
+
+
+export function createContact(payload) {
+    return async function (dispatch) {
+        await axios.post('/', payload)
+    }
+}
+
+
 export function showAlert(alertInfo) {
     return {
         type: SHOW_ALERT,
         payload: alertInfo
     };
 }
+
