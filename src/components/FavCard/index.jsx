@@ -1,4 +1,4 @@
-import './Card.css'
+//import './Card.css'
 import { Link } from 'react-router-dom'
 import { BsCartFill, BsStarFill } from 'react-icons/bs';
 import Card from 'react-bootstrap/Card';

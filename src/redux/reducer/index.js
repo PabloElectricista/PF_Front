@@ -9,6 +9,7 @@ const {
     ADD_REVIEW,
     ACTIVE_LOADING,
     SHOW_ALERT,
+    ADD_TO_CART,
 } = require('../actions/index');
 
 function orderMayMen(array, prop) {
