@@ -1,76 +1,37 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import {
-  addToCart,
-  getProductById,
-} from '../../redux/actions'
-//import ProductCard from '../Card'
-import StripeComponent from '../StripeComponent/StripeComponent'
-import ShopCard from './ShopCard'
+import ShopCard from "./ShopCard";
+import './Card.css'
 
 export default function ShoopingCart() {
-  const dispatch = useDispatch()
-  const products = useSelector((state) => state.cart)
-  const unInstrument = useSelector((state) => state.retrievedInstrument)
+  const cart = JSON.parse(localStorage.getItem('cartList'))
 
-  const { id } = useParams();
+  function renderInstruments() {
+    if (!cart) {
+      return (
+        <h4>
+          The Cart list is empty.
+        </h4>
+      );
+    }
 
-    useEffect(() => {
-        if (!unInstrument || (id !== unInstrument._id && !unInstrument.error)) {
-            dispatch(getProductById(id));
-        }
-    }, [dispatch, unInstrument])
-
-  console.log(products)
-
-
-  let element = []
-  for (let i = 0; i < products.length; i++) {
-    element.push(products[i]);
-  }
-
-
-  // console.log(element, 'PRODUCTOS DE SHOPPING CART')
-
-  useEffect(() => {
-    dispatch(addToCart(id))
-  }, [dispatch, id])
-
-  // let filtered = []
-  // console.log(filtered)
-  // if(element === allInstruments){
-  //  filtered.push(element)
-  // } return filtered
-
-
-  function renderProducts() {
+    let cartMap = cart.map((instrument, idx) => <ShopCard // usar fav card
+      key={idx}
+      id={instrument.id}
+      name={instrument.name}
+      price={instrument.price}
+      brand={instrument.brand}
+      rating={instrument.rating}
+      image={instrument.image} />);
     return (
-      <div>
-        {element?.length ? (
-          element?.map((p) => (
-            <StripeComponent
-            key={p._id}
-            id={p.products}
-            name={p.name}
-            price={p.price}
-            brand={p.brand}
-            rating={1}
-            image={p.image}
-            />
-          ))
-        ) : (
-          <h2>Tu carrito está vacío</h2>
-        )
-        }
+      <div className="favoriteCards">
+        {cartMap}
       </div>
-    )
+    );
   }
 
   return (
-    <div>
-      {renderProducts()}
+    <div className="containerHome cartContainer">
+      <h1>Cart</h1>
+      {renderInstruments()}
     </div>
-  )
-
+  );
 }

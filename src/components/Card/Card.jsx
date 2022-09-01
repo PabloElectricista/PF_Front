@@ -17,6 +17,17 @@ export default function ProductCard({ id, name, price, rating, image, brand }) {
     }
     localStorage.setItem('favList', JSON.stringify(favs))
   }
+  const addToCart = () => {
+    let cart = JSON.parse(localStorage.getItem('cartList'))
+    if (cart) {
+      if (cart.length <= 10 && cart.every(item => item.id !== id)) {
+        cart.push({ id, name, price, rating, image, brand })
+      }
+    } else {
+      cart = [{ id, name, price, rating, image, brand }]
+    }
+    localStorage.setItem('cartList', JSON.stringify(cart))
+  }
 
   return (
     <Card className="card" >
@@ -41,7 +52,7 @@ export default function ProductCard({ id, name, price, rating, image, brand }) {
       </Card.Body>
       <div className='containerButton'>
         <BsStarFill className='CardIcon' onClick={addToFav} />
-        <BsCartFill className='CardIcon' />
+        <BsCartFill className='CardIcon' onClick={addToCart}/>
       </div>
     </Card>
   )
