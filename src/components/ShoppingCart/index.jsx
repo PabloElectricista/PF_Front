@@ -1,36 +1,44 @@
 import ShopCard from "./ShopCard";
 import './Card.css'
+import { useState } from "react";
 
-export default function ShoopingCart() {
-  const cart = JSON.parse(localStorage.getItem('cartList'))
+export default function ShoopingCartItem() {
+
+  const [cartItem, setCartItem] = useState(JSON.parse(localStorage.getItem('cartList')))
+
+  const deleteItem = (id) =>{
+    let arr = cartItem.filter(instrument => instrument.id !== id)
+    localStorage.setItem('cartList', JSON.stringify(arr))
+    setCartItem(arr)
+  }
 
   function renderInstruments() {
-    if (!cart) {
+    if (!cartItem) {
       return (
         <h4>
-          The Cart list is empty.
+          The CartItem list is empty.
         </h4>
-      );
+      )
     }
-
-    let cartMap = cart.map((instrument, idx) => <ShopCard // usar fav card
+    let cartItemMap = cartItem.map((instrument, idx) => <ShopCard // usar fav card
       key={idx}
       id={instrument.id}
       name={instrument.name}
       price={instrument.price}
       brand={instrument.brand}
       rating={instrument.rating}
+      deleteItem={deleteItem}
       image={instrument.image} />);
     return (
       <div className="favoriteCards">
-        {cartMap}
+        {cartItemMap}
       </div>
     );
   }
 
   return (
-    <div className="containerHome cartContainer">
-      <h1>Cart</h1>
+    <div className="containerHome cartItemContainer">
+      <h1>Cart Item</h1>
       {renderInstruments()}
     </div>
   );

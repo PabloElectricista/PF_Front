@@ -33,7 +33,6 @@ const initialState = {
     favoriteInstruments: [],
     retrievedInstrument: null,
     filteredIntruments: [],
-    cart: [],
     productReviewList: [],
     isLoading: true,
     alertInfo: {

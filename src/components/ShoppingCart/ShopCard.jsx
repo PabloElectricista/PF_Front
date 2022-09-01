@@ -8,22 +8,24 @@ import ListGroup from 'react-bootstrap/ListGroup';
 
 
 // , purchaseOrder,updateAmount
-export default function ShopCard({ id, name, price, rating, image, brand }) {
+export default function ShopCard({ id, name, price, rating, image, brand, deleteItem }) {
   const [quantity, setQuantity] = useState(1)
 
   const plus = () => {
-    setQuantity(quantity+1)
+    localStorage.setItem('totalPrice', JSON.stringify(price + JSON.parse(localStorage.getItem('totalPrice'))))
+    setQuantity(quantity + 1)
   }
   const minus = () => {
-    if(quantity>1){
-      setQuantity(quantity-1)
+    if (quantity > 1) {
+      localStorage.setItem('totalPrice', JSON.stringify(JSON.parse(localStorage.getItem('totalPrice'))- price))
+      setQuantity(quantity - 1)
     }
   }
 
-    return (
+  return (
     <Card className="card shop" >
       <Link className='containCardImage' to={"/detail/" + id}>
-        <img className='cardImage' src={image} alt={name}/>
+        <img className='cardImage' src={image} alt={name} />
       </Link>
       <Card.Body className='containCardBody'>
         <Link to={"/detail/" + id}>
@@ -31,7 +33,8 @@ export default function ShopCard({ id, name, price, rating, image, brand }) {
         </Link>
         <ListGroup className='containerListDescription' variant="flush">
           <ListGroup.Item className='cardBrand'>{brand}</ListGroup.Item>
-          <ListGroup.Item className='cardPrice'>${price}</ListGroup.Item>
+          <ListGroup.Item className='cardPrice'>Unitary ${price}</ListGroup.Item>
+          <ListGroup.Item className='cardPrice'>Total ${price * quantity}</ListGroup.Item>
           <ListGroup.Item className='cardRating'>
             <p className={rating >= 1 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
             <p className={rating >= 2 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
@@ -42,10 +45,10 @@ export default function ShopCard({ id, name, price, rating, image, brand }) {
         </ListGroup>
       </Card.Body>
       <div className='containerButton'>
-        <AiFillDelete className='CardIcon'/>
-        <AiFillMinusCircle className='CardIcon' onClick={minus}/>
-        <p>{quantity}</p>
-        <AiFillPlusCircle className='CardIcon' onClick={plus}/>
+        <AiFillDelete className='CardIcon' onClick={() => deleteItem(id)} />
+        <AiFillPlusCircle className='CardIcon' onClick={plus} />
+        <h3>{quantity}</h3>
+        <AiFillMinusCircle className='CardIcon' onClick={minus} />
       </div>
     </Card>
   )

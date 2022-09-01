@@ -15,6 +15,7 @@ export default function CookieCard() {
     CookieDiv.classList.add('Accepted')
     localStorage.setItem('localstorage', true)
     localStorage.setItem('lightTheme', true)
+    localStorage.setItem('totalPrice', 0)
   }
 
   return (

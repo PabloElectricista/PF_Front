@@ -26,6 +26,7 @@ export default function ProductCard({ id, name, price, rating, image, brand }) {
     } else {
       cart = [{ id, name, price, rating, image, brand }]
     }
+    localStorage.setItem('totalPrice', JSON.stringify(price + JSON.parse(localStorage.getItem('totalPrice'))))
     localStorage.setItem('cartList', JSON.stringify(cart))
   }
 
