@@ -16,14 +16,20 @@ import ProductEdit from "./views/ProductEdit/ProductEdit";
 import Favorites from "./components/Favorites/Favorites";
 import History from './components/History/History';
 import CookieCard from './components/CookieCard';
+import AlertMessage from "./components/Alerts/AlertMessage";
+import React from "react";
+import {useSelector} from "react-redux";
 // import StripeComponent from './components/StripeComponent';
 
 function App() {
-    
+
+    const alertInfo = useSelector(store => store.alertInfo)
+
     return (
         <Router>
             <CookieCard/>
             <NavBar/>
+            <AlertMessage {...alertInfo} />
             <Routes>
                 <Route exact path="/" element={<LandingPage/>}/>
                 <Route path="/home" element={<Home/>}/>
