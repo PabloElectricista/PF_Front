@@ -23,7 +23,8 @@ import {useSelector} from "react-redux";
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllProducts } from './redux/actions';
-import CookieCard from './components/CookieCard';
+import ShoopingCart from "./components/ShoppingCart";
+import Dashboard from "./components/Administrator/admin";
 
 function App() {
 

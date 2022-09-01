@@ -3,12 +3,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import {
   addToCart,
+  getProductById,
 } from '../../redux/actions'
-import ProductCard from '../Card'
+//import ProductCard from '../Card'
 import StripeComponent from '../StripeComponent/StripeComponent'
 import ShopCard from './ShopCard'
 
-export default function ShoopingCart(id) {
+export default function ShoopingCart() {
   const dispatch = useDispatch()
   const products = useSelector((state) => state.cart)
   const unInstrument = useSelector((state) => state.retrievedInstrument)
