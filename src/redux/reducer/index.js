@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const {
     GET_ALL_PRODUCTS,
     GET_PRODUCT_BY_ID,
@@ -7,7 +9,7 @@ const {
     ORDER_PRODUCTS,
     GET_REVIEWS_BY_PRODUCT_ID,
     ADD_REVIEW,
-    GET_MY_PRODUCTS,
+    GET_MY_ORDERS,
 } = require('../actions/index');
 
 function orderMayMen(array, prop) {
@@ -28,22 +30,29 @@ function orderMenMay(array, prop) {
 const initialState = {
     instruments: [],
     allInstruments: [],
-    favoriteInstruments: [],
     retrievedInstrument: null,
     filteredIntruments: [],
     productReviewList: [],
-    myProducts: [],
+    myOrders: [],
 }
 
 export default function rootReducer(state = initialState, action) {
     switch (action.type) {
 
-    case GET_MY_PRODUCTS:
-        const NewOrders = action.payload.orders.map(element => element.products[0].products)
-        console.log(NewOrders)
-        
-        return {...state,myProducts: NewOrders}
-    
+        case GET_MY_ORDERS:
+            console.log("acion: myOrders", state.myOrders);
+            if (!action.payload) { return state }
+            const NewOrders = action.payload.orders.map(element => {
+                return {
+                    status: element.status,
+                    quantity: element.products[0].quantity,
+                    instrument: state.allInstruments.find(instrument => instrument._id === element.products[0].products)
+                }
+            })
+
+            return { ...state, myOrders: NewOrders }
+        //-------------------------
+        //-------------------------
         case GET_ALL_PRODUCTS:
             return {
                 ...state,
@@ -77,7 +86,6 @@ export default function rootReducer(state = initialState, action) {
                 allInstruments: [action.payload, ...state.allInstruments]
             }
         case FILTERED_INSTRUMENTS:
-            console.log(action.payload);
             return {
                 ...state,
                 instruments: action.payload

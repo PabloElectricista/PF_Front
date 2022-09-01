@@ -2,9 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import ProfileNavBar from "../../components/ProfileNavBar";
 import Favorites from '../../components/Favorites'
 import ShoppingCart from "../../components/ShoppingCart";
-import ShoppingHistory from "../../components/ShoppingHistory";
-import UserProducts from "../../components/UserProducts";
-import SalesHistory from "../../components/SalesHistory";
+import ShoppingHistory from "../../components/ShoppingHistory/ShopHistory";
+import UserProducts from "../../components/UserProducts/UserProducts";
+import SalesHistory from "../../components/SalesHistory/SalesHistory";
 import NotFound from "../NotFound";
 
 export default function UserProfile() {

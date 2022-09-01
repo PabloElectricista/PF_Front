@@ -63,3 +63,12 @@
   color: #169E85 !important;
   font-size: 1.5em;
 }
+
+body.Dark .card{
+  background: linear-gradient( 90deg, white 45%, #0f7461);
+  border: none;
+}
+
+body.Dark .containerListDescription{
+  background-color: rgba(0, 0, 0, 0);
+}

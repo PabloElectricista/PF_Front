@@ -4,14 +4,12 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import { AiFillEdit, AiOutlineEdit } from 'react-icons/ai';
 import './UserProductCard.css'
 import { TiDelete } from 'react-icons/ti';
-import { getMyProducts } from '../../redux/actions';
-import { useDispatch, useSelector } from "react-redux"
+// import { getMyProducts } from '../../redux/actions';
+import { useDispatch } from "react-redux"
 
 export default function UserProductCard({ id, name, price, rating, image, brand }) {
   const dispatch = useDispatch()
   const getOrders = ()=> {
-    console.log("action");
-    dispatch(getMyProducts("63081149b26238001111dc53"))
   }
 
   return (
