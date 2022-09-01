@@ -1,28 +1,28 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { createProduct, getAllCategories } from '../../redux/actions'
+import { createProduct} from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import './CreateProduct.css'
 
 
 
 export default function CreateProduct() {
-    //const allInstruments = useSelector(store => store.instruments)
-    //const allCategories = useSelector(store => store.categories)
+
     const dispatch = useDispatch()
     const [error, setError] = useState({})
+    const [img, setImg] = useState('')
     const [inputForm, setInputForm] = useState({
         name: '',
         description: '',
         image: [],
         category: [],
-        color: '',
+        color: [],
         price: 0,
         stock: 0,
         brand: '', 
         status: '',
 
     })
+    console.log(inputForm)
 
 
  
@@ -98,11 +98,12 @@ export default function CreateProduct() {
             status: [...inputForm.status, e.target.value]
         }))
     }
-    async function uploadImage(e) {
+    const uploadImage = async (e) => {
         const files = e.target.files;
         const data = new FormData();
+
         data.append("file", files[0]);
-        data.append("upload_preset", "images");
+        data.append("upload_preset", "vmbr1os6");
         const res = await fetch(
           "https://api.cloudinary.com/v1_1/deqxuoyrc/upload",
           {
@@ -132,7 +133,7 @@ export default function CreateProduct() {
                 description: '',
                 image: [],
                 category: [],
-                color: '',
+                color: [],
                 price: 0,
                 stock: 0,
                 brand: '', 
@@ -148,14 +149,8 @@ export default function CreateProduct() {
 
     return (
         <div id='container-create'>
+      
            
-
-            <div id='cont-btn-home'>
-                <Link to='/home'>
-                    <button className="btn btn-secondary" >Back</button>
-                </Link>
-            </div>
-
             <div id='cont-title-form'>
                 <h1>Post your sale!</h1>
             </div>
@@ -206,7 +201,7 @@ export default function CreateProduct() {
                   <input
                     type='file'
                     id='file'
-                    name='image'
+                    name='img'
                     onChange={uploadImage}
                   />
                 </div>
@@ -295,19 +290,7 @@ export default function CreateProduct() {
                 </div>
 
             </form>
-             {/* <form onSubmit={handleSubmitFile} className="form">
-                <input
-                    id="fileInput"
-                    type="file"
-                    name="image"
-                    onChange={handleFileInputChange}
-                    value={fileInputState}
-                    className="form-input"
-                />
-                <button className="btn" type="submit">
-                    Submit
-                </button>
-            </form> */}
+        
                        
             
 

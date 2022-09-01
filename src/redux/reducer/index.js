@@ -4,7 +4,11 @@ const {
     UPDATE_PRODUCT,
     FILTERED_INSTRUMENTS,
     CREATE_PRODUCT,
-    ADD_TO_CART
+    ORDER_PRODUCTS,
+    GET_REVIEWS_BY_PRODUCT_ID,
+    ADD_REVIEW,
+    ACTIVE_LOADING,
+    SHOW_ALERT,
 } = require('../actions/index');
 
 function orderMayMen(array, prop) {
@@ -28,8 +32,15 @@ const initialState = {
     favoriteInstruments: [],
     retrievedInstrument: null,
     filteredIntruments: [],
-    cart: []
-
+    cart: [],
+    productReviewList: [],
+    isLoading: true,
+    alertInfo: {
+        displayAlert: false,
+        alertVariant: 'success',
+        alertTitle: '',
+        alertText: ''
+    }
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -72,35 +83,78 @@ export default function rootReducer(state = initialState, action) {
             console.log(action.payload);
             return {
                 ...state,
-                instruments: action.payload
+                instruments: action.payload,
+                isLoading: false
             }
 
-        case ADD_TO_CART:
-            // console.log(action.payload, 'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
-            let newOrders = action.payload
-            let productsOnly = []
-            productsOnly = newOrders.map(function (elem) {
-                let returnProducts = { product: elem.products }
-                return returnProducts
-            })
-            let newArray = []
-            for (let i = 0; i < productsOnly.length; i++) {
-                newArray.push(productsOnly[i].product)
-
+        case ORDER_PRODUCTS:
+            let sortedProducts = JSON.parse(JSON.stringify(state.instruments))
+            switch (action.payload) {
+                case "Up to Down":
+                    orderMayMen(sortedProducts, "name");
+                    break;
+                case "Down to Up":
+                    orderMenMay(sortedProducts, "name");
+                    break;
+                case "Higher price":
+                    orderMayMen(sortedProducts, "price")
+                    break;
+                case "Lower price":
+                    orderMenMay(sortedProducts, "price");
+                    break;
+                default:
+                    break;
             }
-
-            function flattenDeep(newArray) {
-                return newArray.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), []);
-            }
-            flattenDeep(newArray)
-            console.log(flattenDeep(newArray))
-
-            // console.log(productsOnly, 'SOY LA ORDEN')
-            // console.log(finalInstruments, 'SOY LA ORDEN')
             return {
                 ...state,
-                cart: flattenDeep(newArray),
+                instruments: sortedProducts,
+                isLoading: false
             }
+
+        case GET_REVIEWS_BY_PRODUCT_ID:
+            return {
+                ...state,
+                productReviewList: action.payload
+            }
+
+        case ADD_REVIEW:
+            return {
+                ...state,
+                productReviewList: [
+                    action.payload,
+                    ...state.productReviewList]
+            }
+
+        case ACTIVE_LOADING:
+            return {
+                ...state,
+                isLoading: true
+            }
+
+            case ADD_TO_CART:
+                // console.log(action.payload, 'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
+                let newOrders = action.payload
+                let productsOnly = []
+                productsOnly = newOrders.map(function (elem) {
+                    let returnProducts = { product: elem.products }
+                    return returnProducts
+                })
+                let newArray = []
+                for (let i = 0; i < productsOnly.length; i++) {
+                    newArray.push(productsOnly[i].product)}
+                    function flattenDeep(newArray) {
+                        return newArray.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), []);
+                    }
+                    flattenDeep(newArray)
+                    console.log(flattenDeep(newArray))
+        
+                    // console.log(productsOnly, 'SOY LA ORDEN')
+                    // console.log(finalInstruments, 'SOY LA ORDEN')
+                    return {
+                        ...state,
+                        cart: flattenDeep(newArray),
+                    }
+
         default:
             return state
     }

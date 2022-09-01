@@ -14,21 +14,21 @@ export default function Carrousel() {
         <img className="imageCarousel"
           src={imageOne}
           alt="First slide"
-          onClick={() => navigate("/detail/:id")} />
+          onClick={() => navigate("/detail/630ff421bb07c7c8ca7fcaa2")} />
       </Carousel.Item>
 
       <Carousel.Item interval={3000}>
         <img className="imageCarousel"
           src={imageTwo}
           alt="Second slide"
-          onClick={() => navigate("/detail/:id")} />
+          onClick={() => navigate("/detail/630ff284bb07c7c8ca7fca9a")} />
       </Carousel.Item>
 
       <Carousel.Item interval={3000}>
         <img className="imageCarousel"
           src={imageThree}
           alt="Third slide"
-          onClick={() => navigate("/detail/:id")} />
+          onClick={() => navigate("/detail/63004a6a329ff6b6923c5b4d")} />
       </Carousel.Item>
     </Carousel>
   );
