@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import ProfileNavBar from "../../components/ProfileNavBar";
-import Favorites from '../../components/Favorites'
+import Favorites from '../../components/Favorites/Favorites'
 import ShoppingCart from "../../components/ShoppingCart";
 import ShoppingHistory from "../../components/ShoppingHistory/ShopHistory";
 import UserProducts from "../../components/UserProducts/UserProducts";

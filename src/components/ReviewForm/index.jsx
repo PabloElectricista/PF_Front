@@ -1,16 +1,17 @@
 import React, {useState} from "react";
 import ReactStars from 'react-stars'; //source: https://www.npmjs.com/package/react-stars
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {addReview} from "../../redux/actions";
+import {useAuth0} from "@auth0/auth0-react";
 import './ReviewForm.css';
 
 function ReviewForm(props) {
 
     const productId = props.productId;
     const dispatch = useDispatch();
+    const {isAuthenticated, user} = useAuth0();
+    const productReviewList = useSelector(state => state.productReviewList)
     const defaultReview = {
-        user: '62fe63c53c42cd4281febdbe', //todo - add the user id.
-        userName: 'Admin user',
         product: productId,
         rating: 0,
         comment: ''
@@ -24,7 +25,6 @@ function ReviewForm(props) {
     }
 
     function handleRateChange(newRate) {
-        console.log("rate handleCommentChange", newRate)
         setReviewItem({...reviewItem, rating: newRate})
         setErrorRating('');
     }
@@ -55,13 +55,47 @@ function ReviewForm(props) {
         return resultRating || resultComment;
     }
 
+    function isProductReviewed(userAuth) {
+        if (productReviewList.length !== 0) {
+            const result = productReviewList.filter(item =>
+                item.user === userAuth.userId &&
+                item.userType === userAuth.userType
+            )
+            return result.length !== 0;
+        }
+    }
+
+    function getUserIdAndType(user) {
+        const index = user.sub.indexOf("|");
+        const userId = user.sub.substring(index + 1);
+        const userType = user.sub.substring(0, index);
+        return ({
+            userId: userId,
+            userType: userType
+        })
+
+    }
     function handleSubmit(event) {
         event.preventDefault();
         const error = validateReview(reviewItem);
         if (error) {
             return;
         }
-        dispatch(addReview(reviewItem));
+        if (!isAuthenticated) {
+            setErrorComment('Please log in before leaving a review.');
+            return;
+        }
+        const userAuth = getUserIdAndType(user)
+        if (isProductReviewed(userAuth)) {
+            setErrorComment('It is only allowed one review per user per product.');
+            return;
+        }
+        dispatch(addReview({
+            ...reviewItem,
+            user: userAuth.userId,
+            userType: userAuth.userType,
+            userName: user.given_name ? user.name : user.nickname,
+        }));
         setReviewItem(defaultReview);
         setErrorRating('');
         setErrorComment('');

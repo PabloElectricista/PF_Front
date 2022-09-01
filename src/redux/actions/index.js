@@ -11,6 +11,9 @@ export const ORDER_PRODUCTS = "ORDER_PRODUCTS";
 export const GET_REVIEWS_BY_PRODUCT_ID = "GET_REVIEWS_BY_PRODUCT_ID";
 export const ADD_REVIEW = "ADD_REVIEW";
 export const GET_MY_ORDERS = "GET_MY_ORDERS";
+export const ACTIVE_LOADING = "ACTIVE_LOADING"; 
+export const SHOW_ALERT = "SHOW_ALERT";
+
 
 
 export const getAllProducts = () => {
@@ -117,7 +120,6 @@ export const addReview = (reviewItem) => { //add one review to product
 
 export const getMyOrders = (userId) => {
     return async function (dispatch) {
-        console.log("callToGetMyOrders");
         try {
             const response = await axios.get('/orders/user/' + userId);
             dispatch({
@@ -125,7 +127,21 @@ export const getMyOrders = (userId) => {
                 payload: response.data
             });
         } catch (err) {
-            console.log(err)
+            console.log("callToGetMyOrders", err)
         }
     }
+}
+export const activeLoading = () => {
+    return function(dispatch) {
+        return dispatch({
+            type: ACTIVE_LOADING
+        });
+    };
+}
+
+export function showAlert(alertInfo) {
+    return {
+        type: SHOW_ALERT,
+        payload: alertInfo
+    };
 }

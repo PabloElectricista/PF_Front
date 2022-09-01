@@ -4,6 +4,7 @@
     color: #169E85 !important;
     font-family: 'Satisfy', cursive;
     font-size: 20px !important;
+    font-weight: 600 !important;
 }
 
 .navbar {
@@ -12,6 +13,7 @@
 
 .nav-link {
     color: white !important;
+    font-weight: 600 !important;
 }
 
 .nav-link:hover {
@@ -21,6 +23,7 @@
 .btn-outline-success {
     color: #169E85 !important;
     border-color: #169E85 !important;
+    font-weight: 600 !important;
 }
 
 .btn-outline-success:hover {
@@ -41,32 +44,6 @@
 }
 
 .btn-outline-success:active:focus {
-    box-shadow: none;
-}
-
-.btn-outline-secondary {
-    color: white !important;
-    border-color: white !important;
-}
-
-.btn-outline-secondary:hover {
-    color: black !important;
-    background-color: white !important;
-}
-
-.btn-outline-secondary:focus {
-    box-shadow: none;
-    background-color: white !important;
-    color: black !important;
-}
-
-.btn-outline-secondary:active {
-    box-shadow: none;
-    background-color: white !important;
-    color: black !important;
-}
-
-.btn-outline-secondary:active:focus {
     box-shadow: none;
 }
 

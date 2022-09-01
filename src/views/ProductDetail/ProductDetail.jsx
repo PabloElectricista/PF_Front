@@ -5,7 +5,7 @@ import {getProductById} from "../../redux/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import './ProductDetail.css';
-import Loading from "../../components/Loading";
+import Loading from "../../components/Loading/Loading";
 import Carousel from "react-bootstrap/Carousel";
 import ReviewList from "../../components/ReviewList";
 import ReviewForm from "../../components/ReviewForm";

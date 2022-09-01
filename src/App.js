@@ -1,30 +1,34 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {BrowserRouter as Router,  Routes, Route} from 'react-router-dom';
-
-import LandingPage from './views/LandingPage';
-import Home from './views/Home';
-import NavBar from "./components/NavBar";
+import LandingPage from './views/LandingPage/LandingPage';
+import Home from './views/Home/Home';
+import NavBar from "./components/NavBar/NavBar";
 import ContactUs from "./views/ContactUs";
-import ProductDetail from "./views/ProductDetail";
+import ProductDetail from "./views/ProductDetail/ProductDetail";
 import CreateProduct from "./views/CreateProduct";
 import UserProfile from "./views/UserProfile";
 import Payment from "./views/Payment";
 import NotFound from "./views/NotFound";
-import Footer from "./components/Footer";
-import AboutUs from "./views/AboutUs";
-import ProductEdit from "./views/ProductEdit";
-import Favorites from "./components/Favorites";
-import History from './components/History/History';
+import Footer from "./components/Footer/Footer";
+import AboutUs from "./views/AboutUs/AboutUs";
+import ProductEdit from "./views/ProductEdit/ProductEdit";
+import Favorites from "./components/Favorites/Favorites";
 import CookieCard from './components/CookieCard';
 import Dashboard from './components/Administrator/admin';
+import AlertMessage from "./components/Alerts/AlertMessage";
+import React from "react";
+import {useSelector} from "react-redux";
 // import StripeComponent from './components/StripeComponent';
 
 function App() {
-    
+
+    const alertInfo = useSelector(store => store.alertInfo)
+
     return (
         <Router>
             <CookieCard/>
             <NavBar/>
+            <AlertMessage {...alertInfo} />
             <Routes>
                 <Route exact path="/" element={<LandingPage/>}/>
                 <Route path="/home" element={<Home/>}/>
@@ -36,7 +40,6 @@ function App() {
                 <Route exact path='/favorites' element={<Favorites/>}/>
                 <Route exact path='/payment' element={<Payment/>}/>
                 <Route exact path='/about' element={<AboutUs/>}/>
-                <Route exact path='/history' element={<History/>}/>
                 <Route exact path='/administrator' element={<Dashboard/>}/>
                 {/* <Route path='/stripe/:id' element={<StripeComponent/>}/> en progreso*/}
                 <Route path='*' element={<NotFound/>}/>

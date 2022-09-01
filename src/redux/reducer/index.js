@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const {
     GET_ALL_PRODUCTS,
     GET_PRODUCT_BY_ID,
@@ -10,6 +8,8 @@ const {
     GET_REVIEWS_BY_PRODUCT_ID,
     ADD_REVIEW,
     GET_MY_ORDERS,
+    ACTIVE_LOADING,
+    SHOW_ALERT,
 } = require('../actions/index');
 
 function orderMayMen(array, prop) {
@@ -31,9 +31,15 @@ const initialState = {
     instruments: [],
     allInstruments: [],
     retrievedInstrument: null,
-    filteredIntruments: [],
     productReviewList: [],
     myOrders: [],
+    isLoading: true,
+    alertInfo: {
+        displayAlert: false,
+        alertVariant: 'success',
+        alertTitle: '',
+        alertText: ''
+    }
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -58,12 +64,14 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 allInstruments: action.payload,
                 instruments: action.payload,
+                isLoading: false
             }
 
         case GET_PRODUCT_BY_ID:
             return {
                 ...state,
-                retrievedInstrument: action.payload
+                retrievedInstrument: action.payload,
+                isLoading: false
             }
 
         case UPDATE_PRODUCT:
@@ -85,10 +93,12 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 allInstruments: [action.payload, ...state.allInstruments]
             }
+
         case FILTERED_INSTRUMENTS:
             return {
                 ...state,
-                instruments: action.payload
+                instruments: action.payload,
+                isLoading: false
             }
 
         case ORDER_PRODUCTS:
@@ -112,6 +122,7 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 instruments: sortedProducts,
+                isLoading: false
             }
 
         case GET_REVIEWS_BY_PRODUCT_ID:
@@ -127,6 +138,21 @@ export default function rootReducer(state = initialState, action) {
                     action.payload,
                     ...state.productReviewList]
             }
+
+        case ACTIVE_LOADING:
+            return {
+                ...state,
+                isLoading: true
+            }
+
+        case SHOW_ALERT:
+            return {
+                ...state,
+                alertInfo: {
+                    displayAlert: true,
+                    ...action.payload
+                }
+            };
 
         default:
             return state
