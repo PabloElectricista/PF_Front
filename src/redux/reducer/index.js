@@ -7,6 +7,7 @@ const {
     ORDER_PRODUCTS,
     GET_REVIEWS_BY_PRODUCT_ID,
     ADD_REVIEW,
+    GET_MY_ORDERS,
     ACTIVE_LOADING,
     SHOW_ALERT,
 } = require('../actions/index');
@@ -29,9 +30,9 @@ function orderMenMay(array, prop) {
 const initialState = {
     instruments: [],
     allInstruments: [],
-    favoriteInstruments: [],
     retrievedInstrument: null,
     productReviewList: [],
+    myOrders: [],
     isLoading: true,
     alertInfo: {
         displayAlert: false,
@@ -43,6 +44,21 @@ const initialState = {
 
 export default function rootReducer(state = initialState, action) {
     switch (action.type) {
+
+        case GET_MY_ORDERS:
+            console.log("acion: myOrders", state.myOrders);
+            if (!action.payload) { return state }
+            const NewOrders = action.payload.orders.map(element => {
+                return {
+                    status: element.status,
+                    quantity: element.products[0].quantity,
+                    instrument: state.allInstruments.find(instrument => instrument._id === element.products[0].products)
+                }
+            })
+
+            return { ...state, myOrders: NewOrders }
+        //-------------------------
+        //-------------------------
         case GET_ALL_PRODUCTS:
             return {
                 ...state,

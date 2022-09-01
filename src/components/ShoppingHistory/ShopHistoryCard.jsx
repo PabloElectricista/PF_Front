@@ -1,28 +1,11 @@
-import './Card.css'
 import { Link } from 'react-router-dom'
-import { BsCartFill, BsStarFill } from 'react-icons/bs';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 
-export default function ProductCard({ id, name, price, rating, image, brand }) {
-
-  const addToFav = () => {
-    let favs = JSON.parse(localStorage.getItem('favList'))
-    if (!favs) {
-      favs = [{ id, name, price, rating, image, brand }]
-      localStorage.setItem('favList', JSON.stringify(favs))
-      return
-    }    
-    if (favs.length < 10 && favs.every(item => item.id !== id)) {
-      favs.push({ id, name, price, rating, image, brand })
-      localStorage.setItem('favList', JSON.stringify(favs))
-      return
-    }
-    alert("Can't add the item, is alredy in the FavList or you have 10 Favs.")
-  }
+export default function ShopHistoryCard({ id, name, price, rating, image, brand }) {
 
   return (
-    <Card className="card" >
+    <Card className="card UserProductCard" >
       <Link className='containCardImage' to={"/detail/" + id}>
         <img className='cardImage' src={image} alt={name} />
       </Link>
@@ -42,10 +25,6 @@ export default function ProductCard({ id, name, price, rating, image, brand }) {
           </ListGroup.Item>
         </ListGroup>
       </Card.Body>
-      <div className='containerButton'>
-        <BsStarFill className='CardIcon' onClick={addToFav} />
-        <BsCartFill className='CardIcon' />
-      </div>
     </Card>
   )
 }
