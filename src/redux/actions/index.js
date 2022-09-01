@@ -11,6 +11,7 @@ export const ORDER_PRODUCTS = "ORDER_PRODUCTS";
 export const GET_REVIEWS_BY_PRODUCT_ID = "GET_REVIEWS_BY_PRODUCT_ID";
 export const ADD_REVIEW = "ADD_REVIEW";
 export const ACTIVE_LOADING = "ACTIVE_LOADING"; 
+export const CREATE_CONTACT = "CREATE_CONTACT"; 
 
 
 export const getAllProducts = () => {
@@ -121,4 +122,12 @@ export const activeLoading = () => {
             type: ACTIVE_LOADING
         });
     };
+}
+
+
+
+export function createContact(payload) {
+    return async function (dispatch) {
+        await axios.post('/', payload)
+    }
 }

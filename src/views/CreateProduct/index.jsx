@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { createProduct} from '../../redux/actions'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch,  } from 'react-redux'
 import './CreateProduct.css'
 
 
@@ -9,7 +9,7 @@ export default function CreateProduct() {
 
     const dispatch = useDispatch()
     const [error, setError] = useState({})
-    const [img, setImg] = useState('')
+    //const [img, setImg] = useState('')
     const [inputForm, setInputForm] = useState({
         name: '',
         description: '',
