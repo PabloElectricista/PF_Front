@@ -9,7 +9,6 @@ import Loading from "../../components/Loading/Loading";
 import Carousel from "react-bootstrap/Carousel";
 import ReviewList from "../../components/ReviewList";
 import ReviewForm from "../../components/ReviewForm";
-import AlertMessage from "../../components/Alerts/AlertMessage";
 
 function ProductDetail() {
 
@@ -98,7 +97,6 @@ function ProductDetail() {
     return (
         <div>
             <div className='Details'>
-                <AlertMessage />
                 <h1>Product Details</h1>
                 {renderInstrument()}
             </div>

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
-import {getProductById, updateProduct} from "../../redux/actions";
+import {getProductById, updateProduct, showAlert} from "../../redux/actions";
 import './ProductEdit.css';
 import Loading from "../../components/Loading/Loading";
 import ModalVerification from "../../components/Modal/ModalVerification"
@@ -43,6 +43,12 @@ function ProductEdit() {
         location: '',
         status: '',
     });
+
+    const alertInfo = {
+        alertVariant: 'success',
+        alertTitle: 'Successful edition!',
+        alertText: 'The product information was saved with success.'
+    };
 
     const [selectedImage, setSelectedImage] = React.useState('');
     const [newImage, setNewImage] = React.useState('');
@@ -330,6 +336,7 @@ function ProductEdit() {
         }
         dispatch(updateProduct(instrumentItem));
         navigate(`/detail/${id}`);
+        dispatch(showAlert(alertInfo));
     }
 
     function handleVerifyCancel() {

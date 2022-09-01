@@ -1,21 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Alert from 'react-bootstrap/Alert';
-import Button from 'react-bootstrap/Button';
+import {useDispatch} from 'react-redux'
+import {showAlert} from "../../redux/actions";
 
-function AlertMessage() { //Source: https://react-bootstrap.github.io/components/alerts/
-    const [show, setShow] = useState(true);
+function AlertMessage({displayAlert, alertVariant, alertTitle, alertText}) { //Source: https://react-bootstrap.github.io/components/alerts/
 
-    if (show) {
+    const dispatch = useDispatch()
+    function closeAlert() {
+        dispatch(showAlert({
+            displayAlert: false
+        }))
+    }
+
+    if (displayAlert) {
         return (
-            <Alert variant="success" onClose={() => setShow(false)} dismissible>
-                <Alert.Heading>Successful edition!</Alert.Heading>
+            <Alert variant={alertVariant}
+                   onClose={() => closeAlert()}
+                   dismissible>
+                <Alert.Heading>{alertTitle}</Alert.Heading>
                 <p>
-                    The product information was saved with success.
+                    {alertText}
                 </p>
             </Alert>
         );
     }
-    return <Button onClick={() => setShow(true)}>Show Alert</Button>;
 }
 
 export default AlertMessage;
