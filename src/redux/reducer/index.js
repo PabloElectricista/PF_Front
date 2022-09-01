@@ -8,8 +8,11 @@ const {
     GET_REVIEWS_BY_PRODUCT_ID,
     ADD_REVIEW,
     ACTIVE_LOADING,
-    CREATE_CONTACT
-            
+    CREATE_CONTACT,
+    GET_MY_ORDERS,
+    ACTIVE_LOADING,
+    SHOW_ALERT,
+
 } = require('../actions/index');
 
 function orderMayMen(array, prop) {
@@ -30,14 +33,35 @@ function orderMenMay(array, prop) {
 const initialState = {
     instruments: [],
     allInstruments: [],
-    favoriteInstruments: [],
     retrievedInstrument: null,
     productReviewList: [],
-    isLoading: true
+    myOrders: [],
+    isLoading: true,
+    alertInfo: {
+        displayAlert: false,
+        alertVariant: 'success',
+        alertTitle: '',
+        alertText: ''
+    }
 }
 
 export default function rootReducer(state = initialState, action) {
     switch (action.type) {
+
+        case GET_MY_ORDERS:
+            console.log("acion: myOrders", state.myOrders);
+            if (!action.payload) { return state }
+            const NewOrders = action.payload.orders.map(element => {
+                return {
+                    status: element.status,
+                    quantity: element.products[0].quantity,
+                    instrument: state.allInstruments.find(instrument => instrument._id === element.products[0].products)
+                }
+            })
+
+            return { ...state, myOrders: NewOrders }
+        //-------------------------
+        //-------------------------
         case GET_ALL_PRODUCTS:
             return {
                 ...state,
@@ -124,11 +148,22 @@ export default function rootReducer(state = initialState, action) {
                 isLoading: true
             }
 
+
             case CREATE_CONTACT:
                 return {
                     ...state,
                     
                 }
+
+        case SHOW_ALERT:
+            return {
+                ...state,
+                alertInfo: {
+                    displayAlert: true,
+                    ...action.payload
+                }
+            };
+
 
         default:
             return state

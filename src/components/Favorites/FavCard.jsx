@@ -3,12 +3,8 @@ import { TiDelete } from 'react-icons/ti';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 
-export default function FavCard({ id, name, price, rating, image, brand }) {
+export default function FavCard({ id, name, price, rating, image, brand, deleteFav }) {
 
-  const removeFromFav = () => {
-    let favs = JSON.parse(localStorage.getItem('favList'))
-    localStorage.setItem('favList', JSON.stringify(favs.filter(fav => fav.id !== id)))
-  }
 
   return (
     <Card className="card" >
@@ -32,7 +28,7 @@ export default function FavCard({ id, name, price, rating, image, brand }) {
         </ListGroup>
       </Card.Body>
       <div className='containerButton'>
-        <TiDelete className='CardIcon' onClick={removeFromFav} />
+        <TiDelete className='CardIcon EditIcon' onClick={() => deleteFav(id)} />
       </div>
     </Card>
   )
