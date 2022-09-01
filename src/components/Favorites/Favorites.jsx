@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import './Favorites.css';
-import FavCard from "../FavCard";
+import FavCard from "./FavCard";
 
 
 export default function Favorites() {
