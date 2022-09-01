@@ -13,6 +13,9 @@ function AlertMessage({displayAlert, alertVariant, alertTitle, alertText}) { //S
     }
 
     if (displayAlert) {
+        setTimeout(() => {
+            closeAlert();
+        }, 5000)
         return (
             <Alert variant={alertVariant}
                    onClose={() => closeAlert()}
