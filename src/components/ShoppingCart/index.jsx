@@ -1,6 +1,7 @@
 import ShopCard from "./ShopCard";
 import './Card.css'
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function ShoopingCartItem() {
 
@@ -38,8 +39,14 @@ export default function ShoopingCartItem() {
 
   return (
     <div className="containerHome cartItemContainer">
-      <h1>Cart Item</h1>
+      <h1>Shopping Cart</h1>
       {renderInstruments()}
+      <div>
+        <Link to = '/stripe'>
+        <button>Submit Cart</button>
+        </Link>
+      </div>
     </div>
+    
   );
 }

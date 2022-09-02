@@ -6,7 +6,7 @@
 */
 
 import axios from 'axios';
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { loadStripe } from '@stripe/stripe-js';
 import {
     Elements,
@@ -17,7 +17,7 @@ import {
 
 import "bootswatch/dist/lux/bootstrap.min.css";
 import ShoopingCartItem from '../ShoppingCart';
-import { useState } from 'react';
+// import { useState } from 'react';
 
 const stripePromise = loadStripe('pk_test_51LZlZLAfFn4zXQabU5GwZV9N2mF4rWwZiphhNImIDe3ClFcAcspjPLm2unNFM81E9ljcZfjf2BBhb6L2UW3Vin6G00c54G75HA');
 
@@ -26,8 +26,9 @@ function StripeComponent() {
     const products = JSON.parse(localStorage.getItem('cartList'))
     // const [totalPrice, setTotalPrice] = useState(JSON.parse(localStorage.getItem('totalPrice')))
     // const total = () => {
-    //     setTotalPrice(JSON.parse(localStorage.getItem('totalPrice')))
+    //     setTotalPrice()
     //   }
+    //   console.log
 
     function CheckoutForm() {
         const stripe = useStripe();
