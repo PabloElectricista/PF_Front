@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
+.navbar {
+    margin-bottom: .5em !important;
+}
+
 .navbar-brand {
     color: #169E85 !important;
     font-family: 'Satisfy', cursive;
