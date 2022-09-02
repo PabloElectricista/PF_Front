@@ -1,116 +1,164 @@
 // React utilities
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-// Actions
-import { 
-    filteredIntruments
-} from '../../redux/actions';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // Styles
-import Accordion from 'react-bootstrap/Accordion';
-import AccordionHeader from 'react-bootstrap/esm/AccordionHeader';
-import AccordionBody from 'react-bootstrap/esm/AccordionBody';
-import CloseButton from 'react-bootstrap/CloseButton';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import IconButton from '@mui/material/IconButton';
+import SendIcon from '@mui/icons-material/Send';
+import Slider from '@mui/material/Slider';
 import './Filters.css';
 
 export default function Filters() {
-
-    const dispatch = useDispatch();
-    const [select, setSelect] = useState({ 
-        price: '',
-        brand: '', 
-        status: '', 
-        categorie: '',
-        color: ''
+    
+    // Hooks
+    const location = useLocation();
+    const navigate = useNavigate();
+    const products = useSelector(state => state.instruments);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const brand = searchParams.get('brand');
+    const price = searchParams.get('price');
+    const status = searchParams.get('status');
+    const color = searchParams.get('color');
+    // Intruments' propierties
+    const brandArrayAll = [];
+    const pricesAll = [];
+    const colorsArrayAll = [];
+    products.map(product => {
+        brandArrayAll.push(product.brand);
+        pricesAll.push(product.price);
+        colorsArrayAll.push(product.color);
+        return null;
     });
-
-    function handleSelect(e) {
-        setSelect((prevState) => {
-            return {
-                ...prevState,
-                [e.target.name]: e.target.value
-            }
-        })
-        let actualSelect = {[e.target.name]: e.target.value }
-        dispatch(filteredIntruments(actualSelect));
+    // Repeated results are eliminated from the arrays
+    const brandAll = brandArrayAll.filter((item, index) => {
+        return brandArrayAll.indexOf(item) === index;
+    });
+    const colorAll = colorsArrayAll.filter((item, index) => {
+        return colorsArrayAll.indexOf(item) === index;
+    });
+    // Alphabetize the arrays in alphabetical order
+    colorAll.sort();
+    brandAll.sort();
+    // Local state
+    const [priceSlide, setPriceSlide] = useState([Math.floor(Math.min(...pricesAll)), Math.ceil(Math.max(...pricesAll))]);
+    // Send selected filters
+    function handlerSubmit(e) {
+        e.target.value ? e.target.name === 'price' ? 
+        setSearchParams(searchParams.set( e.target.name, `${e.target.value[0]}/${e.target.value[1]}`)) :
+        setSearchParams(searchParams.set( e.target.name, e.target.value )) :
+        searchParams.delete(e.target.name);
+        location.search = `?${searchParams.toString()}`;
+        navigate(location);
+    }
+    // Save changes in the price slider
+    function handlerChangePrice (e) {
+        e.preventDefault();
+        setPriceSlide(e.target.value);
+    }
+    // Send price filter data
+    function handlerRangeSubmit() {
+        const prices = {
+            target: {}
+        };
+        prices.target.name = 'price';
+        prices.target.value = priceSlide;
+        handlerSubmit(prices)
     }
 
     return (
-        <div className='containerFilters'>
-
-            <div className='selectedFilters'>
-                { Object.entries(select).map(prop => {
-                    return (
-                        prop[1] ? 
-                        <div className='activeFilter'>
-                            {prop[1]}
-                            <CloseButton />
-                        </div>
-                        : null
-                    )
-                })}
-            </div>
-
-            <Accordion className="accordion" defaultActiveKey={['0']} alwaysOpen>
-                <Accordion.Item eventKey="1">
-                    <AccordionHeader>Price</AccordionHeader>
-                        <AccordionBody>
-                            <p>Filtro de precio, pronto disponible</p>
-                        </AccordionBody>
-                </Accordion.Item>
-                <Accordion.Item eventKey="2">
-                    <Accordion.Header>Brand</Accordion.Header>
-                    <Accordion.Body>
-                        <select value={select.brand} onChange={(e) => { handleSelect(e) }} name="brand" id="select">
-                            <option value=''>All Brands</option>
-                            <option value="Fender">Fender</option>
-                            <option value="Ibanez">Ibanez</option>
-                            <option value="Carlo Robelli">Carlo Robelli</option>
-                            <option value="Yamaha">Yamaha</option>
-                            <option value="Takamine">Takamine</option>
-                            <option value="Sturgis">Sturgis</option>
-                            <option value="Sala Muzik">Sala Muzik</option>
-                            <option value="Naad">Naad</option>
-                            <option value="MoonAngel">MoonAngel</option>
-                            <option value="SUTILA">SUTILA</option>
-                            <option value="Jupiter">Jupiter</option>
-                            <option value="Honner">Honner</option>
-                            <option value="HandCraftoria">HandCraftoria</option>
-                            <option value="Pacific Drums">Pacific Drums</option>
-                            <option value="Tama">Tama</option>
-                            <option value="RockJam">RockJam</option>
-                            <option value="Generic">Generic</option>
-                        </select>
-                    </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="3">
-                    <Accordion.Header>Status</Accordion.Header>
-                    <Accordion.Body>
-                        <select value={select.status} onChange={(e) => { handleSelect(e) }} name="status" id="stat">
-                            <option value="">All</option>
-                            <option value="New">New</option>
-                            <option value="Used">Used</option>
-                        </select>
-                    </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="4">
-                    <Accordion.Header>Categories</Accordion.Header>
-                    <Accordion.Body>
-                        <select value={select.categorie} onChange={(e) => { handleSelect(e) }} name="categorie" id="cat">
-                            <option value="">All Categories</option>
-                            <option value="String">String</option>
-                            <option value="Percussion">Percussion</option>
-                            <option value="Wind">Wind</option>
-                            <option value="Electric">Electric</option>
-                        </select>
-                    </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="5">
-                    <AccordionHeader>Color</AccordionHeader>
-                        <AccordionBody>
-                            <p>Filtro de color, pronto disponible</p>
-                        </AccordionBody>
-                </Accordion.Item>
-            </Accordion>
+        brand && price && status && color ? null :
+        <div className='filtersContainer'>
+            {
+                !brand ? <>
+                <b>Brand: </b>
+                <FormControl className='brandFilter'>
+                    <Select
+                        name="brand"
+                        variant="filled"
+                        fullWidth
+                        size='small'
+                        onChange={(e) => handlerSubmit(e)}
+                    >
+                    {
+                        brandAll.map((brand, i) => {
+                            return (
+                                <MenuItem 
+                                    key={i} 
+                                    value={brand}
+                                >
+                                {brand} </MenuItem>
+                            )
+                        })
+                    }
+                    </Select>
+                </FormControl>
+                </> : null
+            }
+            {
+                !price ? <>
+                <b>Price: </b>
+                <FormControl className='filterPrice'>
+                    <Slider
+                        min={Math.floor(Math.min(...pricesAll))}
+                        max={Math.ceil(Math.max(...pricesAll))}
+                        valueLabelDisplay="auto"
+                        value={priceSlide}
+                        marks={[{value: Math.floor(Math.min(...pricesAll)), label: `$${priceSlide[0]}`}, 
+                        {value: Math.ceil(Math.max(...pricesAll)), label: `$${priceSlide[1]}`}]}
+                        onChange={(e) => handlerChangePrice(e)}
+                    />
+                    <IconButton onClick={() => handlerRangeSubmit()} aria-label="send">
+                        <SendIcon/>
+                    </IconButton>
+                </FormControl>
+                </> : null
+            }
+            {
+                !status ? <>
+                <b>Status: </b>
+                <FormControl className='statusFilter'>
+                    <Select
+                        name="status"
+                        variant="filled"
+                        fullWidth
+                        size='small'
+                        onChange={(e) => handlerSubmit(e)}
+                    >
+                        <MenuItem value="New">New</MenuItem>
+                        <MenuItem value="Used">Used</MenuItem>
+                    </Select>
+                </FormControl>
+                </> : null
+            }
+            {
+                !color ? <>
+                <b>Color: </b>
+                <FormControl className='colorFilter'>
+                    <Select
+                        name="color"
+                        variant="filled"
+                        fullWidth
+                        size='small'
+                        onChange={(e) => handlerSubmit(e)}
+                    >
+                    {
+                        colorAll.map((color, i) => {
+                            return (
+                                <MenuItem 
+                                    key={i} 
+                                    value={color}
+                                >
+                                {color} </MenuItem>
+                            )
+                        })
+                    }
+                    </Select>
+                </FormControl>
+                </> : null
+            }
         </div>
     )
 }

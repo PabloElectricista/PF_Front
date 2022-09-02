@@ -1,6 +1,6 @@
 // React utilities
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 // Files
 import iconSearch from '../img/search_FILL0.png';
 //Styles
@@ -10,6 +10,7 @@ import './SearchBar.css';
 
 export default function SearchBar() {
     // Hooks
+    const location = useLocation();
     const navigate = useNavigate();
     const [name, setName] = useState('')
     // Save every change that occurs in the SearchBar
@@ -21,7 +22,8 @@ export default function SearchBar() {
     function handleSubmit(e) {
         e.preventDefault();
         if (name) {
-            navigate(`/home?search=${name}`);
+            location.search = `?name=${name}`;
+            navigate(location);
             setName('');
         }
     }
