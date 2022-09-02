@@ -18,7 +18,9 @@ import Dashboard from './components/Administrator/admin';
 import AlertMessage from "./components/Alerts/AlertMessage";
 import React from "react";
 import {useSelector} from "react-redux";
-// import StripeComponent from './components/StripeComponent';
+import StripeComponent from './components/StripeComponent/StripeComponent';
+import ShoopingCart from "./components/ShoppingCart";
+import Dashboard from "./components/Administrator/admin";
 
 function App() {
 
@@ -40,8 +42,10 @@ function App() {
                 <Route exact path='/favorites' element={<Favorites/>}/>
                 <Route exact path='/payment' element={<Payment/>}/>
                 <Route exact path='/about' element={<AboutUs/>}/>
-                <Route exact path='/administrator' element={<Dashboard/>}/>
-                {/* <Route path='/stripe/:id' element={<StripeComponent/>}/> en progreso*/}
+                <Route exact path='/cart' element={<ShoopingCart/>}/>
+                <Route exact path='/admin/*' element={<Dashboard/>}/>
+                <Route exact path='/history' element={<History/>}/>
+                <Route path='/stripe' element={<StripeComponent/>}/>
                 <Route path='*' element={<NotFound/>}/>
             </Routes>
             <Footer/>

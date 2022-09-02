@@ -11,6 +11,7 @@ const {
     GET_MY_ORDERS,
     ACTIVE_LOADING,
     SHOW_ALERT,
+    ADD_TO_CART,
 
 } = require('../actions/index');
 
@@ -33,6 +34,7 @@ const initialState = {
     instruments: [],
     allInstruments: [],
     retrievedInstrument: null,
+    filteredIntruments: [],
     productReviewList: [],
     myOrders: [],
     isLoading: true,
@@ -95,8 +97,8 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 allInstruments: [action.payload, ...state.allInstruments]
             }
-
         case FILTERED_INSTRUMENTS:
+            console.log(action.payload);
             return {
                 ...state,
                 instruments: action.payload,
@@ -147,12 +149,36 @@ export default function rootReducer(state = initialState, action) {
                 isLoading: true
             }
 
+        case ADD_TO_CART:
+            // console.log(action.payload, 'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
+            let newOrders = action.payload
+            let productsOnly = []
+            productsOnly = newOrders.map(function (elem) {
+                let returnProducts = { product: elem.products }
+                return returnProducts
+            })
+            let newArray = []
+            for (let i = 0; i < productsOnly.length; i++) {
+                newArray.push(productsOnly[i].product)
+            }
+            function flattenDeep(newArray) {
+                return newArray.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), []);
+            }
+            flattenDeep(newArray)
+            console.log(flattenDeep(newArray))
 
-            case CREATE_CONTACT:
-                return {
-                    ...state,
-                    
-                }
+            // console.log(productsOnly, 'SOY LA ORDEN')
+            // console.log(finalInstruments, 'SOY LA ORDEN')
+            return {
+                ...state,
+                cart: flattenDeep(newArray),
+            }
+
+        case CREATE_CONTACT:
+            return {
+                ...state,
+
+            }
 
         case SHOW_ALERT:
             return {
@@ -162,6 +188,7 @@ export default function rootReducer(state = initialState, action) {
                     ...action.payload
                 }
             };
+
 
 
         default:

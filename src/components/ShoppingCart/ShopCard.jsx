@@ -1,13 +1,29 @@
-//import './Card.css'
+import './Card.css'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { BsCartFill, BsStarFill } from 'react-icons/bs';
+import { AiFillPlusCircle, AiFillMinusCircle, AiFillDelete } from 'react-icons/ai';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 
-export default function FavCard({ id, name, price, rating, image, brand, deleteFav }) {
+
+// , purchaseOrder,updateAmount
+export default function ShopCard({ id, name, price, rating, image, brand, deleteItem }) {
+  const [quantity, setQuantity] = useState(1)
+
+  const plus = () => {
+    localStorage.setItem('totalPrice', JSON.stringify(price + JSON.parse(localStorage.getItem('totalPrice'))))
+    setQuantity(quantity + 1)
+  }
+  const minus = () => {
+    if (quantity > 1) {
+      localStorage.setItem('totalPrice', JSON.stringify(JSON.parse(localStorage.getItem('totalPrice'))- price))
+      setQuantity(quantity - 1)
+    }
+  }
 
   return (
-    <Card className="card" >
+    <Card className="card shop" >
       <Link className='containCardImage' to={"/detail/" + id}>
         <img className='cardImage' src={image} alt={name} />
       </Link>
@@ -17,7 +33,8 @@ export default function FavCard({ id, name, price, rating, image, brand, deleteF
         </Link>
         <ListGroup className='containerListDescription' variant="flush">
           <ListGroup.Item className='cardBrand'>{brand}</ListGroup.Item>
-          <ListGroup.Item className='cardPrice'>${price}</ListGroup.Item>
+          <ListGroup.Item className='cardPrice'>Unitary ${price}</ListGroup.Item>
+          <ListGroup.Item className='cardPrice'>Total ${price * quantity}</ListGroup.Item>
           <ListGroup.Item className='cardRating'>
             <p className={rating >= 1 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
             <p className={rating >= 2 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
@@ -28,7 +45,10 @@ export default function FavCard({ id, name, price, rating, image, brand, deleteF
         </ListGroup>
       </Card.Body>
       <div className='containerButton'>
-        <TiDelete className='CardIcon EditIcon' onClick={() => deleteFav(id)} />
+        <AiFillDelete className='CardIcon' onClick={() => deleteItem(id)} />
+        <AiFillPlusCircle className='CardIcon' onClick={plus} />
+        <h3>{quantity}</h3>
+        <AiFillMinusCircle className='CardIcon' onClick={minus} />
       </div>
     </Card>
   )

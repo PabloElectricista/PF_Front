@@ -48,9 +48,9 @@
   margin: 0.5em !important;
   width: 1.9em !important;
   height: 1.9em !important;
-  color: transparent !important;
-  stroke: #888;
-  stroke-width: 0.6px;
+  /* color: transparent !important; */
+  stroke: rgb(0, 0, 0);
+  stroke-width: 1px;
 }
 
 .CardIcon:hover {
