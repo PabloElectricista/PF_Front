@@ -7,7 +7,12 @@ const {
     ORDER_PRODUCTS,
     GET_REVIEWS_BY_PRODUCT_ID,
     ADD_REVIEW,
-    ACTIVE_LOADING
+    CREATE_CONTACT,
+    GET_MY_ORDERS,
+    ACTIVE_LOADING,
+    SHOW_ALERT,
+    ADD_TO_CART,
+
 } = require('../actions/index');
 
 function orderMayMen(array, prop) {
@@ -28,14 +33,36 @@ function orderMenMay(array, prop) {
 const initialState = {
     instruments: [],
     allInstruments: [],
-    favoriteInstruments: [],
     retrievedInstrument: null,
+    filteredIntruments: [],
     productReviewList: [],
-    isLoading: true
+    myOrders: [],
+    isLoading: true,
+    alertInfo: {
+        displayAlert: false,
+        alertVariant: 'success',
+        alertTitle: '',
+        alertText: ''
+    }
 }
 
 export default function rootReducer(state = initialState, action) {
     switch (action.type) {
+
+        case GET_MY_ORDERS:
+            console.log("acion: myOrders", state.myOrders);
+            if (!action.payload) { return state }
+            const NewOrders = action.payload.orders.map(element => {
+                return {
+                    status: element.status,
+                    quantity: element.products[0].quantity,
+                    instrument: state.allInstruments.find(instrument => instrument._id === element.products[0].products)
+                }
+            })
+
+            return { ...state, myOrders: NewOrders }
+        //-------------------------
+        //-------------------------
         case GET_ALL_PRODUCTS:
             return {
                 ...state,
@@ -70,8 +97,8 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 allInstruments: [action.payload, ...state.allInstruments]
             }
-
         case FILTERED_INSTRUMENTS:
+            console.log(action.payload);
             return {
                 ...state,
                 instruments: action.payload,
@@ -121,6 +148,48 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 isLoading: true
             }
+
+        case ADD_TO_CART:
+            // console.log(action.payload, 'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
+            let newOrders = action.payload
+            let productsOnly = []
+            productsOnly = newOrders.map(function (elem) {
+                let returnProducts = { product: elem.products }
+                return returnProducts
+            })
+            let newArray = []
+            for (let i = 0; i < productsOnly.length; i++) {
+                newArray.push(productsOnly[i].product)
+            }
+            function flattenDeep(newArray) {
+                return newArray.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), []);
+            }
+            flattenDeep(newArray)
+            console.log(flattenDeep(newArray))
+
+            // console.log(productsOnly, 'SOY LA ORDEN')
+            // console.log(finalInstruments, 'SOY LA ORDEN')
+            return {
+                ...state,
+                cart: flattenDeep(newArray),
+            }
+
+        case CREATE_CONTACT:
+            return {
+                ...state,
+
+            }
+
+        case SHOW_ALERT:
+            return {
+                ...state,
+                alertInfo: {
+                    displayAlert: true,
+                    ...action.payload
+                }
+            };
+
+
 
         default:
             return state

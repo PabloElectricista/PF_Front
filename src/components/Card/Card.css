@@ -44,12 +44,13 @@
 }
 
 .CardIcon {
+  cursor: pointer;
   margin: 0.5em !important;
   width: 1.9em !important;
   height: 1.9em !important;
-  color: transparent !important;
-  stroke: #888;
-  stroke-width: 0.6px;
+  /* color: transparent !important; */
+  stroke: rgb(0, 0, 0);
+  stroke-width: 1px;
 }
 
 .CardIcon:hover {
@@ -61,4 +62,13 @@
 .cardPrice {
   color: #169E85 !important;
   font-size: 1.5em;
+}
+
+body.Dark .card{
+  background: linear-gradient( 90deg, white 45%, #0f7461);
+  border: none;
+}
+
+body.Dark .containerListDescription{
+  background-color: rgba(0, 0, 0, 0);
 }

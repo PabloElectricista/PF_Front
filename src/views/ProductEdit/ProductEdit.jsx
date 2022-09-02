@@ -1,9 +1,10 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
-import {getProductById, updateProduct} from "../../redux/actions";
+import {getProductById, updateProduct, showAlert} from "../../redux/actions";
 import './ProductEdit.css';
 import Loading from "../../components/Loading/Loading";
+import ModalVerification from "../../components/Modal/ModalVerification"
 
 function ProductEdit() {
 
@@ -43,8 +44,15 @@ function ProductEdit() {
         status: '',
     });
 
+    const alertInfo = {
+        alertVariant: 'success',
+        alertTitle: 'Successful edition!',
+        alertText: 'The product information was saved with success.'
+    };
+
     const [selectedImage, setSelectedImage] = React.useState('');
     const [newImage, setNewImage] = React.useState('');
+    const [showModal, setShowModal] = useState(false);
 
     function handleChange(event) {
         setInstrumentItem({...instrumentItem, [event.target.name]: event.target.value})
@@ -311,7 +319,7 @@ function ProductEdit() {
                         <button className='submitButton' type='submit'>Save</button>
                         <button className='cancelButton'
                                 type='button'
-                                onClick={() => handleCancel()}
+                                onClick={() => handleVerifyCancel()}
                         >Cancel
                         </button>
                     </div>
@@ -328,6 +336,11 @@ function ProductEdit() {
         }
         dispatch(updateProduct(instrumentItem));
         navigate(`/detail/${id}`);
+        dispatch(showAlert(alertInfo));
+    }
+
+    function handleVerifyCancel() {
+        setShowModal(true);
     }
 
     function handleCancel() {
@@ -409,6 +422,13 @@ function ProductEdit() {
         <div className='ProductEdit'>
             <h1>Edit Product</h1>
             {renderInstrument()}
+            <ModalVerification
+                setShowModal={setShowModal}
+                showModal={showModal}
+                title={"Question"}
+                text={"Your changes will be lost. Do you want to continue?"}
+                functionYes={handleCancel}
+            />
         </div>
     );
 }

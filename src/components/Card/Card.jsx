@@ -8,14 +8,29 @@ export default function ProductCard({ id, name, price, rating, image, brand }) {
 
   const addToFav = () => {
     let favs = JSON.parse(localStorage.getItem('favList'))
-    if (favs) {
-      if (favs.length <= 10 && favs.every(item => item.id !== id)) {
-        favs.push({ id, name, price, rating, image, brand })
+    if (!favs) {
+      favs = [{ id, name, price, rating, image, brand }]
+      localStorage.setItem('favList', JSON.stringify(favs))
+      return
+    }    
+    if (favs.length < 10 && favs.every(item => item.id !== id)) {
+      favs.push({ id, name, price, rating, image, brand })
+      localStorage.setItem('favList', JSON.stringify(favs))
+      return
+    }
+    alert("Can't add the item, is alredy in the FavList or you have 10 Favs.")
+  }
+  const addToCart = () => {
+    let cart = JSON.parse(localStorage.getItem('cartList'))
+    if (cart) {
+      if (cart.length <= 10 && cart.every(item => item.id !== id)) {
+        cart.push({ id, name, price, rating, image, brand })
       }
     } else {
-      favs = [{ id, name, price, rating, image, brand }]
+      cart = [{ id, name, price, rating, image, brand }]
     }
-    localStorage.setItem('favList', JSON.stringify(favs))
+    localStorage.setItem('totalPrice', JSON.stringify(price + JSON.parse(localStorage.getItem('totalPrice'))))
+    localStorage.setItem('cartList', JSON.stringify(cart))
   }
 
   return (
@@ -41,7 +56,7 @@ export default function ProductCard({ id, name, price, rating, image, brand }) {
       </Card.Body>
       <div className='containerButton'>
         <BsStarFill className='CardIcon' onClick={addToFav} />
-        <BsCartFill className='CardIcon' />
+        <BsCartFill className='CardIcon' onClick={addToCart}/>
       </div>
     </Card>
   )

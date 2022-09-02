@@ -1,0 +1,10 @@
+.shop {
+  width: 50% !important;
+}
+
+.cartContainer{
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  flex-direction: column !important;
+}

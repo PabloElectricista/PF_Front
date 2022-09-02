@@ -11,13 +11,17 @@
     font-weight: 600 !important;
 }
 
+.navbar {
+    height: 68px;
+}
+
 .nav-link {
     color: white !important;
     font-weight: 600 !important;
 }
 
 .nav-link:hover {
-    color: #dddddd !important; 
+    color: #dddddd !important;
 }
 
 .btn-outline-success {
@@ -48,11 +52,15 @@
 }
 
 .ProfileImg {
-    height: 50px;    
+    height: 50px;
     border-radius: 50%;
     margin: 0 20px;
 }
 
-.Loading{ 
+.Loading {
     color: red;
+}
+
+body.Dark .navbar {
+    background: linear-gradient(45deg, #0f7461, black, #0f7461);
 }

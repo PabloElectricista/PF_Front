@@ -11,7 +11,7 @@
   width: 4rem;
   opacity: 1;
   margin-bottom: 1.5rem;
-  background-color:  black;
+  background-color: black;
   color: transparent;
 }
 
@@ -52,7 +52,7 @@
   transition: all 0.3s;
 }
 
-.CardIcon:hover{
+.CardIcon:hover {
   transform: scale(1.1);
   color: #198754;
 }
@@ -70,4 +70,18 @@
 
 .textAboutUs {
   font-size: 1.3em;
+}
+
+body.Dark .TeamCard {
+  background: #125548;
+  color: white;
+}
+
+body.Dark .CardIcon {
+  stroke: black;
+}
+
+body.Dark .CardIcon:hover {
+  stroke: black;
+  fill: black;
 }
