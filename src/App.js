@@ -20,7 +20,7 @@ import React from "react";
 import {useSelector} from "react-redux";
 import StripeComponent from './components/StripeComponent/StripeComponent';
 import ShoopingCart from "./components/ShoppingCart";
-import Dashboard from "./components/Administrator/admin";
+import History from "./components/History/History";
 
 function App() {
 
