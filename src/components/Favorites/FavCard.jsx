@@ -1,6 +1,6 @@
 //import './Card.css'
-import { Link } from 'react-router-dom'
-import { BsCartFill, BsStarFill } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
+import { TiDelete } from 'react-icons/ti';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 
