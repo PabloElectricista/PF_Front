@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
+.sticky-top {
+    margin-bottom: .5em !important;
+}
+
 .navbar-brand {
     color: #169E85 !important;
     font-family: 'Satisfy', cursive;
@@ -8,7 +12,7 @@
 }
 
 .navbar {
-    height: 68px;
+    height: 68px !important;
 }
 
 .nav-link {
@@ -28,23 +32,23 @@
 
 .btn-outline-success:hover {
     color: white !important;
-    background-color: #169E85;
+    background-color: #169E85 !important;
 }
 
 .btn-outline-success:focus {
-    box-shadow: none;
+    box-shadow: none !important;
     background-color: #169E85 !important;
     color: white !important;
 }
 
 .btn-outline-success:active {
-    box-shadow: none;
+    box-shadow: none !important;
     background-color: #169E85 !important;
     color: white !important;
 }
 
 .btn-outline-success:active:focus {
-    box-shadow: none;
+    box-shadow: none !important;
 }
 
 .ProfileImg {

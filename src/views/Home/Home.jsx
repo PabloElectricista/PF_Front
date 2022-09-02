@@ -1,8 +1,7 @@
 // React utilities
-import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 // Components
 import ProductCard from "../../components/Card/Card";
 import Pagination from "../../components/Pagination/Pagination";
@@ -21,31 +20,38 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import CloseButton from 'react-bootstrap/CloseButton';
 import 'bootstrap/dist/css/bootstrap.css';
 import './Home.css';
 
 export default function Home() {
   
   //Hooks
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const allInstruments = useSelector(state => state.instruments);
   const isLoading = useSelector(state => state.isLoading);
   const [currentPage, setCurrentPage] = useState(1);
     // Getting value of the query from the url
   const [searchParams] = useSearchParams();
-  const search = searchParams.get("search");
+  const searchName = searchParams.get('name');
+  const filters = []
+  searchParams.forEach((value, key) => {
+    filters.push([key, value]);
+  });
 
   useEffect(() => {
-    if (search) {
-      dispatch(filteredIntruments({name: search}));
+    if (searchParams.toString()) {
+      dispatch(filteredIntruments(searchParams.toString()));
     } else {
       dispatch(getAllProducts());
     }
     dispatch(activeLoading());
-  }, [dispatch, search]);
+  }, [dispatch, searchParams]);
 
   useEffect(() => {
-    setCurrentPage(1)
+    setCurrentPage(1);
   }, [allInstruments]);
 
   useEffect(() => {
@@ -58,6 +64,14 @@ export default function Home() {
     dispatch(orderProducts(e.target.value));
   }
 
+  // Clear filters
+  function clearFilter (filter) {
+    console.log(filter);
+    searchParams.delete(filter);
+    location.search = `?${searchParams.toString()}`;
+    navigate(location);
+  }
+
   // Pagination logic
   let idxLastItem = currentPage * 15;
   let ixdFirstItem = idxLastItem - 15;
@@ -67,16 +81,16 @@ export default function Home() {
   };
 
   return (
-    <div className="containerHome">
+    <>
       { isLoading ? <Loading /> : 
-        <>
+        <div className="containerHome">
           <div className="aditionalContent">
-            { search ? 
-              <div className="numberOfResults">
-                {allInstruments.length} results of ""<span>{search}</span>""
-              </div> : null
-            }
             
+            <div className="numberOfResults">
+              {searchName ? <span>{searchName.toUpperCase()}</span> : null}
+              <p><b>{allInstruments.length}</b> results</p>
+            </div>
+
             <FormControl 
               variant="standard" 
               sx={{ m: 1, minWidth: 90 }} 
@@ -97,11 +111,31 @@ export default function Home() {
               </Select>
             </FormControl>
           </div>
+
+          { filters.length ? searchName && filters.length === 1 ?
+            null : 
+            <div className="selectedFilters">
+              <span>Selected filters: </span>
+              { 
+                filters.map(filter => {
+                  return filter[0] === 'name' ? 
+                    null : 
+                    ( 
+                      <div key={filter[0]} className="activeFilter">
+                        { filter[0] === 'price' ? `Price range ${filter[1]}` : filter[1]}
+                        <CloseButton onClick={() => clearFilter(filter[0])}/>
+                      </div>
+                    )
+                })
+              }
+            </div>
+          : null }
           
           { allInstruments.length ?
             <>
               <div className="containerContent">
                 <Filters />
+            
                 <div className="containerCards">
                   {
                     pageInstruments?.map(instrument => {
@@ -122,10 +156,9 @@ export default function Home() {
               </div>
               <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} />
             </>
-            : <NothingFound />
-          }
-        </>
+          : <NothingFound /> }
+        </div>
       }
-    </div>
+    </>
   )
 }

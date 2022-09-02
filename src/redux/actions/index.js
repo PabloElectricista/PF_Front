@@ -71,26 +71,15 @@ export function createProduct(payload) {
     }
 }
 
-let queries = {
-    name: "",
-    categorie: "",
-    status: "",
-    brand: ""
-}
 export function filteredIntruments(payload) {
     return async function (dispatch) {
-        let condition = [];
-        queries = { ...queries, ...payload }
-        for (const key in queries) {
-            if (queries[key]) condition.push(`${key}=${queries[key]}`)
-        }
-        const filter = await axios.get(`/filter?${condition.join('&')}`)
+        const filter = await axios.get(`/filter?${payload}`)
         dispatch({
             type: FILTERED_INSTRUMENTS,
             payload: filter.data
-        })
-    }
-}
+        });
+    };
+};
 
 
 export function allOrders() {

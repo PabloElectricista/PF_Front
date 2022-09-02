@@ -18,7 +18,7 @@
 }
 
 .containerName {
-  font-weight: 600 !important;
+  font-weight: 800 !important;
 }
 
 .containerListDescription {
@@ -37,10 +37,10 @@
 }
 
 .containerButton {
-  margin-right: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  margin-right: 2rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly !important;
 }
 
 .CardIcon {
@@ -51,17 +51,19 @@
   /* color: transparent !important; */
   /* stroke: rgb(0, 0, 0);
   stroke-width: 1px; */
+  color: #169E85 !important;
 }
 
 .CardIcon:hover {
-  color: #169E85 !important;
-  stroke: none;
-  stroke-width: 0;
+  color: white !important;
+  stroke: #169E85 !important;
+  stroke-width: 1px !important;
 }
 
 .cardPrice {
   color: #169E85 !important;
   font-size: 1.5em;
+  font-weight: 600 !important;
 }
 
 body.Dark .card{
