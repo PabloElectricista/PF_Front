@@ -96,10 +96,9 @@ export function filteredIntruments(payload) {
 export function allOrders() {
     return async (dispatch) => {
       const NewOrder = await axios.get(
-        'http://localhost:4000/orders/user/630e5167d4480e5b45e82970'
+        'http://localhost:4000/orders'
         )
-        // console.log(NewOrder.data.orders)
-      const allOrders = NewOrder.data.orders
+      const allOrders = NewOrder.data
         return dispatch({
         type: ALL_ORDERS,
         payload: allOrders,

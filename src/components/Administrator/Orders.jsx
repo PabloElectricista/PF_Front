@@ -16,8 +16,6 @@ function createData(id, date, name, shipTo, paymentMethod, amount) {
   return { id, date, name, shipTo, paymentMethod, amount };
 }
 
-
-
 const rows = [
   createData(
     0,
@@ -59,21 +57,16 @@ function preventDefault(event) {
 }
 
 export default function Orders() {
-  let {id} = useParams();
+
   const dispatch = useDispatch()
   const allOrder = useSelector((state) => state.orders)
   console.log(allOrder)
-  const [orders, setOrders] = useState('');
-  const [estado, setEstado] = useState(orders?.status)
 
   useEffect(() => {
     dispatch(allOrders())
   }, [dispatch])
 
 
-  function handleAllOrders(event) {
-    setOrders({...orders, [event.target.name]: event.target.value})
-}
 
   return (
     <React.Fragment>
@@ -83,19 +76,19 @@ export default function Orders() {
           <TableRow>
             <TableCell>Date</TableCell>
             <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
+            <TableCell>Status</TableCell>
             <TableCell>Payment Method</TableCell>
             <TableCell align="right">Sale Amount</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {allOrders.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
+              <TableCell>{row.createadAt}</TableCell>
+              <TableCell>{row.user.username}</TableCell>
+              <TableCell>{row.status}</TableCell>
               <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
+              {/* <TableCell align="right">{`$${row.products.}`}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>

@@ -151,28 +151,9 @@ export default function rootReducer(state = initialState, action) {
             }
 
         case ALL_ORDERS:
-            console.log(action.payload, 'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
-            let newOrders = action.payload
-            let productsOnly = []
-            productsOnly = newOrders.map(function (elem) {
-                let returnProducts = { product: elem.products }
-                return returnProducts
-            })
-            let newArray = []
-            for (let i = 0; i < productsOnly.length; i++) {
-                newArray.push(productsOnly[i].product)
-            }
-            function flattenDeep(newArray) {
-                return newArray.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), []);
-            }
-            flattenDeep(newArray)
-            console.log(flattenDeep(newArray))
-
-            // console.log(productsOnly, 'SOY LA ORDEN')
-            // console.log(finalInstruments, 'SOY LA ORDEN')
             return {
                 ...state,
-                orders: flattenDeep(newArray),
+                orders: action.payload,
             }
 
         case CREATE_CONTACT:
