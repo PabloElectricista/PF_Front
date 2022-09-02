@@ -1,12 +1,12 @@
 .footer {
-    margin-top: auto;
-    padding: 0.5rem;
-    display: flex;
-    justify-content: space-around;
+    margin-top: auto !important;
+    padding: 0.5rem !important;
+    display: flex !important;
+    justify-content: space-around !important;
 }
 
 .terms {
-    font-size: 0.7rem;
+    font-size: 0.7rem !important;
 }
 
 .footerAboutUs:hover {
