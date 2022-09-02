@@ -1,7 +1,7 @@
 .containerSearchBar {
-    flex-grow: 2;
-    display: flex;
-    justify-content: center;
+    flex-grow: 2 !important;
+    display: flex !important;
+    justify-content: center !important;
 }
 
 .input-group {
@@ -9,6 +9,6 @@
 }
 
 .form-control:focus{
-    box-shadow: none;
-    border-color: #ced4da;
+    box-shadow: none !important;
+    border-color: #ced4da !important;
 }

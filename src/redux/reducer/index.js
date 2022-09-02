@@ -98,7 +98,6 @@ export default function rootReducer(state = initialState, action) {
                 allInstruments: [action.payload, ...state.allInstruments]
             }
         case FILTERED_INSTRUMENTS:
-            console.log(action.payload);
             return {
                 ...state,
                 instruments: action.payload,
