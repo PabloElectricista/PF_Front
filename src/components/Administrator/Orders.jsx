@@ -63,9 +63,10 @@ export default function Orders() {
   const [orders, setOrders] = useState('');
   const [estado, setEstado] = useState(orders?.status)
 
-  useEffect(() => {
-    dispatch(getUsers())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(getUsers())
+  // }, [])
+
 
   return (
     <React.Fragment>

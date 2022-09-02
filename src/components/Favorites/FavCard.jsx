@@ -4,7 +4,7 @@ import { BsCartFill, BsStarFill } from 'react-icons/bs';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 
-export default function ProductCard({ id, name, price, rating, image, brand }) {
+export default function FavCard({ id, name, price, rating, image, brand, deleteFav }) {
 
   return (
     <Card className="card" >
@@ -28,8 +28,7 @@ export default function ProductCard({ id, name, price, rating, image, brand }) {
         </ListGroup>
       </Card.Body>
       <div className='containerButton'>
-        <BsStarFill className='CardIcon' />
-        <BsCartFill className='CardIcon' />
+        <TiDelete className='CardIcon EditIcon' onClick={() => deleteFav(id)} />
       </div>
     </Card>
   )

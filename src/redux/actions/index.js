@@ -10,9 +10,13 @@ export const FILTERED_INSTRUMENTS = "FILTERED_INSTRUMENTS";
 export const ORDER_PRODUCTS = "ORDER_PRODUCTS";
 export const GET_REVIEWS_BY_PRODUCT_ID = "GET_REVIEWS_BY_PRODUCT_ID";
 export const ADD_REVIEW = "ADD_REVIEW";
+export const GET_MY_ORDERS = "GET_MY_ORDERS";
 export const ACTIVE_LOADING = "ACTIVE_LOADING"; 
+export const CREATE_CONTACT = "CREATE_CONTACT"; 
 export const SHOW_ALERT = "SHOW_ALERT";
 export const ADD_TO_CART = "ADD_TO_CART";
+
+
 
 
 export const getAllProducts = () => {
@@ -103,17 +107,8 @@ export function addToCart() {
     }
 }
 
-export const addReview = (reviewItem) => { //add one review to product
-    return async function(dispatch) {
-        const response = await axios.post('reviews', reviewItem);
-        dispatch({
-            type: ADD_REVIEW,
-            payload: response.data
-        });
-    }
-}
 export const orderProducts = (payload) => {
-    return function(dispatch) {
+    return async function (dispatch) {
         return dispatch({
             type: ORDER_PRODUCTS,
             payload,
@@ -131,6 +126,29 @@ export const getReviewsByProduct = (productId) => {
     }
 }
 
+export const addReview = (reviewItem) => { //add one review to product
+    return async function (dispatch) {
+        const response = await axios.post('reviews', reviewItem);
+        dispatch({
+            type: ADD_REVIEW,
+            payload: response.data
+        });
+    }
+}
+
+export const getMyOrders = (userId) => {
+    return async function (dispatch) {
+        try {
+            const response = await axios.get('/orders/user/' + userId);
+            dispatch({
+                type: GET_MY_ORDERS,
+                payload: response.data
+            });
+        } catch (err) {
+            console.log("callToGetMyOrders", err)
+        }
+    }
+}
 export const activeLoading = () => {
     return function(dispatch) {
         return dispatch({
@@ -138,6 +156,14 @@ export const activeLoading = () => {
         });
     };
 }
+
+export function createContact(payload) {
+    return async function (dispatch) {
+        await axios.post('/', payload)
+    }
+}
+
+
 export function showAlert(alertInfo) {
     return {
         type: SHOW_ALERT,
