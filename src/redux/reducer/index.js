@@ -11,7 +11,7 @@ const {
     GET_MY_ORDERS,
     ACTIVE_LOADING,
     SHOW_ALERT,
-    ADD_TO_CART,
+    ALL_ORDERS,
 
 } = require('../actions/index');
 
@@ -43,7 +43,8 @@ const initialState = {
         alertVariant: 'success',
         alertTitle: '',
         alertText: ''
-    }
+    },
+    orders:[]
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -149,8 +150,8 @@ export default function rootReducer(state = initialState, action) {
                 isLoading: true
             }
 
-        case ADD_TO_CART:
-            // console.log(action.payload, 'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
+        case ALL_ORDERS:
+            console.log(action.payload, 'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
             let newOrders = action.payload
             let productsOnly = []
             productsOnly = newOrders.map(function (elem) {
@@ -171,7 +172,7 @@ export default function rootReducer(state = initialState, action) {
             // console.log(finalInstruments, 'SOY LA ORDEN')
             return {
                 ...state,
-                cart: flattenDeep(newArray),
+                orders: flattenDeep(newArray),
             }
 
         case CREATE_CONTACT:

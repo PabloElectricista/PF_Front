@@ -6,15 +6,17 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
-import {getUsers} from '../../redux/actions/index'
+import {allOrders} from '../../redux/actions/index'
 import { useParams} from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
   return { id, date, name, shipTo, paymentMethod, amount };
 }
+
+
 
 const rows = [
   createData(
@@ -59,14 +61,19 @@ function preventDefault(event) {
 export default function Orders() {
   let {id} = useParams();
   const dispatch = useDispatch()
-
+  const allOrder = useSelector((state) => state.orders)
+  console.log(allOrder)
   const [orders, setOrders] = useState('');
   const [estado, setEstado] = useState(orders?.status)
 
-  // useEffect(() => {
-  //   dispatch(getUsers())
-  // }, [])
+  useEffect(() => {
+    dispatch(allOrders())
+  }, [dispatch])
 
+
+  function handleAllOrders(event) {
+    setOrders({...orders, [event.target.name]: event.target.value})
+}
 
   return (
     <React.Fragment>

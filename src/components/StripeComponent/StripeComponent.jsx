@@ -16,8 +16,11 @@ import {
 } from '@stripe/react-stripe-js';
 
 import "bootswatch/dist/lux/bootstrap.min.css";
-import ShoopingCartItem from '../ShoppingCart';
-// import { useState } from 'react';
+// import ShoopingCartItem from '../ShoppingCart';
+import { useState } from 'react';
+import ShopCard from "../ShoppingCart";
+import '../ShoppingCart/Card.css'
+
 
 const stripePromise = loadStripe('pk_test_51LZlZLAfFn4zXQabU5GwZV9N2mF4rWwZiphhNImIDe3ClFcAcspjPLm2unNFM81E9ljcZfjf2BBhb6L2UW3Vin6G00c54G75HA');
 
@@ -29,6 +32,37 @@ function StripeComponent() {
     //     setTotalPrice()
     //   }
     //   console.log
+    const [cartItem, setCartItem] = useState(JSON.parse(localStorage.getItem('cartList')))
+
+    const deleteItem = (id) => {
+        let arr = cartItem.filter(instrument => instrument.id !== id)
+        localStorage.setItem('cartList', JSON.stringify(arr))
+        setCartItem(arr)
+    }
+
+    function renderInstruments() {
+        if (!cartItem) {
+            return (
+                <h4>
+                    The CartItem list is empty.
+                </h4>
+            )
+        }
+        let cartItemMap = cartItem.map((instrument, idx) => <ShopCard
+            key={idx}
+            id={instrument.id}
+            name={instrument.name}
+            price={instrument.price}
+            brand={instrument.brand}
+            rating={instrument.rating}
+            deleteItem={deleteItem}
+            image={instrument.image} />);
+        return (
+            <div className="favoriteCards">
+                {cartItemMap}
+            </div>
+        );
+    }
 
     function CheckoutForm() {
         const stripe = useStripe();
@@ -64,11 +98,14 @@ function StripeComponent() {
             }
         }
         return (
-            <form onSubmit={handleSubmit} className="cardContainer">
-                <ShoopingCartItem />
-                {/* <p>{total()}</p> */}
-                <div className='form-group m-2'>
-                    <CardElement className='form-control' />
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <h1>Shopping Cart</h1>
+                    {renderInstruments()}
+                    <p>TOTAL A PAGAR</p>
+                </div>
+                <div className='cartContainer'>
+                    <CardElement className='cartContainer' />
                 </div>
                 <button type="submit" disabled={!stripe || !elements} className="btn btn-success m-2" >
                     buy

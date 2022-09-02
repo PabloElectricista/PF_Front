@@ -14,7 +14,7 @@ export const GET_MY_ORDERS = "GET_MY_ORDERS";
 export const ACTIVE_LOADING = "ACTIVE_LOADING"; 
 export const CREATE_CONTACT = "CREATE_CONTACT"; 
 export const SHOW_ALERT = "SHOW_ALERT";
-export const ADD_TO_CART = "ADD_TO_CART";
+export const ALL_ORDERS = "ALL_ORDERS";
 
 
 
@@ -93,16 +93,16 @@ export function filteredIntruments(payload) {
 }
 
 
-export function addToCart() {
+export function allOrders() {
     return async (dispatch) => {
       const NewOrder = await axios.get(
         'http://localhost:4000/orders/user/630e5167d4480e5b45e82970'
         )
         // console.log(NewOrder.data.orders)
-      const productsInCart = NewOrder.data.orders
+      const allOrders = NewOrder.data.orders
         return dispatch({
-        type: ADD_TO_CART,
-        payload: productsInCart,
+        type: ALL_ORDERS,
+        payload: allOrders,
       })
     }
 }
