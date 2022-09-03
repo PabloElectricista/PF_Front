@@ -87,10 +87,10 @@ export function allOrders() {
       const NewOrder = await axios.get(
         'http://localhost:4000/orders'
         )
-      const allOrders = NewOrder.data
+      
         return dispatch({
         type: ALL_ORDERS,
-        payload: allOrders,
+        payload: NewOrder.data,
       })
     }
 }

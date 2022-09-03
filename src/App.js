@@ -26,10 +26,10 @@ function App() {
 
     const alertInfo = useSelector(store => store.alertInfo)
 
-    return (
+    return (<>
         <Router>
-            <CookieCard/>
             <NavBar/>
+            <CookieCard/>
             <AlertMessage {...alertInfo} />
             <Routes>
                 <Route exact path="/" element={<LandingPage/>}/>
@@ -50,6 +50,7 @@ function App() {
             </Routes>
             <Footer/>
         </Router>
+    </>
     );
 }
 
