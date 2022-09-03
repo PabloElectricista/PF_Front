@@ -32,6 +32,12 @@ export default function Orders() {
     return total
   }
 
+  const getProfit = (price) => {
+    let total = getPrice(price)
+    let profit = 0
+    return profit += total * 0.012
+  }
+  
   return (
     <React.Fragment>
       <Title>Recent Orders</Title>
@@ -39,19 +45,19 @@ export default function Orders() {
         <TableHead>
           <TableRow>
             <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
+            <TableCell>User</TableCell>
             <TableCell>Status</TableCell>
-            <TableCell>Payment Method</TableCell>
+            <TableCell>Estimated Profit</TableCell>
             <TableCell align="right">Sale Amount</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {allOrder.map((row, idx) => (row.status !== "cancelled" &&
             <TableRow key={idx}>
-              <TableCell>{row.createdAt}</TableCell>
+              <TableCell>{row.createdAt.toString().slice(0,10)}</TableCell>
               <TableCell>{row.user ? row.user.username : "null"}</TableCell>
               <TableCell>{row.status}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
+              <TableCell>{`$${(getProfit(row.products)).toFixed(2)}`}</TableCell>
               <TableCell align="right">{`$${(getPrice(row.products)).toFixed(2)}`}</TableCell>
             </TableRow>
           ))}
