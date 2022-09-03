@@ -15,6 +15,8 @@ export const ACTIVE_LOADING = "ACTIVE_LOADING";
 export const CREATE_CONTACT = "CREATE_CONTACT"; 
 export const SHOW_ALERT = "SHOW_ALERT";
 export const ALL_ORDERS = "ALL_ORDERS";
+export const GET_ALL_USERS = "GET_ALL_USERS";
+
 
 
 
@@ -26,6 +28,18 @@ export const getAllProducts = () => {
         return dispatch({
             type: GET_ALL_PRODUCTS,
             payload: products.data
+        });
+    };
+};
+
+export const getAllUsers = () => {
+    return async function (dispatch) {
+        const users = await axios('/users');
+        console.log(users)
+
+        return dispatch({
+            type: GET_ALL_USERS,
+            payload: users.data
         });
     };
 };

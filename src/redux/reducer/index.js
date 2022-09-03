@@ -12,6 +12,7 @@ const {
     ACTIVE_LOADING,
     SHOW_ALERT,
     ALL_ORDERS,
+    GET_ALL_USERS,
 
 } = require('../actions/index');
 
@@ -37,6 +38,7 @@ const initialState = {
     filteredIntruments: [],
     productReviewList: [],
     myOrders: [],
+    users: [],
     isLoading: true,
     alertInfo: {
         displayAlert: false,
@@ -169,6 +171,13 @@ export default function rootReducer(state = initialState, action) {
                     ...action.payload
                 }
             };
+
+            case GET_ALL_USERS:
+                return {
+                    ...state,
+                    users: action.payload,
+                    isLoading: false
+                }
 
 
 
