@@ -21,7 +21,7 @@ export default function ShoopingCartItem() {
         </h4>
       )
     }
-    let cartItemMap = cartItem.map((instrument, idx) => <ShopCard // usar fav card
+    let cartItemMap = cartItem.map((instrument, idx) => <ShopCard 
       key={idx}
       id={instrument.id}
       name={instrument.name}
@@ -39,13 +39,7 @@ export default function ShoopingCartItem() {
 
   return (
     <div className="containerHome cartItemContainer">
-      <h1>Shopping Cart</h1>
       {renderInstruments()}
-      <div>
-        <Link to = '/stripe'>
-        <button>Submit Cart</button>
-        </Link>
-      </div>
     </div>
     
   );

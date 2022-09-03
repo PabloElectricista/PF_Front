@@ -8,3 +8,27 @@
   justify-content: center !important;
   flex-direction: column !important;
 }
+
+.containerHome {
+  display: flex;
+  flex-direction: column;
+  padding-left: 3em;
+  padding-right: 3em;
+  width: 100%;
+  min-height: 72vh;
+}
+
+.containerContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+.containerCards{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 72%;
+  gap: 1em;
+}
