@@ -306,13 +306,32 @@ function ProductEdit() {
                     </div>
 
                     <div className='inputLabelField'>
-                        <label>Brand: </label>
-                        <input placeholder='Instrument status'
-                               onChange={(e) => handleChange(e)}
-                               onBlur={() => validateAlpha('status', instrumentItem.status)}
-                               value={instrumentItem.status}
-                               type='text' name={'status'}/>
-                        <span className="errorMessage">{errorInfo.status}</span>
+                        <label>Status: </label>
+                        <label>
+                            <input id="new"
+                                   className='radioInput'
+                                   name="status"
+                                   type="radio"
+                                   value="New"
+                                   checked={instrumentItem.status.toLowerCase() === 'new'}
+                                   onChange={(e) => handleChange(e)}
+                                   onBlur={() => validateAlpha('status', instrumentItem.status)}
+                            />
+                            New
+                        </label>
+
+                        <label>
+                            <input id="used"
+                                   className='radioInput'
+                                   name="status"
+                                   type="radio"
+                                   value="Used"
+                                   checked={instrumentItem.status.toLowerCase() === 'used'}
+                                   onChange={(e) => handleChange(e)}
+                                   onBlur={() => validateAlpha('status', instrumentItem.status)}
+                            />
+                            Used
+                        </label>
                     </div>
 
                     <div className="buttonsGroup">
