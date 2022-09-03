@@ -148,7 +148,7 @@ export const activeLoading = () => {
 
 export function createContact(payload) {
     return async function (dispatch) {
-        await axios.post('/', payload)
+        await axios.post('/send-claim', payload)
     }
 }
 

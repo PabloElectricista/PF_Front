@@ -13,6 +13,7 @@ export default function ContactUs() {
     message: "",
 
   })
+  console.log(input)
   
 
 
@@ -50,6 +51,7 @@ export default function ContactUs() {
     
         <label className="FormLabel">Issue</label>
         <select className="FormInput" type="text" name="subject" value={input.subject} onChange={(e) => handleChange(e)} >
+          <option>Select one</option>
           <option value="product" defaultValue>Product</option>
           <option value="service" >Service</option>
           <option value="other">Other</option>

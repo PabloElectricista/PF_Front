@@ -1,16 +1,20 @@
-import { useState } from 'react'
+import { useAuth0 } from "@auth0/auth0-react"
+import { useState, useEffect } from 'react'
 import { createProduct} from '../../redux/actions'
 import { useDispatch,  } from 'react-redux'
+import AlertMessage from "../../components/Alerts/AlertMessage";
 import './CreateProduct.css'
-
-
+import { useNavigate } from "react-router-dom";
 
 export default function CreateProduct() {
 
-    const dispatch = useDispatch()
+    const {user, isAuthenticated } = useAuth0();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [error, setError] = useState({})
     //const [img, setImg] = useState('')
     const [inputForm, setInputForm] = useState({
+        
         name: '',
         description: '',
         image: [],
@@ -23,19 +27,27 @@ export default function CreateProduct() {
 
     })
     console.log(inputForm)
+    console.log(isAuthenticated)
 
 
- 
+function getUser(){
+    const index = user.sub.indexOf("|");
+    const userId = user.sub.substring(index + 1);
+    const userName= user.given_name ? user.name : user.nickname; 
+   return{ 
+    user: userId, 
+    userName: userName
+   }
+}
+   
 
-    function validate(input) {
+function validate(input) {
 
         let error = {}
         if (input.name.length >= 0 && !input.name.match(/^[a-zA-Z_]+( [a-zA-Z_]+)*$/)) {
             error.name = 'Only letters and no spaces are allowed at the end!'
         } else error.name = null
-
-    
-
+        
         if (input.category && input.category.length === 0) {
             error.category = 'You have to choose at least one category'
         } else error.category = null
@@ -56,120 +68,129 @@ export default function CreateProduct() {
             error.brand = 'Only letters and no spaces are allowed at the end!'
         } else error.brand = null
         return error
-    }
+}
 
-    function handleChange(e) {
-        setInputForm({
-            ...inputForm,
-            [e.target.name]: e.target.value
-        })
-        setError(validate({
-            ...inputForm,
-            [e.target.name]: e.target.value
-        }))
-    }
-    function handleSelect(e) {
+
+function handleChange(e) {
+    setInputForm({
+        ...inputForm,
+        [e.target.name]: e.target.value
+    })
+    setError(validate({
+        ...inputForm,
+        [e.target.name]: e.target.value
+    }))
+}
+
+function handleSelect(e) {
         setInputForm({
             ...inputForm,
             category: [...inputForm.category, e.target.value]
-        })
-        setError(validate({
+    })
+    setError(validate({
             ...inputForm,
             category: [...inputForm.category, e.target.value]
-        }))
-    }
-    function handleSelectC(e) {
-        setInputForm({
-            ...inputForm,
-            color: [...inputForm.color, e.target.value]
-        })
-        setError(validate({
-            ...inputForm,
-            color: [...inputForm.color, e.target.value]
-        }))
-    }
-    function handleSelectS(e) {
-        setInputForm({
-            ...inputForm,
-            status: [...inputForm.status, e.target.value]
-        })
-        setError(validate({
-            ...inputForm,
-            status: [...inputForm.status, e.target.value]
-        }))
-    }
-    const uploadImage = async (e) => {
-        const files = e.target.files;
-        const data = new FormData();
+    }))
+}
 
-        data.append("file", files[0]);
-        data.append("upload_preset", "vmbr1os6");
-        const res = await fetch(
-          "https://api.cloudinary.com/v1_1/deqxuoyrc/upload",
-          {
-            method: "POST",
-            body: data,
-          }
-        );
-        const file = await res.json();
-        const aux = file.secure_url;
+function handleSelectC(e) {
         setInputForm({
-          ...inputForm,
-          image: aux,
-        });
+            ...inputForm,
+            color: [...inputForm.color, e.target.value]
+    })
+    setError(validate({
+            ...inputForm,
+            color: [...inputForm.color, e.target.value]
+    }))
+}
+
+function handleSelectS(e) {
+    setInputForm({
+        ...inputForm,
+        status: [...inputForm.status, e.target.value]
+    })
+    setError(validate({
+        ...inputForm,
+        status: [...inputForm.status, e.target.value]
+    }))
+}
+    
+
+const uploadImage = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "vmbr1os6");
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/deqxuoyrc/upload",
+      {
+        method: "POST",
+        body: data,
       }
+    );
+    const file = await res.json();
+    const aux = file.secure_url;
+    setInputForm({
+      ...inputForm,
+      image: aux,
+    });
+}
    
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        if(error.name === null && error.category === null && error.color === null && 
-        error.price === null && error.stock === null && 
-        error.brand === null){
-       
-            dispatch(createProduct(inputForm))
-            alert('Successfully created')
-            setInputForm({
-                name: '',
-                description: '',
-                image: [],
-                category: [],
-                color: [],
-                price: 0,
-                stock: 0,
-                brand: '', 
-                status: '',
-            })
-        }else{
-            alert('Fixes flagged errors and fills in required spaces')
-        }
-      
-    }
+function handleSubmit(e) {
+    e.preventDefault();
+    if(error.name === null && error.category === null && error.color === null && 
+    error.price === null && error.stock === null && 
+    error.brand === null){
+    
+   dispatch(createProduct(inputForm, getUser()))
+    alert('Successfully created')
+    navigate("/home");
+    setInputForm({
+        name: '',
+        description: '',
+        image: [],
+        category: [],
+        color: [],
+        price: 0,
+        stock: 0,
+        brand: '', 
+        status: '',
+    })
+    }else{
+        alert('Fixes flagged errors and fills in required spaces')
+    }}
 
 
 
-    return (
-        <div id='container-create'>
-      
-           
-            <div id='cont-title-form'>
-                <h1>Post your sale!</h1>
-            </div>
 
-            <form onSubmit={(e) => { handleSubmit(e) }}>
 
-                <div id='form-cont-left'>
-                    <div id='input-name' className='form-inputs'>
-                        <label>* Name:</label>
-                        <input
-                            type='text'
-                            value={inputForm.name}
-                            name='name'
-                            onChange={(e) => { handleChange(e) }} />
-                             {error.name&& (
-                            <p>{error.name}</p>
-                        )}
+return (
+
+    <div>
+      {!isAuthenticated && !isAuthenticated ? (
+        <div>
+            <AlertMessage/>   
+        </div>
+    ) : (
+    <div id='container-create'>
+        <div id='cont-title-form'>
+            <h1>Post your sale!</h1>
+        </div>
+<form onSubmit={(e) => { handleSubmit(e) }}>
+
+        <div id='form-cont-left'>
+            <div id='input-name' className='form-inputs'>
+                <label>* Name:</label>
+                <input
+                    type='text'
+                    value={inputForm.name}
+                    name='name'
+                    onChange={(e) => { handleChange(e) }} />
+                     {error.name&& (
+                    <p>{error.name}</p>)}
                        
-                    </div>
+        </div>
 
                     <div id='input-dsc' className='form-inputs'>
                         <label>Description:</label>
@@ -291,9 +312,7 @@ export default function CreateProduct() {
 
             </form>
         
-                       
-            
-
-        </div>
+            </div>)}
+            </div>
     )
 }
