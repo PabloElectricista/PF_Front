@@ -18,7 +18,7 @@ export default function UserProducts() {
     const myProducts = products.filter(product => product.user ? product.user._id : null === user.sub.slice(user.sub.indexOf("|") + 1))
     console.log(user.sub.slice(user.sub.indexOf("|") + 1))
     console.log(products.map(e => {
-      return e.user
+      return {user: e.user, product: e.name}
     }))
     if (myProducts.length === 0) {
       return (
