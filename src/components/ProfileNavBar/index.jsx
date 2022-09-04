@@ -13,6 +13,7 @@ export default function ProfileNavBar() {
                 <Link to='/profile/my-products' className="btn btn-sm btn-outline-success" >My Products</Link>
                 <Link to='/profile/shop-history' className="btn btn-sm btn-outline-success" >Shopping history</Link>
                 <Link to='/profile/sold' className="btn btn-sm btn-outline-success" >Sales History</Link>
+                <Link to='/profile' className="btn btn-sm btn-outline-success" >Personal Data</Link>
             </div>
         </div>
     </div>
