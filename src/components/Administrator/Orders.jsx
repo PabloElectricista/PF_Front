@@ -1,73 +1,43 @@
-import React, {useEffect, useState}  from 'react';
-import Link from '@mui/material/Link';
+import React, { useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
-import {getUsers} from '../../redux/actions/index'
-import { useParams} from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { allOrders, getAllProducts } from '../../redux/actions/index'
+import { useDispatch, useSelector } from 'react-redux';
 
-
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const rows = [
-  createData(
-    0,
-    '16 Mar, 2019',
-    'Elvis Presley',
-    'Tupelo, MS',
-    'VISA ⠀•••• 3719',
-    312.44,
-  ),
-  createData(
-    1,
-    '16 Mar, 2019',
-    'Paul McCartney',
-    'London, UK',
-    'VISA ⠀•••• 2574',
-    866.99,
-  ),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  createData(
-    3,
-    '16 Mar, 2019',
-    'Michael Jackson',
-    'Gary, IN',
-    'AMEX ⠀•••• 2000',
-    654.39,
-  ),
-  createData(
-    4,
-    '15 Mar, 2019',
-    'Bruce Springsteen',
-    'Long Branch, NJ',
-    'VISA ⠀•••• 5919',
-    212.79,
-  ),
-];
-
-function preventDefault(event) {
-  event.preventDefault();
-}
 
 export default function Orders() {
-  let {id} = useParams();
+
   const dispatch = useDispatch()
+  const allOrder = useSelector((state) => state.orders)
+  const allInstruments = useSelector((state) => state.allInstruments)
 
-  const [orders, setOrders] = useState('');
-  const [estado, setEstado] = useState(orders?.status)
+  useEffect(() => {
+    dispatch(allOrders())
+    dispatch(getAllProducts())
+  }, [dispatch])
 
-  // useEffect(() => {
-  //   dispatch(getUsers())
-  // }, [])
+  const getPrice = (products) => {
+    const instrument = []
+    products.forEach(element => {
+      instrument.push({inst: allInstruments.find(item => item._id === element.products), quant: element.quantity})
+    });
+    let total = 0
+    instrument.forEach(e => {
+      total += (e.inst ? e.inst.price : 0) * e.quant
+    })
+    return total
+  }
 
-
+  const getProfit = (price) => {
+    let total = getPrice(price)
+    let profit = 0
+    return profit += total * 0.012
+  }
+  
   return (
     <React.Fragment>
       <Title>Recent Orders</Title>
@@ -75,27 +45,24 @@ export default function Orders() {
         <TableHead>
           <TableRow>
             <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
+            <TableCell>User</TableCell>
+            <TableCell>Status</TableCell>
+            <TableCell>Estimated Profit</TableCell>
             <TableCell align="right">Sale Amount</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
+          {allOrder.map((row, idx) => (row.status !== "cancelled" &&
+            <TableRow key={idx}>
+              <TableCell>{row.createdAt.toString().slice(0,10)}</TableCell>
+              <TableCell>{row.user ? row.user.username : "null"}</TableCell>
+              <TableCell>{row.status}</TableCell>
+              <TableCell>{`$${(getProfit(row.products)).toFixed(2)}`}</TableCell>
+              <TableCell align="right">{`$${(getPrice(row.products)).toFixed(2)}`}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
-      </Link>
     </React.Fragment>
   );
 }
