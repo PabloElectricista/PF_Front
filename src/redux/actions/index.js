@@ -16,6 +16,8 @@ export const CREATE_CONTACT = "CREATE_CONTACT";
 export const SHOW_ALERT = "SHOW_ALERT";
 export const ALL_ORDERS = "ALL_ORDERS";
 export const GET_ALL_USERS = "GET_ALL_USERS";
+export const GET_USER_BY_ID = "GET_USER_BY_ID";
+export const UPDATE_USER = "UPDATE_USER";
 
 
 
@@ -35,11 +37,20 @@ export const getAllProducts = () => {
 export const getAllUsers = () => {
     return async function (dispatch) {
         const users = await axios('/users');
-        console.log(users)
+      
 
         return dispatch({
             type: GET_ALL_USERS,
             payload: users.data
+        });
+    };
+};
+export const getUserById = (id) => {
+    return async function (dispatch) {
+        const user = await axios("/users/"+ id );
+        return dispatch({
+            type: GET_USER_BY_ID,
+            payload: user.data
         });
     };
 };
@@ -74,6 +85,17 @@ export const updateProduct = (instrumentItem) => {
             instrumentItem);
         return dispatch({
             type: UPDATE_PRODUCT,
+            payload: response.data
+        });
+    };
+};
+
+export const putUser = (id, payload) => {
+    return async function (dispatch) {
+        const response = await axios.put(`/users/${id}`,
+            payload);
+        return dispatch({
+            type: UPDATE_USER,
             payload: response.data
         });
     };

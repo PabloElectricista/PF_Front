@@ -22,6 +22,8 @@ import StripeComponent from './components/StripeComponent/StripeComponent';
 import ShoopingCart from "./components/ShoppingCart";
 import History from "./components/History/History";
 import UserControl from './components/UserControl/UserControl';
+import UserDetail from './components/UserControl/UserDetail';
+import UserEdit from './components/UserControl/UserEdit';
 
 function App() {
 
@@ -46,6 +48,8 @@ function App() {
                 <Route exact path='/cart' element={<ShoopingCart/>}/>
                 <Route exact path='/admin/*' element={<Dashboard/>}/>
                 <Route exact path='/admin/usercontrol' element={<UserControl/>}/>
+                <Route exact path='/admin/usercontrol/userdetail/:id' element={<UserDetail/>}/>
+                <Route exact path='/admin/usercontrol/userdetail/userEdit/:id' element={<UserEdit/>}/>
                 <Route exact path='/history' element={<History/>}/>
                 <Route path='/stripe' element={<StripeComponent/>}/>
                 <Route path='*' element={<NotFound/>}/>

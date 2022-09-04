@@ -71,7 +71,7 @@ useEffect(()=>{
         users.map( u => {
           return(
           <div class="card">
-            <UsersCard username={u && u.username} email={u && u.email} id={u && u._id} />
+            <UsersCard username={u && u.username} email={u && u.email} _id={u && u._id} />
           </div>)
 
         })
