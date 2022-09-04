@@ -6,13 +6,14 @@
 
 .navbar-brand {
     color: #169E85 !important;
-    font-family: 'Satisfy', cursive;
+    font-family: 'Satisfy', cursive !important;
     font-size: 20px !important;
     font-weight: 600 !important;
+    text-transform: none !important;
 }
 
 .navbar {
-    height: 68px !important;
+    text-transform: none !important;
 }
 
 .nav-link {
@@ -28,6 +29,8 @@
     color: #169E85 !important;
     border-color: #169E85 !important;
     font-weight: 600 !important;
+    text-transform: none !important;
+    padding: 0.6em .8em !important;
 }
 
 .btn-outline-success:hover {

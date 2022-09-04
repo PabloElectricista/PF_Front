@@ -1,21 +1,27 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable react-hooks/exhaustive-deps */
+// React utilities
 import React, {useEffect} from "react";
 import {getProductById} from "../../redux/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
-import './ProductDetail.css';
+// Components
 import Loading from "../../components/Loading/Loading";
-import Carousel from "react-bootstrap/Carousel";
 import ReviewList from "../../components/ReviewList";
 import ReviewForm from "../../components/ReviewForm";
+// Styles
+import Carousel from "react-bootstrap/Carousel";
+import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import './ProductDetail.css';
 
 function ProductDetail() {
 
-    const dispatch = useDispatch();
-    const instrumentItem = useSelector((state) => state.retrievedInstrument);
-    const {id} = useParams();
+    // Hooks
+    const { id } = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();    
+    const instrumentItem = useSelector((state) => state.retrievedInstrument);
 
     useEffect(() => {
         if (!instrumentItem || (id !== instrumentItem._id && !instrumentItem.error)) {
@@ -23,6 +29,7 @@ function ProductDetail() {
         }
     }, [dispatch, instrumentItem, id])
 
+    // Go to edit the product
     function handleEdit() {
         navigate(`/edit/${id}`);
     }
@@ -46,10 +53,10 @@ function ProductDetail() {
             instrumentItem.image.map((imageItem, index) => {
                 return <Carousel.Item interval={3000} key={index}>
                             <img className="imageCarousel"
-                                 src={imageItem}
-                                 alt={index}
+                                src={imageItem}
+                                alt={index}
                             />
-                       </Carousel.Item>
+                        </Carousel.Item>
             })
         );
     }
@@ -95,15 +102,67 @@ function ProductDetail() {
     }
 
     return (
-        <div>
-            <div className='Details'>
-                <h1>Product Details</h1>
-                {renderInstrument()}
+        (!instrumentItem || (id !== instrumentItem._id && !instrumentItem.error)) ? <Loading /> :
+        <div className="containerDetails">
+            <div className="principalData">
+                <Carousel variant="dark" >
+                    {
+                        instrumentItem.image.map((imageItem, index) => {
+                            return(
+                                <Carousel.Item interval={3000} key={index}>
+                                    {
+                                        imageItem ? <img className="imageDetail"
+                                            src={imageItem}
+                                            alt={instrumentItem.name}
+                                        /> : <Loading />
+                                    }
+                                    
+                                </Carousel.Item>
+                            ) 
+                        })
+                    }
+                </Carousel>
+
+                <div className="productData">
+                    <h3>{instrumentItem.name}</h3>
+                    <p>{instrumentItem.description}</p>
+                    <ul>
+                        <div className="listProductDetail">
+                            <li><b>Brand:</b> {instrumentItem.brand}</li>
+                            <li><b>Stock:</b> {instrumentItem.stock}</li>
+                            <li><b>Condition:</b> {instrumentItem.status}</li>
+                        </div>
+                        <div className="listProductDetail">
+                            <li><b>Color:</b> {instrumentItem.color[0].toUpperCase() + instrumentItem.color.substring(1)}</li>
+                            <li><b>Category:</b> </li>
+                            <li><b>Location:</b> {instrumentItem.location}</li>
+                        </div>
+                    </ul>
+                </div>
+
+                <div className="productsOptions">
+                    <div className="share-favorite">
+                        <p><ShareOutlinedIcon /> Share</p>
+                        <p><FavoriteBorderOutlinedIcon /> Favorite</p>
+                    </div>
+                    
+                    <div className="detailPayment">
+                        <h5>${instrumentItem.price}</h5>
+                        <div className="formPayment">Aca iria el form donde puedes elegir
+                        la cantidad e ir a comprarlo o al carrito</div>
+                    </div>
+                </div>
             </div>
             <ReviewForm productId={id}/>
             <ReviewList productId={id}/>
         </div>
     );
 }
+
+//             <div className='Details'>
+//             {renderInstrument()}
+//             </div>
+//             <ReviewForm productId={id}/>
+//             <ReviewList productId={id}/> 
 
 export default ProductDetail;
