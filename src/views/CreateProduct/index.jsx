@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react"
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { createProduct} from '../../redux/actions'
 import { useDispatch,  } from 'react-redux'
 import AlertMessage from "../../components/Alerts/AlertMessage";

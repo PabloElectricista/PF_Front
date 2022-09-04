@@ -4,22 +4,28 @@ import { BsCartFill, BsStarFill } from 'react-icons/bs';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 
-export default function ProductCard({ id, name, price, rating, image, brand }) {
 
+export default function ProductCard({ id, name, price, rating, image, brand , handleOpen}) {
+
+
+  
   const addToFav = () => {
     let favs = JSON.parse(localStorage.getItem('favList'))
     if (!favs) {
       favs = [{ id, name, price, rating, image, brand }]
       localStorage.setItem('favList', JSON.stringify(favs))
+      handleOpen(true)
       return
-    }    
+    }
     if (favs.length < 10 && favs.every(item => item.id !== id)) {
       favs.push({ id, name, price, rating, image, brand })
       localStorage.setItem('favList', JSON.stringify(favs))
+      handleOpen(true)
       return
     }
-    alert("Can't add the item, is alredy in the FavList or you have 10 Favs.")
+    handleOpen(true)
   }
+
   const addToCart = () => {
     let cart = JSON.parse(localStorage.getItem('cartList'))
     if (cart) {
@@ -31,6 +37,7 @@ export default function ProductCard({ id, name, price, rating, image, brand }) {
     }
     localStorage.setItem('totalPrice', JSON.stringify(price + JSON.parse(localStorage.getItem('totalPrice'))))
     localStorage.setItem('cartList', JSON.stringify(cart))
+    handleOpen(true)
   }
 
   return (
@@ -54,9 +61,10 @@ export default function ProductCard({ id, name, price, rating, image, brand }) {
           </ListGroup.Item>
         </ListGroup>
       </Card.Body>
+
       <div className='containerButton'>
         <BsStarFill className='CardIcon' onClick={addToFav} />
-        <BsCartFill className='CardIcon' onClick={addToCart}/>
+        <BsCartFill className='CardIcon' onClick={addToCart} />
       </div>
     </Card>
   )

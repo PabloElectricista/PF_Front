@@ -15,7 +15,11 @@ export default function UserProducts() {
 
 
   if (isAuthenticated) {
-    const myProducts = products.filter(product => product.user === user.sub.slice(user.sub.indexOf("|") + 1))
+    const myProducts = products.filter(product => product.user ? product.user._id : null === user.sub.slice(user.sub.indexOf("|") + 1))
+    console.log(user.sub.slice(user.sub.indexOf("|") + 1))
+    console.log(products.map(e => {
+      return e.user
+    }))
     if (myProducts.length === 0) {
       return (
         <h2>You have no products published</h2>

@@ -20,12 +20,9 @@ import React from "react";
 import {useSelector} from "react-redux";
 import StripeComponent from './components/StripeComponent/StripeComponent';
 import ShoopingCart from "./components/ShoppingCart";
-import History from "./components/History/History";
 import UserControl from './components/UserControl/UserControl';
 import UserDetail from './components/UserControl/UserDetail';
 import UserEdit from './components/UserControl/UserEdit';
-import UserData from './components/UserProfile/UserData';
-import UserEditData from './components/UserProfile/UserEditData';
 
 function App() {
 
@@ -52,9 +49,8 @@ function App() {
                 <Route exact path='/admin/usercontrol' element={<UserControl/>}/>
                 <Route exact path='/admin/usercontrol/userdetail/:id' element={<UserDetail/>}/>
                 <Route exact path='/admin/usercontrol/userdetail/userEdit/:id' element={<UserEdit/>}/>
-                <Route exact path='/history' element={<History/>}/>
                 <Route path='/stripe' element={<StripeComponent/>}/>
-                {/* <Route path='/profile/data' element={<UserData/>}/> */}
+
                 {/* <Route path='/profile/data/edit' element={<UserEditData/>}/> */}
                 <Route path='*' element={<NotFound/>}/>
             </Routes>
