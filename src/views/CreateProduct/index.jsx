@@ -2,7 +2,6 @@ import { useAuth0 } from "@auth0/auth0-react"
 import { useState, useEffect } from 'react'
 import { createProduct} from '../../redux/actions'
 import { useDispatch,  } from 'react-redux'
-import AlertMessage from "../../components/Alerts/AlertMessage";
 import './CreateProduct.css'
 import { useNavigate } from "react-router-dom";
 
@@ -33,10 +32,10 @@ export default function CreateProduct() {
 function getUser(){
     const index = user.sub.indexOf("|");
     const userId = user.sub.substring(index + 1);
-    const userName= user.given_name ? user.name : user.nickname; 
+     
    return{ 
     user: userId, 
-    userName: userName
+    
    }
 }
    
@@ -135,15 +134,16 @@ const uploadImage = async (e) => {
       image: aux,
     });
 }
-   
+
 
 function handleSubmit(e) {
     e.preventDefault();
     if(error.name === null && error.category === null && error.color === null && 
     error.price === null && error.stock === null && 
     error.brand === null){
+
     
-   dispatch(createProduct(inputForm, getUser()))
+   dispatch(createProduct({...getUser(),...inputForm }))
     alert('Successfully created')
     navigate("/home");
     setInputForm({
@@ -169,9 +169,9 @@ return (
 
     <div>
       {!isAuthenticated && !isAuthenticated ? (
-        <div>
-            <AlertMessage/>   
-        </div>
+        alert('You must to be logued to continue'),
+        navigate("/home")
+        
     ) : (
     <div id='container-create'>
         <div id='cont-title-form'>
@@ -307,6 +307,7 @@ return (
                     <div id='cont-btn-submit'>
                         <button className="btn btn-secondary">Sell Product</button>
                     </div>
+                   
 
                 </div>
 
