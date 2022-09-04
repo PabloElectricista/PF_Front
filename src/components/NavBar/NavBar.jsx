@@ -40,16 +40,14 @@ export default function NavBar() {
 
                 <SearchBar />
 
-                <div>
-                    {isAuthenticated ?
-                        <>
-                            <Link to="profile">
-                                <img className="ProfileImg" src={user.picture} alt="user" />
-                            </Link>
-                            <LogOutBtn />
-                        </>
-                        : (!isLoading && <LogInBtn />)}
-                </div>
+                {isAuthenticated ?
+                    <>
+                        <Link to="profile">
+                            <img className="ProfileImg" src={user.picture} alt="user" />
+                        </Link>
+                        <LogOutBtn />
+                    </>
+                    : (!isLoading && <LogInBtn />)}
                 <LightDarktn />
             </div>
         </nav>
