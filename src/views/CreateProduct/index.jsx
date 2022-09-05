@@ -1,11 +1,12 @@
 import { useAuth0 } from "@auth0/auth0-react"
 import { useDispatch, } from 'react-redux'
-import { useState } from 'react'
-import { createProduct} from '../../redux/actions'
-import { useDispatch,  } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { createProduct } from '../../redux/actions'
+import AlertMessage from "../../components/Alerts/AlertMessage";
 
 import './CreateProduct.css'
 import { useNavigate } from "react-router-dom";
+import { Alert, AlertTitle, Snackbar } from "@mui/material"
 
 export default function CreateProduct() {
 
@@ -30,7 +31,20 @@ export default function CreateProduct() {
     console.log(inputForm)
     console.log(isAuthenticated)
 
-
+    //-------------------------
+    //-------------------------
+    const [open, setOpen] = useState(!isAuthenticated);
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+    useEffect(()=>{
+        setOpen(!isAuthenticated)
+    },[isAuthenticated])
+    //-------------------------
+    //-------------------------
     function getUser() {
         const index = user.sub.indexOf("|");
         const userId = user.sub.substring(index + 1);
@@ -169,159 +183,157 @@ export default function CreateProduct() {
     }
 
 
-
-
-
     return (
 
         <div>
-            {/* {!isAuthenticated && !isAuthenticated ? (
-                alert('You must to be logued to continue'),
-                navigate("/home")
+            <Snackbar elevation={6} open={open} onClose={handleClose}>
+                <Alert onClose={handleClose}  variant='filled' severity="warning" sx={{ width: '100%' }}>
+                    <AlertTitle><strong>Warning</strong></AlertTitle>
+                    <strong>must be loged to submit a product</strong>
+                </Alert>
+            </Snackbar>
+            <div id='container-create'>
+                <div id='cont-title-form'>
+                    <h1>Post your sale!</h1>
+                </div>
+                <form onSubmit={(e) => { handleSubmit(e) }}>
 
-            ) : ( */}
-                <div id='container-create'>
-                    <div id='cont-title-form'>
-                        <h1>Post your sale!</h1>
-                    </div>
-                    <form onSubmit={(e) => { handleSubmit(e) }}>
+                    <div id='form-cont-left'>
+                        <div id='input-name' className='form-inputs'>
+                            <label>* Name:</label>
+                            <input
+                                type='text'
+                                value={inputForm.name}
+                                name='name'
+                                onChange={(e) => { handleChange(e) }} />
+                            {error.name && (
+                                <p>{error.name}</p>)}
 
-                        <div id='form-cont-left'>
-                            <div id='input-name' className='form-inputs'>
-                                <label>* Name:</label>
-                                <input
-                                    type='text'
-                                    value={inputForm.name}
-                                    name='name'
-                                    onChange={(e) => { handleChange(e) }} />
-                                {error.name && (
-                                    <p>{error.name}</p>)}
+                        </div>
 
-                            </div>
+                        <div id='input-dsc' className='form-inputs'>
+                            <label>Description:</label>
+                            <input
+                                type='text'
+                                value={inputForm.description}
+                                name='description'
+                                onChange={(e) => { handleChange(e) }} />
 
-                            <div id='input-dsc' className='form-inputs'>
-                                <label>Description:</label>
-                                <input
-                                    type='text'
-                                    value={inputForm.description}
-                                    name='description'
-                                    onChange={(e) => { handleChange(e) }} />
+                        </div>
 
-                            </div>
+                        <div id='input-name' className='form-inputs'>
+                            <label>*Category:</label>
+                            <select onChange={(e) => { handleSelect(e) }} placeholder="-Select at least one-" >
 
-                            <div id='input-name' className='form-inputs'>
-                                <label>*Category:</label>
-                                <select onChange={(e) => { handleSelect(e) }} placeholder="-Select at least one-" >
+                                <option value="default"> -Select one</option>
+                                <option value="Wind"> Wind </option>
+                                <option value="Electric"> Electric </option>
+                                <option value="Percussion"> Percussion </option>
+                                <option value="String"> String </option>
+                            </select>
+                        </div>
 
-                                    <option value="default"> -Select one</option>
-                                    <option value="Wind"> Wind </option>
-                                    <option value="Electric"> Electric </option>
-                                    <option value="Percussion"> Percussion </option>
-                                    <option value="String"> String </option>
-                                </select>
-                            </div>
+                        <div>
+
 
                             <div>
-
-
-                                <div>
-                                    <label>*Image:</label>
-                                    <input
-                                        type='file'
-                                        id='file'
-                                        name='img'
-                                        onChange={uploadImage}
-                                    />
-                                </div>
-                                <br />
-                            </div>
-
-
-                            <div id='input-name' className='form-inputs'>
-                                <label>Color:</label>
-                                <select onChange={(e) => { handleSelectC(e) }}>
-
-                                    <option value="default"> -Select at least one</option>
-                                    <option value="Yellow "> Yellow </option>
-                                    <option value="Green"> Green </option>
-                                    <option value="Purple"> Purple </option>
-                                    <option value="Brown"> Brown </option>
-                                    <option value="Orange"> Orange </option>
-                                    <option value="Lightblue"> Lightblue </option>
-                                    <option value="Pink"> Pink </option>
-                                    <option value="Gray"> Gray </option>
-                                    <option value="White"> White </option>
-                                    <option value="Black"> Black </option>
-                                    <option value="Other"> Other </option>
-                                    <option value="Art Graph"> Art Graph </option>
-
-                                </select>
-                            </div>
-
-
-                            <div id='input-name' className='form-inputs'>
-                                <label>Price:</label>
+                                <label>*Image:</label>
                                 <input
-                                    type='text'
-                                    value={inputForm.price}
-                                    name='price'
-                                    onChange={(e) => { handleChange(e) }} />
-                                {error.price && (
-                                    <p>{error.price}</p>
-                                )}
-
-
+                                    type='file'
+                                    id='file'
+                                    name='img'
+                                    onChange={uploadImage}
+                                />
                             </div>
-
-                            <div id='input-stk' className='form-inputs'>
-                                <label>*stock:</label>
-                                <input
-                                    type='number'
-                                    value={inputForm.stock}
-                                    name='stock'
-                                    onChange={(e) => { handleChange(e) }} />
-                                {error.stock && (
-                                    <p>{error.stock}</p>
-                                )}
+                            <br />
+                        </div>
 
 
-                            </div>
+                        <div id='input-name' className='form-inputs'>
+                            <label>Color:</label>
+                            <select onChange={(e) => { handleSelectC(e) }}>
 
-                            <div id='input-brn' className='form-inputs'>
-                                <label >Brand:</label>
-                                <input
-                                    type='text'
-                                    value={inputForm.brand}
-                                    name='brand'
-                                    onChange={(e) => { handleChange(e) }} />
-                                {error.brand && (
-                                    <p>{error.brand}</p>
-                                )}
+                                <option value="default"> -Select at least one</option>
+                                <option value="Yellow "> Yellow </option>
+                                <option value="Green"> Green </option>
+                                <option value="Purple"> Purple </option>
+                                <option value="Brown"> Brown </option>
+                                <option value="Orange"> Orange </option>
+                                <option value="Lightblue"> Lightblue </option>
+                                <option value="Pink"> Pink </option>
+                                <option value="Gray"> Gray </option>
+                                <option value="White"> White </option>
+                                <option value="Black"> Black </option>
+                                <option value="Other"> Other </option>
+                                <option value="Art Graph"> Art Graph </option>
+
+                            </select>
+                        </div>
 
 
-                            </div>
-
-                            <div id='input-name' className='form-inputs'>
-                                <label>Status:</label>
-                                <select onChange={(e) => { handleSelectS(e) }} placeholder="-Select at least one-" >
-
-                                    <option value="default"> -Select one</option>
-                                    <option value="New"> New </option>
-                                    <option value="Used"> Used </option>
-                                </select>
-                            </div>
-
-                            <div id='cont-btn-submit'>
-                                <button className="btn btn-secondary">Sell Product</button>
-                            </div>
+                        <div id='input-name' className='form-inputs'>
+                            <label>Price:</label>
+                            <input
+                                type='text'
+                                value={inputForm.price}
+                                name='price'
+                                onChange={(e) => { handleChange(e) }} />
+                            {error.price && (
+                                <p>{error.price}</p>
+                            )}
 
 
                         </div>
 
-                    </form>
+                        <div id='input-stk' className='form-inputs'>
+                            <label>*stock:</label>
+                            <input
+                                type='number'
+                                value={inputForm.stock}
+                                name='stock'
+                                onChange={(e) => { handleChange(e) }} />
+                            {error.stock && (
+                                <p>{error.stock}</p>
+                            )}
 
-                </div>
-                
+
+                        </div>
+
+                        <div id='input-brn' className='form-inputs'>
+                            <label >Brand:</label>
+                            <input
+                                type='text'
+                                value={inputForm.brand}
+                                name='brand'
+                                onChange={(e) => { handleChange(e) }} />
+                            {error.brand && (
+                                <p>{error.brand}</p>
+                            )}
+
+
+                        </div>
+
+                        <div id='input-name' className='form-inputs'>
+                            <label>Status:</label>
+                            <select onChange={(e) => { handleSelectS(e) }} placeholder="-Select at least one-" >
+
+                                <option value="default"> -Select one</option>
+                                <option value="New"> New </option>
+                                <option value="Used"> Used </option>
+                            </select>
+                        </div>
+
+                        <div id='cont-btn-submit'>
+                            <button className="btn btn-secondary">Sell Product</button>
+                        </div>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+
         </div>
     )
 }
