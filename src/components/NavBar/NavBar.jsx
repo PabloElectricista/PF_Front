@@ -46,7 +46,7 @@ export default function NavBar() {
                 {isAuthenticated ?
                     <>
                         <img className="ProfileImg" src={user.picture} alt="user" />
-                        <NavDropdown title="Categorías" id="navbarScrollingDropdown">
+                        <NavDropdown title={user.nickname} id="navbarScrollingDropdown">
                             <NavDropdown.Item href="#">
                                 <Link to='/profile/data'className="dropDown" >Personal Data</Link>
                             </NavDropdown.Item>

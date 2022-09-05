@@ -1,8 +1,9 @@
 import { getAllProducts, getMyOrders } from '../../redux/actions';
 import { useDispatch, useSelector } from "react-redux"
 import { useAuth0 } from '@auth0/auth0-react';
-import UserShopHistoryCard from './ShopHistoryCard';
 import { useEffect } from 'react';
+import Loading from '../Loading/Loading';
+import NothingFound from '../NothingFound/NothingFound';
 
 export default function ShopHistory() {
   const { user, isAuthenticated } = useAuth0()
@@ -18,16 +19,12 @@ export default function ShopHistory() {
 
   if (isAuthenticated) {
     // const mapOrders = myOrders.map(order => <>order</>)
-    console.log(myOrders);
-    if (myOrders.length === 0){
-      return (<h1>you have no orders</h1>)
+    if (myOrders.length === 0) {
+      return (<NothingFound />)
     }
-      return (
-        // { mapOrders }
-        <></>
-      )
   }
+
   return (
-    <h1>you have no orders</h1>
+    <Loading />
   )
 }
