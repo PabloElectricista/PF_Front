@@ -7,14 +7,16 @@ import SearchBar from "../SearchBar/SearchBar";
 import LogInBtn from "../LogInBtn";
 import LogOutBtn from "../LogOutBtn";
 import LightDarktn from "../LightDarkBtn";
+import { BsCartFill, BsStarFill } from 'react-icons/bs';
+import { GiGuitarBassHead } from 'react-icons/gi';
 // Files and extra code
 import goode_logo from '../../components/img/assets/ChuckBerry.png'
-import toTheTop from '../../customScripts';
 // Auth0
 import { useAuth0 } from '@auth0/auth0-react';
 // Style
 import 'bootstrap/dist/css/bootstrap.css';
 import './NavBar.css';
+import { NavDropdown } from "react-bootstrap";
 
 export default function NavBar() {
 
@@ -33,18 +35,31 @@ export default function NavBar() {
                 </div>
 
                 <div className="navbar-nav hstack gap-3">
-                    <Link to='/home' className="nav-link"  >Products</Link>
-                    <Link to='/contact' className="nav-link">Contact us</Link>
-                    <Link to='/create' className="nav-link" >Sell</Link>
+                    <Link to='/home' className="nav-link"  ><GiGuitarBassHead className='CardIcon' /></Link>
+                    <Link to='/favorites' className="nav-link"><BsStarFill className='CardIcon' /></Link>
+                    <Link to='/cart' className="nav-link"><BsCartFill className='CardIcon' /></Link>
+                    <Link to='/create' className="nav-link sellStyle" ><strong>Sell</strong></Link>
                 </div>
 
                 <SearchBar />
 
                 {isAuthenticated ?
                     <>
-                        <Link to="profile">
-                            <img className="ProfileImg" src={user.picture} alt="user" />
-                        </Link>
+                        <img className="ProfileImg" src={user.picture} alt="user" />
+                        <NavDropdown title="Categorías" id="navbarScrollingDropdown">
+                            <NavDropdown.Item href="#">
+                                <Link to='/profile/data'className="dropDown" >Personal Data</Link>
+                            </NavDropdown.Item>
+                            <NavDropdown.Item href="#">
+                                <Link to='/profile/sold' className="dropDown">Sales History</Link>
+                            </NavDropdown.Item>
+                            <NavDropdown.Item href="#">
+                                <Link to='/profile/shop-history'  className="dropDown">Shopping history</Link>
+                            </NavDropdown.Item>
+                            <NavDropdown.Item href="#">
+                                <Link to='/profile/my-products'  className="dropDown">My Products</Link>
+                            </NavDropdown.Item>
+                        </NavDropdown>
                         <LogOutBtn />
                     </>
                     : (!isLoading && <LogInBtn />)}

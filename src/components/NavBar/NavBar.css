@@ -67,3 +67,17 @@
 body.Dark .navbar {
     background: linear-gradient(45deg, #0f7461, black, #0f7461);
 }
+
+.sellStyle{
+    cursor: pointer;
+    font-weight: 900 !important;
+    font-size: 1.4rem !important;
+    color: #169E85 !important;
+    transition: all 0.3s !important;
+    stroke: #0f7461 !important;
+}
+
+.dropDown{
+    font-size: 1.1rem;
+    font-weight: 900;
+}

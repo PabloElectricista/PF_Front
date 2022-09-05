@@ -41,9 +41,9 @@ function App() {
                 <Route path='/edit/:id' element={<ProductEdit/>}/>
                 <Route exact path='/create' element={<CreateProduct/>}/>
                 <Route exact path='/profile/*' element={<UserProfile/>}/>
-                <Route exact path='/favorites' element={<Favorites/>}/>
                 <Route exact path='/payment' element={<Payment/>}/>
                 <Route exact path='/about' element={<AboutUs/>}/>
+                <Route exact path='/favorites' element={<Favorites/>}/>
                 <Route exact path='/cart' element={<ShoopingCart/>}/>
                 <Route exact path='/admin/*' element={<Dashboard/>}/>
                 <Route exact path='/admin/usercontrol' element={<UserControl/>}/>
