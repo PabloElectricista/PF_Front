@@ -4,6 +4,7 @@ import UserProducts from "../../components/UserProducts/UserProducts";
 import SalesHistory from "../../components/SalesHistory/SalesHistory";
 import NotFound from "../NotFound";
 import UserProf from "../../components/UserProfile/UserProf";
+import UserEditData from "../../components/UserProfile/UserEditData";
 
 export default function UserProfile() {
 
@@ -14,6 +15,7 @@ export default function UserProfile() {
         <Route exact path='/my-products' element={<UserProducts />} />
         <Route exact path='/sold' element={<SalesHistory />} />
         <Route exact path='/data' element={<UserProf />} />
+        <Route exact path='/data/edit' element={<UserEditData />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>

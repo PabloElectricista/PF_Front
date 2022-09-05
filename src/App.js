@@ -23,6 +23,7 @@ import ShoopingCart from "./components/ShoppingCart";
 import UserControl from './components/UserControl/UserControl';
 import UserDetail from './components/UserControl/UserDetail';
 import UserEdit from './components/UserControl/UserEdit';
+import UserEditData from './components/UserProfile/UserEditData';
 
 function App() {
 
@@ -50,8 +51,6 @@ function App() {
                 <Route exact path='/admin/usercontrol/userdetail/:id' element={<UserDetail/>}/>
                 <Route exact path='/admin/usercontrol/userdetail/userEdit/:id' element={<UserEdit/>}/>
                 <Route path='/stripe' element={<StripeComponent/>}/>
-
-                {/* <Route path='/profile/data/edit' element={<UserEditData/>}/> */}
                 <Route path='*' element={<NotFound/>}/>
             </Routes>
             <Footer/>

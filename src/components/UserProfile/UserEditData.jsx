@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 // import { useNavigate } from 'react-router-dom'
 import { Button } from '@mui/material'
-import { putUser, getAllUsers } from '../../redux/actions'
+import { putUser, getAllUsers, getUserById } from '../../redux/actions'
+import { useAuth0 } from '@auth0/auth0-react';
+import Loading from '../Loading/Loading';
+import './UserProf.css'
+
 
 const UserEditData = () => {
   const paises = [
@@ -202,8 +206,8 @@ const UserEditData = () => {
     'Zambia',
     'Zimbabue',
   ]
-  const allUsers = useSelector((state) => state.users)
-  const userId = allUsers.filter((u) => u._id === allUsers._id)
+  const { isAuthenticated, isLoading, user } = useAuth0()
+  const userDetail = useSelector((state) => state.userDetail)
   const dispatch = useDispatch()
   // const navigate = useNavigate()
   const [errors, setErrors] = useState({})
@@ -216,51 +220,59 @@ const UserEditData = () => {
     address: '',
     postal: '',
   })
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(getUserById(user.sub.slice(user.sub.indexOf("|") + 1)))
+      console.log(user,"despachado");
+    }
+  }, [isAuthenticated])
+
+
 
   useEffect(() => {
     setInput({
       ...input,
-      name: userId[0].name,
-      lastname: userId[0].lastname,
-      country: userId[0].country,
-      cuil: userId[0].cuil,
-      phone: userId[0].phone,
-      address: userId[0].address,
-      postal: userId[0].postal,
+      name: userDetail.name,
+      lastname: userDetail.lastname,
+      country: userDetail.country,
+      cuil: userDetail.cuil,
+      phone: userDetail.phone,
+      address: userDetail.address,
+      postal: userDetail.postal,
     })
-  })
+  }, [])
 
-  useEffect(() => {
-    setErrors(validate(input))
-  }, [input])
+  // useEffect(() => {
+  //   setErrors(validate(input))
+  // }, [input])
 
-  const validate = (input) => {
-    const errors = {}
+  // const validate = (input) => {
+  //   const errors = {}
 
-    if (input.name && !input.name.match(/^[a-zA-Z ]*$/g)) {
-      errors.name = 'only letters*'
-    }
-    if (input.lastname && !input.lastname.match(/^[a-zA-Z ]*$/g)) {
-      errors.lastname = 'only letters*'
-    }
-    if (input.cuil && !input.cuil.match(/^[\d]{1,3}\.?[\d]{3,3}\.?[\d]{3,3}$/)) {
-      errors.cuil = 'Must be a valid ID number*'
-    }
-    if (
-      input.phone &&
-      !input.phone.match(/^\(?\d{2}\)?[\s\.-]?\d{4}[\s\.-]?\d{4}$/)
-    ) {
-      errors.phone = 'Must be a valid phone number*'
-    }
-    if (!input.address.match(/^[A-Za-z0-9\s]+$/g) && input.address) {
-      errors.address = 'Symbols are not allowed*'
-    }
-      if (input.postal && !input.postal.match(/^(\d{4})$/g)) {
-      errors.postal ='Must be a valid ZIP Code*'
-    }
+  //   if (input.name && !input.name.match(/^[a-zA-Z ]*$/g)) {
+  //     errors.name = 'only letters*'
+  //   }
+  //   if (input.lastname && !input.lastname.match(/^[a-zA-Z ]*$/g)) {
+  //     errors.lastname = 'only letters*'
+  //   }
+  //   if (input.cuil && !input.cuil.match(/^[\d]{1,3}\.?[\d]{3,3}\.?[\d]{3,3}$/)) {
+  //     errors.cuil = 'Must be a valid ID number*'
+  //   }
+  //   if (
+  //     input.phone &&
+  //     !input.phone.match(/^\(?\d{2}\)?[\s\.-]?\d{4}[\s\.-]?\d{4}$/)
+  //   ) {
+  //     errors.phone = 'Must be a valid phone number*'
+  //   }
+  //   if (!input.address.match(/^[A-Za-z0-9\s]+$/g) && input.address) {
+  //     errors.address = 'Symbols are not allowed*'
+  //   }
+  //   if (input.postal && !input.postal.match(/^(\d{4})$/g)) {
+  //     errors.postal = 'Must be a valid ZIP Code*'
+  //   }
 
-    return errors
-  }
+  //   return errors
+  // }
 
   const handleChange = (e) => {
     setInput({
@@ -275,38 +287,39 @@ const UserEditData = () => {
     if (Object.values(errors).length > 0) {
       return alert(Object.values(errors))
     } else {
-      const id = allUsers._id
+      const id = userDetail._id
       dispatch(putUser(id, input))
       alert('Personal data updated', 'updateInfo')
-      setTimeout(function () {
-        dispatch(getAllUsers())
-      }, 500)
+      dispatch(getUserById())
     }
+  }
+  if (isLoading) {
+    return <Loading />
   }
 
   return (
-    <div>
-      <form  onSubmit={(e) => handleSubmit(e)}>
-        <legend>Personal Data</legend>
-        {/* <img src={userId[0].picture} alt='' /> */}
+    <div className="FormDiv">
+      <form className="FormDiv" onSubmit={(e) => handleSubmit(e)}>
+        <legend className="FormTextArea">Personal Data</legend>
+        <img className="pic" src={user.picture} alt='' />
         <div >
           <div >
-            <label htmlFor='username'>User:</label>
+            <label className="FormLabel" htmlFor='username'>User:</label>
             <input
               type='text'
               name='username'
-              value={userId[0].username}
+              value={user.username}
               readOnly
             />
           </div>
 
           <div>
-            <label htmlFor='email'>Email:</label>
-            <input type='text' name='email' value={userId[0].email} readOnly />
+            <label className="FormLabel" htmlFor='email'>Email:</label>
+            <input type='text' name='email' value={user.email} readOnly />
           </div>
 
           <div>
-            <label htmlFor='name'>Name:</label>
+            <label className="FormLabel" htmlFor='name'>Name:</label>
             <input
               type='text'
               name='name'
@@ -319,7 +332,7 @@ const UserEditData = () => {
           </div>
 
           <div>
-            <label htmlFor='lastname'>Lastname:</label>
+            <label className="FormLabel" htmlFor='lastname'>Lastname:</label>
             <input
               type='text'
               name='lastname'
@@ -332,7 +345,7 @@ const UserEditData = () => {
           </div>
 
           <div>
-            <label htmlFor='country'>Country:</label>
+            <label className="FormLabel" htmlFor='country'>Country:</label>
             <select
               name='country'
               onChange={(e) => handleChange(e)}
@@ -349,7 +362,7 @@ const UserEditData = () => {
           </div>
 
           <div>
-            <label htmlFor='cuil'>Identification Number:</label>
+            <label className="FormLabel" htmlFor='cuil'>Identification Number:</label>
             <input
               type='text'
               name='cuil'
@@ -362,7 +375,7 @@ const UserEditData = () => {
           </div>
 
           <div>
-            <label htmlFor='phone'>Phone:</label>
+            <label className="FormLabel" htmlFor='phone'>Phone:</label>
             <input
               type='text'
               name='phone'
@@ -375,7 +388,7 @@ const UserEditData = () => {
           </div>
 
           <div>
-            <label htmlFor='address'>Address:</label>
+            <label className="FormLabel" htmlFor='address'>Address:</label>
             <input
               type='text'
               name='address'
@@ -388,7 +401,7 @@ const UserEditData = () => {
           </div>
 
           <div>
-            <label htmlFor='postal'>ZIP Code:</label>
+            <label className="FormLabel" htmlFor='postal'>ZIP Code:</label>
             <input
               type='number'
               name='postal'
@@ -401,11 +414,12 @@ const UserEditData = () => {
           </div>
           <Button
             sx={{
-              color: 'black',
+              color: '#169E85',
               fontWeight: 'bold',
               backgroundColor: 'white',
             }}
-             type='submit'
+            type='submit'
+            className="SubmitBtn"
           >
             Actualizar
           </Button>
