@@ -29,6 +29,7 @@ export default function Home() {
 
   //-------------------------------
   //-------------------------------
+  // alert para los fav y cart
   const [added, setAdded] = useState(false);
   const [notAdded, setNotAdded] = useState(false);
 
