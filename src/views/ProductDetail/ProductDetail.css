@@ -1,68 +1,27 @@
-.Details h1 {
-    margin-left: 2.1em;
-}
-
-.detailsContainer {
-    border-radius: .5em;
-    background-color: white;
-    display: flex;
-    margin: 3em 5em;
-}
-
-.imageContainer {
-    border-radius: .5em;
-    width: 20rem;
-    margin: 1em 2em;
-}
-
-.detailsImage {
-    height: 100%;
-    width: 15rem;
-    object-fit: contain;
-}
-
-.productDetailCarousel {
-    width: 20rem;
-    height: 30rem;
-    transition: all ease 0.5s;
-    margin-bottom: 1rem;
-}
-
-.infoContainer {
-    margin: 1.5em;
-}
-
-.imageList {
-    margin: 2em;
-    display: grid;
-    grid-template-columns: auto auto auto;
-}
-
-.imageItem {
-    width: 40%;
-    margin: auto auto 1em;
-    height: auto;
-}
-
-/*  */
-
 .containerDetails {
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin: 1em 1.8em;
-    gap: 2em;
+    gap: 2.5em;
 }
 
 .containerDetails p, h3, h5, ul {
     margin-bottom: 0 !important;
 }
 
+.containerDetails .MuiDivider-root {
+    width: 65em;
+    opacity: .5 !important;
+    border: 1px solid black !important;
+}
+
 .principalData {
-    width: 100%;
+    width: 75em;
     height: 28em;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     background-color: white;
     box-shadow: .5em .5em 2em #282c34;
     padding: 1em 1.5em;
@@ -71,8 +30,13 @@
 }
 
 .principalData .carousel {
-    width: 20em;
-    height: 26em;
+    width: 20em !important;
+    height: 26em !important;
+}
+
+.principalData .MuiSkeleton-root {
+    width: 20em !important;
+    height: 26em !important;
 }
 
 .principalData .imageDetail {
@@ -89,13 +53,15 @@
     width: 30em;
 }
 
-.productData h3, p {
-    overflow: hidden;
+.productData h3 {
+    overflow: visible;
 }
 
 .productData p {
     font-size: .9em;
     width: 90%;
+    overflow:auto;
+    padding-right: 1em;
 }
 
 .productData ul {
@@ -119,6 +85,7 @@
 .productsOptions {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .productsOptions .MuiSvgIcon-root{
@@ -164,4 +131,15 @@
     padding: .5em;
     text-align: center;
     height: 80%;
+}
+
+.editButton {
+    display: flex;
+    margin-top: auto;
+    justify-content: center;
+    background-color: #169E85;
+    border-radius: 1em;
+    border: none;
+    color: white;
+    width: 30%;
 }

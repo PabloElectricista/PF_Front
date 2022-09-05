@@ -1,10 +1,22 @@
-import './Card.css'
+// React utilities
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { BsCartFill, BsStarFill } from 'react-icons/bs';
+// Styles
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Skeleton from '@mui/material/Skeleton';
+import './Card.css'
 
 export default function ProductCard({ id, name, price, rating, image, brand }) {
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+  }, [])
 
   const addToFav = () => {
     let favs = JSON.parse(localStorage.getItem('favList'))
@@ -36,7 +48,14 @@ export default function ProductCard({ id, name, price, rating, image, brand }) {
   return (
     <Card className="card" >
       <Link className='containCardImage' to={"/detail/" + id}>
-        <img className='cardImage' src={image} alt={name} />
+        {
+          !loading ? 
+          <img className='cardImage' src={image} alt={name} />
+          : <Skeleton             
+            variant='rectangular' 
+            animation="wave"
+          />
+        }
       </Link>
       <Card.Body className='containCardBody'>
         <Link to={"/detail/" + id}>

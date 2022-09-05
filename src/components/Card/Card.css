@@ -25,6 +25,12 @@
   width: 8rem;
 }
 
+.card .MuiSkeleton-root {
+  height: 200px !important;
+  width: 200px !important;
+  margin: 15px !important;
+}
+
 .containCardImage {
   margin: 1rem;
   width: 15rem;
@@ -48,9 +54,6 @@
   margin: 0.5em !important;
   width: 1.9em !important;
   height: 1.9em !important;
-  /* color: transparent !important; */
-  /* stroke: rgb(0, 0, 0);
-  stroke-width: 1px; */
   color: #169E85 !important;
 }
 

@@ -1,32 +1,46 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable react-hooks/exhaustive-deps */
 // React utilities
-import React, {useEffect} from "react";
-import {getProductById} from "../../redux/actions";
-import {useDispatch, useSelector} from "react-redux";
-import {useNavigate, useParams} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { getProductById } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 // Components
 import Loading from "../../components/Loading/Loading";
-import ReviewList from "../../components/ReviewList";
+import ReviewList from "../../components/ReviewList/ReviewList";
 import ReviewForm from "../../components/ReviewForm";
+// Auth0
+import { useAuth0 } from '@auth0/auth0-react';
 // Styles
 import Carousel from "react-bootstrap/Carousel";
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Divider from '@mui/material/Divider';
+import Skeleton from '@mui/material/Skeleton';
 import './ProductDetail.css';
 
-function ProductDetail() {
+export default function ProductDetail() {
+
+    // Auth0
+    const { isAuthenticated } = useAuth0()
 
     // Hooks
     const { id } = useParams();
     const navigate = useNavigate();
-    const dispatch = useDispatch();    
+    const dispatch = useDispatch();
     const instrumentItem = useSelector((state) => state.retrievedInstrument);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (!instrumentItem || (id !== instrumentItem._id && !instrumentItem.error)) {
             dispatch(getProductById(id));
         }
+        setTimeout(() => {
+            setLoading(false);
+        }, 1500);
     }, [dispatch, instrumentItem, id])
 
     // Go to edit the product
@@ -34,94 +48,46 @@ function ProductDetail() {
         navigate(`/edit/${id}`);
     }
 
-    function renderCategories() {
-        if (!instrumentItem ||
-            !instrumentItem.category ||
-            instrumentItem.category.length === 0) {
-            return 'N/A';
+    // Alert Logic 
+    const [open, setOpen] = React.useState(false);
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+    const handleClick = () => {
+        setOpen(true);
+    };
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
         }
-        return instrumentItem.category.join(', ');
-    }
-
-    function renderImageItem() {
-        if (!instrumentItem ||
-            !instrumentItem.image ||
-            instrumentItem.image.length === 0) {
-            return '';
-        }
-        return (
-            instrumentItem.image.map((imageItem, index) => {
-                return <Carousel.Item interval={3000} key={index}>
-                            <img className="imageCarousel"
-                                src={imageItem}
-                                alt={index}
-                            />
-                        </Carousel.Item>
-            })
-        );
-    }
-
-    function renderInstrument() {
-        if (!instrumentItem || (id !== instrumentItem._id && !instrumentItem.error)) {
-            return <Loading/>;
-        }
-        if (instrumentItem.error) {
-            return (
-                <h4 className='instrumentErrorMessage'>
-                    The requested instrument was not found.
-                </h4>
-            );
-        }
-
-        return (
-            <div className='detailsContainer'>
-                <div className="imageContainer">
-                    <Carousel className='productDetailCarousel' variant="dark">
-                        {renderImageItem()}
-                    </Carousel>
-                </div>
-                <div className="infoContainer">
-                    <h1>{instrumentItem.name}</h1>
-                    <p><b>Name: </b>{instrumentItem.name}</p>
-                    <p><b>Price: $</b>{instrumentItem.price}</p>
-                    <p><b>Description: </b>{instrumentItem.description}</p>
-                    <p><b>Stock: </b>{instrumentItem.stock}</p>
-                    <p><b>Color: </b>{instrumentItem.color}</p>
-                    <p><b>Categories: </b>{renderCategories()}</p>
-                    <p><b>Brand: </b>{instrumentItem.brand}</p>
-                    <p><b>Location: </b>{instrumentItem.location}</p>
-                    <p><b>Status: </b>{instrumentItem.status}</p>
-                    <button className='submitButton'
-                            type='button'
-                            onClick={() => handleEdit()}
-                    >Edit
-                    </button>
-                </div>
-            </div>
-        );
-    }
+        setOpen(false);
+    };
 
     return (
         (!instrumentItem || (id !== instrumentItem._id && !instrumentItem.error)) ? <Loading /> :
         <div className="containerDetails">
             <div className="principalData">
-                <Carousel variant="dark" >
-                    {
-                        instrumentItem.image.map((imageItem, index) => {
-                            return(
-                                <Carousel.Item interval={3000} key={index}>
-                                    {
-                                        imageItem ? <img className="imageDetail"
+                {
+                    !loading ? 
+                    <Carousel variant="dark" >
+                        {
+                            instrumentItem.image.map((imageItem, index) => {
+                                return(
+                                    <Carousel.Item interval={3000} key={index}>
+                                        <img className="imageDetail"
                                             src={imageItem}
                                             alt={instrumentItem.name}
-                                        /> : <Loading />
-                                    }
-                                    
-                                </Carousel.Item>
-                            ) 
-                        })
-                    }
-                </Carousel>
+                                        />
+                                    </Carousel.Item>
+                                ) 
+                            })
+                        }
+                    </Carousel>
+                    : <Skeleton             
+                        variant='circular' 
+                        animation="wave"
+                    />
+                }
 
                 <div className="productData">
                     <h3>{instrumentItem.name}</h3>
@@ -142,8 +108,15 @@ function ProductDetail() {
 
                 <div className="productsOptions">
                     <div className="share-favorite">
-                        <p><ShareOutlinedIcon /> Share</p>
+                        <CopyToClipboard text={window.location.href}>
+                            <p><ShareOutlinedIcon onClick={handleClick}/> Share</p>
+                        </CopyToClipboard>
                         <p><FavoriteBorderOutlinedIcon /> Favorite</p>
+                        <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+                                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                                Link copied to clipboard 
+                                </Alert>
+                        </Snackbar>
                     </div>
                     
                     <div className="detailPayment">
@@ -151,18 +124,21 @@ function ProductDetail() {
                         <div className="formPayment">Aca iria el form donde puedes elegir
                         la cantidad e ir a comprarlo o al carrito</div>
                     </div>
+
+                    {
+                        isAuthenticated ? 
+                        <button className='editButton'
+                            type='button'
+                            onClick={() => handleEdit()}
+                        >Edit
+                        </button>
+                        : null 
+                    }
                 </div>
             </div>
-            <ReviewForm productId={id}/>
+            <Divider />
             <ReviewList productId={id}/>
+            <ReviewForm productId={id}/>
         </div>
     );
 }
-
-//             <div className='Details'>
-//             {renderInstrument()}
-//             </div>
-//             <ReviewForm productId={id}/>
-//             <ReviewList productId={id}/> 
-
-export default ProductDetail;

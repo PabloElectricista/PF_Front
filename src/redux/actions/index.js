@@ -120,14 +120,11 @@ export function filteredIntruments(payload) {
 
 export function allOrders() {
     return async (dispatch) => {
-      const NewOrder = await axios.get(
-        'http://localhost:4000/orders'
-        )
-      
+        const NewOrder = await axios.get('/orders')
         return dispatch({
         type: ALL_ORDERS,
         payload: NewOrder.data,
-      })
+        })
     }
 }
 
