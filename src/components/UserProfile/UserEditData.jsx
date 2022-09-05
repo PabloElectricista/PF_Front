@@ -223,24 +223,24 @@ const UserEditData = () => {
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(getUserById(user.sub.slice(user.sub.indexOf("|") + 1)))
-      console.log(user,"despachado");
+      console.log(user, "despachado");
     }
   }, [isAuthenticated])
 
 
 
-  useEffect(() => {
-    setInput({
-      ...input,
-      name: userDetail.name,
-      lastname: userDetail.lastname,
-      country: userDetail.country,
-      cuil: userDetail.cuil,
-      phone: userDetail.phone,
-      address: userDetail.address,
-      postal: userDetail.postal,
-    })
-  }, [])
+  // useEffect(() => {
+  //   setInput({
+  //     ...input,
+  //     name: userDetail.username,
+  //     lastname: userDetail.userdata.lastname,
+  //     country: userDetail.userdata.country,
+  //     cuil: userDetail.userdata.cuil,
+  //     phone: userDetail.userdata.phone,
+  //     address: userDetail.userdata.address,
+  //     postal: userDetail.userdata.postal,
+  //   })
+  // }, [])
 
   // useEffect(() => {
   //   setErrors(validate(input))

@@ -10,8 +10,8 @@ import './Card.css'
 
 export default function ProductCard({ id, name, price, rating, image, brand, handleAdded, handleNotAdded }) {
 
-  const [loading, setLoading] = useState(true);
-  
+  // const [loading, setLoading] = useState(true);
+
   const addToFav = () => {
     let favs = JSON.parse(localStorage.getItem('favList'))
     if (favs) {
@@ -47,24 +47,24 @@ export default function ProductCard({ id, name, price, rating, image, brand, han
     handleAdded()
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500);
-  }, [])
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 1500);
+  // }, [])
 
 
   return (
     <Card className="card" >
       <Link className='containCardImage' to={"/detail/" + id}>
-        {
+        {/* {
           !loading ?
-            <img className='cardImage' src={image} alt={name} />
-            : <Skeleton
-              variant='rectangular'
-              animation="wave"
-            />
-        }
+          : <Skeleton
+          variant='rectangular'
+          animation="wave"
+          />
+        } */}
+        <img className='cardImage' src={image} alt={name} />
       </Link>
       <Card.Body className='containCardBody'>
         <Link to={"/detail/" + id}>
