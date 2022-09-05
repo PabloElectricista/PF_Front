@@ -29,18 +29,22 @@ export default function Home() {
 
   //-------------------------------
   //-------------------------------
-  const [open, setOpen] = useState(false);
+  const [added, setAdded] = useState(false);
+  const [notAdded, setNotAdded] = useState(false);
+
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-    setOpen(false);
+    setAdded(false);
+    setNotAdded(false)
   };
-  const handleOpen = () => {
-    setOpen(true)
+  const handleAdded = () => {
+    setAdded(true)
   }
-  //-------------------------------
-  //-------------------------------
+  const handleNotAdded = () => {
+    setNotAdded(true)
+  }
   //-------------------------------
   //-------------------------------
   
@@ -167,7 +171,8 @@ export default function Home() {
                           brand={instrument.brand}
                           rating={Math.floor((Math.random() * 6))}
                           image={instrument.image}
-                          handleOpen={handleOpen}
+                          handleAdded={handleAdded}
+                          handleNotAdded={handleNotAdded}
                         />
                       )
                     })
@@ -179,10 +184,16 @@ export default function Home() {
             : <NothingFound />}
         </div>
       }
-      <Snackbar open={open} autoHideDuration={1500} onClose={handleClose}>
+      <Snackbar open={added} autoHideDuration={1000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
         <AlertTitle>Success</AlertTitle>
         <strong>Added correctly</strong>
+        </Alert>
+      </Snackbar>
+      <Snackbar open={notAdded} autoHideDuration={1000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="warning" sx={{ width: '100%' }}>
+        <AlertTitle>Fail</AlertTitle>
+        <strong>List maximum size exceeded</strong>
         </Alert>
       </Snackbar>
     </>

@@ -5,31 +5,35 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 
-export default function ProductCard({ id, name, price, rating, image, brand , handleOpen}) {
+export default function ProductCard({ id, name, price, rating, image, brand, handleAdded, handleNotAdded }) {
 
 
-  
+
   const addToFav = () => {
     let favs = JSON.parse(localStorage.getItem('favList'))
-    if (!favs) {
+    if (favs) {
+      if (favs.length >= 30) {
+        handleNotAdded()
+        return
+      }
+      if (!favs.some(item => item.id === id)) {
+        favs.push({ id, name, price, rating, image, brand })
+      }
+    } else {
       favs = [{ id, name, price, rating, image, brand }]
-      localStorage.setItem('favList', JSON.stringify(favs))
-      handleOpen(true)
-      return
     }
-    if (favs.length < 10 && favs.every(item => item.id !== id)) {
-      favs.push({ id, name, price, rating, image, brand })
-      localStorage.setItem('favList', JSON.stringify(favs))
-      handleOpen(true)
-      return
-    }
-    handleOpen(true)
+    localStorage.setItem('favList', JSON.stringify(favs))
+    handleAdded()
   }
 
   const addToCart = () => {
     let cart = JSON.parse(localStorage.getItem('cartList'))
     if (cart) {
-      if (cart.length <= 10 && cart.every(item => item.id !== id)) {
+      if (cart.length >= 30) {
+        handleNotAdded()
+        return
+      }
+      if (!cart.some(item => item.id === id)) {
         cart.push({ id, name, price, rating, image, brand })
       }
     } else {
@@ -37,7 +41,7 @@ export default function ProductCard({ id, name, price, rating, image, brand , ha
     }
     localStorage.setItem('totalPrice', JSON.stringify(price + JSON.parse(localStorage.getItem('totalPrice'))))
     localStorage.setItem('cartList', JSON.stringify(cart))
-    handleOpen(true)
+    handleAdded()
   }
 
   return (
