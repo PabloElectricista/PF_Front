@@ -21,7 +21,7 @@ export default function Carrousel() {
         <img className="imageCarousel"
           src={imageTwo}
           alt="Second slide"
-          onClick={() => navigate("/detail/630ff284bb07c7c8ca7fca9a")} />
+          onClick={() => navigate("/detail/63004a6a329ff6b6923c5b39")} />
       </Carousel.Item>
 
       <Carousel.Item interval={3000}>

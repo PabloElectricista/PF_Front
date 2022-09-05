@@ -3,11 +3,11 @@ import './Card.css'
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function ShoopingCartItem() {
+export default function ShoppingCart() {
 
   const [cartItem, setCartItem] = useState(JSON.parse(localStorage.getItem('cartList')))
 
-  const deleteItem = (id) =>{
+  const deleteItem = (id) => {
     let arr = cartItem.filter(instrument => instrument.id !== id)
     localStorage.setItem('cartList', JSON.stringify(arr))
     setCartItem(arr)
@@ -21,7 +21,7 @@ export default function ShoopingCartItem() {
         </h4>
       )
     }
-    let cartItemMap = cartItem.map((instrument, idx) => <ShopCard 
+    let cartItemMap = cartItem.map((instrument, idx) => <ShopCard
       key={idx}
       id={instrument.id}
       name={instrument.name}
@@ -39,8 +39,9 @@ export default function ShoopingCartItem() {
 
   return (
     <div className="containerHome cartItemContainer">
+      <h1>Cart</h1>
       {renderInstruments()}
     </div>
-    
+
   );
 }

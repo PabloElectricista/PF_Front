@@ -2,8 +2,6 @@ import { useAuth0 } from "@auth0/auth0-react"
 import { useDispatch, } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { createProduct } from '../../redux/actions'
-import AlertMessage from "../../components/Alerts/AlertMessage";
-
 import './CreateProduct.css'
 import { useNavigate } from "react-router-dom";
 import { Alert, AlertTitle, Snackbar } from "@mui/material"
@@ -33,7 +31,7 @@ export default function CreateProduct() {
 
     //-------------------------
     //-------------------------
-    const [open, setOpen] = useState(!isAuthenticated);
+    const [open, setOpen] = useState(true);
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -46,12 +44,8 @@ export default function CreateProduct() {
     //-------------------------
     //-------------------------
     function getUser() {
-        const index = user.sub.indexOf("|");
-        const userId = user.sub.substring(index + 1);
-
         return {
-            user: userId,
-
+            user: user.sub.substring(user.sub.indexOf("|") + 1),
         }
     }
 
@@ -185,7 +179,7 @@ export default function CreateProduct() {
 
     return (
 
-        <div>
+        <div className="bgImg">
             <Snackbar elevation={6} open={open} onClose={handleClose}>
                 <Alert onClose={handleClose}  variant='filled' severity="warning" sx={{ width: '100%' }}>
                     <AlertTitle><strong>Warning</strong></AlertTitle>
@@ -286,7 +280,7 @@ export default function CreateProduct() {
                         </div>
 
                         <div id='input-stk' className='form-inputs'>
-                            <label>*stock:</label>
+                            <label>*Stock:</label>
                             <input
                                 type='number'
                                 value={inputForm.stock}
