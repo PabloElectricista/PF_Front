@@ -6,6 +6,7 @@ import { getProductById } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import {addToFav, addToCart} from '../../components/Card/FavAndCart';
 // Components
 import Loading from "../../components/Loading/Loading";
 import ReviewList from "../../components/ReviewList/ReviewList";
@@ -15,12 +16,12 @@ import { useAuth0 } from '@auth0/auth0-react';
 // Styles
 import Carousel from "react-bootstrap/Carousel";
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Divider from '@mui/material/Divider';
 import Skeleton from '@mui/material/Skeleton';
 import './ProductDetail.css';
+import {BsCartFill, BsStarFill} from "react-icons/bs";
 
 export default function ProductDetail() {
 
@@ -62,7 +63,7 @@ export default function ProductDetail() {
         }
         setOpen(false);
     };
-
+    const {name, price, rating, image, brand} = instrumentItem ? instrumentItem : {};
     return (
         (!instrumentItem || (id !== instrumentItem._id && !instrumentItem.error)) ? <Loading /> :
         <div className="containerDetails">
@@ -100,7 +101,7 @@ export default function ProductDetail() {
                         </div>
                         <div className="listProductDetail">
                             <li><b>Color:</b> {instrumentItem.color[0].toUpperCase() + instrumentItem.color.substring(1)}</li>
-                            <li><b>Category:</b> </li>
+                            <li><b>Category:</b> {instrumentItem.category}</li>
                             <li><b>Location:</b> {instrumentItem.location}</li>
                         </div>
                     </ul>
@@ -111,7 +112,8 @@ export default function ProductDetail() {
                         <CopyToClipboard text={window.location.href}>
                             <p><ShareOutlinedIcon onClick={handleClick}/> Share</p>
                         </CopyToClipboard>
-                        <p><FavoriteBorderOutlinedIcon /> Favorite</p>
+                        <BsStarFill className='CardIcon' onClick={() => addToFav(id, name, price, rating, image, brand)} />
+                        <BsCartFill className='CardIcon' onClick={() => addToCart(id, name, price, rating, image, brand)}/>
                         <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
                                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                                 Link copied to clipboard 
