@@ -15,7 +15,7 @@ Poner un boton en la homepage que dirija a este componente cuando el usuario ya 
 
 ```
 {
-  id: paymentMethod.id,
+  paymentMethodid: paymentMethod.id,
   customer = "_id"  (comprador)
   products = [
                {
