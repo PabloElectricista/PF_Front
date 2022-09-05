@@ -1,5 +1,6 @@
 .containerLanding {
     font-family: "Roboto", sans-serif;
+    color: white;
 }
 
 .firstContactLanding {
@@ -22,7 +23,13 @@
 .titleLanding, .textLanding {
     width: 50vw;
     text-align: center;
-    color: white !important;
+    color: #20c2a4;
+    font-weight: 800;
+    text-shadow:0 0 6px rgb(0, 0, 0);
+
+}
+.titleLanding{
+    font-size: 3rem;
 }
 
 .divider { 

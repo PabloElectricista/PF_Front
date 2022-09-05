@@ -7,14 +7,16 @@ import SearchBar from "../SearchBar/SearchBar";
 import LogInBtn from "../LogInBtn";
 import LogOutBtn from "../LogOutBtn";
 import LightDarktn from "../LightDarkBtn";
+import { BsCartFill, BsStarFill } from 'react-icons/bs';
+import { GiGuitarBassHead } from 'react-icons/gi';
 // Files and extra code
 import goode_logo from '../../components/img/assets/ChuckBerry.png'
-import toTheTop from '../../customScripts';
 // Auth0
 import { useAuth0 } from '@auth0/auth0-react';
 // Style
 import 'bootstrap/dist/css/bootstrap.css';
 import './NavBar.css';
+import { NavDropdown } from "react-bootstrap";
 
 export default function NavBar() {
 
@@ -26,25 +28,30 @@ export default function NavBar() {
                 <div className="d-flex align-items-center">
                     <div className="d-flex me-5">
                         <img className="navbarLogo" src={goode_logo} alt="Logo B. Goode" width="40" height='40' />
-                        <Link className="navbar-brand" onClick={() => toTheTop()} to="/">
+                        <Link className="navbar-brand" to="/">
                             B. Goode
                         </Link>
                     </div>
                 </div>
 
                 <div className="navbar-nav hstack gap-3">
-                    <Link to='/home' className="nav-link" onClick={() => toTheTop()} >Products</Link>
-                    <Link to='/contact' className="nav-link" onClick={() => toTheTop()}>Contact us</Link>
-                    <Link to='/create' className="nav-link" onClick={() => toTheTop()}>Sell</Link>
+                    <Link to='/home' className="nav-link"  ><GiGuitarBassHead className='CardIcon' /></Link>
+                    <Link to='/favorites' className="nav-link"><BsStarFill className='CardIcon' /></Link>
+                    <Link to='/cart' className="nav-link"><BsCartFill className='CardIcon' /></Link>
+                    <Link to='/create' className="nav-link sellStyle" ><strong>Sell</strong></Link>
                 </div>
 
                 <SearchBar />
 
                 {isAuthenticated ?
                     <>
-                        <Link to="profile">
-                            <img className="ProfileImg" src={user.picture} alt="user" />
-                        </Link>
+                        <img className="ProfileImg" src={user.picture} alt="user" />
+                        <NavDropdown title={user.nickname} id="navbarScrollingDropdown">
+                            <NavDropdown.Item href='/profile/data' className="dropDown" >Personal Data</NavDropdown.Item>
+                            <NavDropdown.Item href="/profile/sold" className="dropDown" >Sales History</NavDropdown.Item>
+                            <NavDropdown.Item href='/profile/shop-history' className="dropDown" >Shopping history</NavDropdown.Item>
+                            <NavDropdown.Item href='/profile/my-products' className="dropDown" >My Products</NavDropdown.Item>
+                        </NavDropdown>
                         <LogOutBtn />
                     </>
                     : (!isLoading && <LogInBtn />)}

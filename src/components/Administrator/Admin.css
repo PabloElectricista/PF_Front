@@ -3,3 +3,21 @@ body {
     overflow: visible !important;
     font-weight: bold;
 }
+.MuiBox-root, .MuiTable-root{
+    font-weight: 800 !important;
+}
+
+
+.MuiTableCell-root{
+    font-weight: 800 !important;
+    font-size: 1.4rem !important;
+}
+body.Dark .MuiBox-root , body.Dark .MuiTableCell-root{
+    background: #333333;
+    color: azure;
+}
+
+.Typography-root{
+    font-weight: 800 !important;
+    font-size: 1.4rem !important;
+}

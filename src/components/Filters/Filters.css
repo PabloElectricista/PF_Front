@@ -58,3 +58,9 @@
     margin-left: .4em !important;
     align-items: center;
 }
+body.Dark .filtersContainer, body.Dark .filterPrice, body.Dark .MuiSlider-root{
+    background-color:#0f7461 !important;
+    color: white !important;
+    font-family: serif !important;
+}
+

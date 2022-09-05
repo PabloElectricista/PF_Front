@@ -103,7 +103,9 @@ export const putUser = (id, payload) => {
 
 export function createProduct(payload) {
     return async function (dispatch) {
-        await axios.post('/products', payload)
+        console.log(payload);
+        const response = await axios.post('/products', payload)
+        
     }
 }
 

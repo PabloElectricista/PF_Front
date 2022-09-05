@@ -27,14 +27,17 @@ export default function UserDetail(){
         
     return(
            <div>
+
+            <div>
+                <h1>User Detail</h1>
+            </div>
     
 
-                <p>Name={currentClient.username}</p>
-                <p>Email={currentClient.email}</p>
-
-                <p>User Blocked={currentClient.isBLoked? "true" : "false"}</p>
-                <p>User Admin={currentClient.isAdmin? "true" : "false"}</p>
-                <p>User Active={currentClient.isActive? "true" : "false"}</p>
+                <p>Name : {currentClient.username}</p>
+                <p>Email : {currentClient.email}</p>
+                <p>Blocked? : {currentClient.isBLoked? "true" : "false"}</p>
+                <p>Admin? : {currentClient.isAdmin? "true" : "false"}</p>
+                <p>Active? : {currentClient.isActive? "true" : "false"}</p>
 
                 <button 
                 className='submitButton'

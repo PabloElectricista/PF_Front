@@ -61,24 +61,42 @@ useEffect(()=>{
 
 
   return(
+   
 
 
   <div>{
     !currentUser.isAdmin ? (
     <h1>no sos admin chaon</h1>
     ) : (
-      <div>{
-        users.map( u => {
-          return(
-          <div class="card">
-            <UsersCard username={u && u.username} email={u && u.email} _id={u && u._id} />
-          </div>)
 
-        })
-       }
+    <div>
+        <div>
+            <h1>Users List</h1>
+            <br/>
+            <span>Choose one to see details</span>
+            <br/>
+        </div>
 
 
-      </div>
+            <div>{
+      
+              users.map( u => {
+                return(
+                <div class="card">
+                  <UsersCard username={u && u.username} email={u && u.email} _id={u && u._id} />
+                </div>)
+      
+               })
+               }
+
+
+            </div>
+
+
+    </div>
+       
+         
+       
     )}
 
   </div>
