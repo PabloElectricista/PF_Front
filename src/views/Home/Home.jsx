@@ -9,7 +9,7 @@ import Filters from "../../components/Filters/Filters";
 import Loading from "../../components/Loading/Loading";
 import NothingFound from "../../components/NothingFound/NothingFound";
 // Actions
-import { 
+import {
   orderProducts,
   getAllProducts,
   filteredIntruments,
@@ -23,8 +23,27 @@ import Select from '@mui/material/Select';
 import CloseButton from 'react-bootstrap/CloseButton';
 import 'bootstrap/dist/css/bootstrap.css';
 import './Home.css';
+import { Alert, AlertTitle, Snackbar } from "@mui/material";
 
 export default function Home() {
+
+  //-------------------------------
+  //-------------------------------
+  const [open, setOpen] = useState(false);
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true)
+  }
+  //-------------------------------
+  //-------------------------------
+  //-------------------------------
+  //-------------------------------
+  
   
   //Hooks
   const location = useLocation();
@@ -33,7 +52,7 @@ export default function Home() {
   const allInstruments = useSelector(state => state.instruments);
   const isLoading = useSelector(state => state.isLoading);
   const [currentPage, setCurrentPage] = useState(1);
-    // Getting value of the query from the url
+  // Getting value of the query from the url
   const [searchParams] = useSearchParams();
   const searchName = searchParams.get('name');
   const filters = []
@@ -65,7 +84,7 @@ export default function Home() {
   }
 
   // Clear filters
-  function clearFilter (filter) {
+  function clearFilter(filter) {
     console.log(filter);
     searchParams.delete(filter);
     location.search = `?${searchParams.toString()}`;
@@ -76,24 +95,24 @@ export default function Home() {
   let idxLastItem = currentPage * 15;
   let ixdFirstItem = idxLastItem - 15;
   let pageInstruments = allInstruments.slice(ixdFirstItem, idxLastItem);
-  const paginate = (number) => { 
-    setCurrentPage(number) 
+  const paginate = (number) => {
+    setCurrentPage(number)
   };
 
   return (
     <>
-      { isLoading ? <Loading /> : 
+      {isLoading ? <Loading /> :
         <div className="containerHome">
           <div className="aditionalContent">
-            
+
             <div className="numberOfResults">
               {searchName ? <span>{searchName.toUpperCase()}</span> : null}
               <p><b>{allInstruments.length}</b> results</p>
             </div>
 
-            <FormControl 
-              variant="standard" 
-              sx={{ m: 1, minWidth: 90 }} 
+            <FormControl
+              variant="standard"
+              sx={{ m: 1, minWidth: 90 }}
               size="small"
               className={allInstruments.length ? null : "ocult"}
             >
@@ -112,30 +131,30 @@ export default function Home() {
             </FormControl>
           </div>
 
-          { filters.length ? searchName && filters.length === 1 ?
-            null : 
+          {filters.length ? searchName && filters.length === 1 ?
+            null :
             <div className="selectedFilters">
               <span>Selected filters: </span>
-              { 
+              {
                 filters.map(filter => {
-                  return filter[0] === 'name' ? 
-                    null : 
-                    ( 
+                  return filter[0] === 'name' ?
+                    null :
+                    (
                       <div key={filter[0]} className="activeFilter">
-                        { filter[0] === 'price' ? `Price range ${filter[1]}` : filter[1]}
-                        <CloseButton onClick={() => clearFilter(filter[0])}/>
+                        {filter[0] === 'price' ? `Price range ${filter[1]}` : filter[1]}
+                        <CloseButton onClick={() => clearFilter(filter[0])} />
                       </div>
                     )
                 })
               }
             </div>
-          : null }
-          
-          { allInstruments.length ?
+            : null}
+
+          {allInstruments.length ?
             <>
               <div className="containerContent">
                 <Filters />
-            
+
                 <div className="containerCards">
                   {
                     pageInstruments?.map(instrument => {
@@ -148,6 +167,7 @@ export default function Home() {
                           brand={instrument.brand}
                           rating={Math.floor((Math.random() * 6))}
                           image={instrument.image}
+                          handleOpen={handleOpen}
                         />
                       )
                     })
@@ -156,9 +176,15 @@ export default function Home() {
               </div>
               <Pagination currentPage={currentPage} postPerPage={15} totalPosts={allInstruments.length} paginate={paginate} />
             </>
-          : <NothingFound /> }
+            : <NothingFound />}
         </div>
       }
+      <Snackbar open={open} autoHideDuration={1500} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        <AlertTitle>Success</AlertTitle>
+        <strong>Added correctly</strong>
+        </Alert>
+      </Snackbar>
     </>
   )
 }
