@@ -101,7 +101,7 @@ export default function ProductDetail() {
                         </div>
                         <div className="listProductDetail">
                             <li><b>Color:</b> {instrumentItem.color[0].toUpperCase() + instrumentItem.color.substring(1)}</li>
-                            <li><b>Category:</b> {instrumentItem.category}</li>
+                            <li><b>Category:</b> {instrumentItem.category.join(', ')}</li>
                             <li><b>Location:</b> {instrumentItem.location}</li>
                         </div>
                     </ul>
