@@ -18,8 +18,8 @@ function AlertMessage({displayAlert, alertVariant, alertTitle, alertText}) { //S
         }, 5000)
         return (
             <Alert variant={alertVariant}
-                   onClose={() => closeAlert()}
-                   dismissible>
+                    onClose={() => closeAlert()}
+                    dismissible>
                 <Alert.Heading>{alertTitle}</Alert.Heading>
                 <p>
                     {alertText}
