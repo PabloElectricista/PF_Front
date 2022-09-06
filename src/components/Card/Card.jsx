@@ -1,36 +1,22 @@
 // React utilities
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom'
-import { BsCartFill, BsStarFill } from 'react-icons/bs';
+// Components 
+import { addToFav, addToCart } from './favAndCart';
 // Styles
+import { BsCartFill, BsStarFill } from 'react-icons/bs';
+import ReactStars from 'react-stars';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Skeleton from '@mui/material/Skeleton';
 import './Card.css'
-import { addToFav, addToCart } from './favAndCart';
+
 
 export default function ProductCard({ id, name, price, rating, image, brand, handleAdded, handleNotAdded }) {
-
-  // const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 1500);
-  // }, [])
-
 
   return (
     <Card className="card" >
       <Link className='containCardImage' to={"/detail/" + id}>
-        {/* {
-          !loading ?
-          : <Skeleton
-          variant='rectangular'
-          animation="wave"
-          />
-        } */}
-        <img className='cardImage' src={image} alt={name} />
+        <img className='cardImage' src={image} alt="" />
       </Link>
       <Card.Body className='containCardBody'>
         <Link to={"/detail/" + id}>
@@ -40,11 +26,14 @@ export default function ProductCard({ id, name, price, rating, image, brand, han
           <ListGroup.Item className='cardBrand'>{brand}</ListGroup.Item>
           <ListGroup.Item className='cardPrice'>${price}</ListGroup.Item>
           <ListGroup.Item className='cardRating'>
-            <p className={rating >= 1 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
-            <p className={rating >= 2 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
-            <p className={rating >= 3 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
-            <p className={rating >= 4 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
-            <p className={rating === 5 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
+            <ReactStars
+              className="stars"
+              value={rating}
+              edit={false}
+              size={18}
+              color1={'#888'}
+              color2={'#169E85'}
+            />
           </ListGroup.Item>
         </ListGroup>
       </Card.Body>
