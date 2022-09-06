@@ -20,7 +20,7 @@ export default function UserDetail(){
     
     
     function handleEdit() {
-        navigate(`/admin/usercontrol/userdetail/userEdit/${id}`);
+        navigate(`/profile/admin/usercontrol/userdetail/userEdit/${id}`);
     }
     
     console.log(currentClient)

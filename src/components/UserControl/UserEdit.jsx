@@ -148,15 +148,13 @@ return (
               <option value= {false} >No</option>
             </select>
         </div>
-
-
           <div>
-            <button className="btn btn-outline-success me-2" type='submit'>Modify</button>
-
+            <button className="btn btn-outline-success me-2" type='submit'>
+              <Link to={`/profile/admin/usercontrol/userdetail/${currentClient._id}`}>Modify</Link>
+              </button>
             <button className="btn btn-outline-success me-2">
-              <Link to={`/admin/usercontrol/userdetail/${currentClient._id}`}>Cancel</Link>
+              <Link to={`/profile/admin/usercontrol/userdetail/${currentClient._id}`}>Cancel</Link>
             </button>
-
           </div>
         </form>
       </div>

@@ -8,3 +8,18 @@
   margin: 0 auto;
   width: 50% !important;
 }
+
+.UserProfileCard{
+  justify-content: center;
+  text-align: center;
+  height: fit-content !important;
+  margin-top: 20px;
+}
+
+.UserCardLi{
+  list-style: none;
+}
+
+.UserControlTitle{
+  text-align: center;
+}

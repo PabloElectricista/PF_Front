@@ -22,7 +22,7 @@ export const mainListItems = (
       <ListItemText primary="Orders" />
     </ListItemButton>
 
-    <Link to = "/admin/usercontrol">
+    <Link to = "/profile/admin/usercontrol">
       <ListItemButton>
       <ListItemIcon>
         <PeopleIcon/>
