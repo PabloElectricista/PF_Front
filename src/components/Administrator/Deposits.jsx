@@ -45,7 +45,7 @@ export default function Deposits() {
       array1.push(total[i]);
     }
     console.log(total);
-    console.log(array1), 'SUPUESTO TOTAL';
+    console.log(array1, 'SUPUESTO TOTAL');
     const initialValue = 0;
     const sumWithInitial = array1.reduce(
       (previousValue, currentValue) => previousValue + currentValue,
