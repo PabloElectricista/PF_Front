@@ -32,6 +32,7 @@ export default function Chart() {
     return profit += total * 0.012
   }
 
+
   let data = [];
   allOrder.map((row) =>{
     data.push({
