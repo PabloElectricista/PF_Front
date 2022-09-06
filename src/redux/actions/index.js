@@ -10,8 +10,8 @@ export const ORDER_PRODUCTS = "ORDER_PRODUCTS";
 export const GET_REVIEWS_BY_PRODUCT_ID = "GET_REVIEWS_BY_PRODUCT_ID";
 export const ADD_REVIEW = "ADD_REVIEW";
 export const GET_MY_ORDERS = "GET_MY_ORDERS";
-export const ACTIVE_LOADING = "ACTIVE_LOADING"; 
-export const CREATE_CONTACT = "CREATE_CONTACT"; 
+export const ACTIVE_LOADING = "ACTIVE_LOADING";
+export const CREATE_CONTACT = "CREATE_CONTACT";
 export const SHOW_ALERT = "SHOW_ALERT";
 export const ALL_ORDERS = "ALL_ORDERS";
 export const GET_ALL_USERS = "GET_ALL_USERS";
@@ -36,7 +36,7 @@ export const getAllProducts = () => {
 export const getAllUsers = () => {
     return async function (dispatch) {
         const users = await axios('/users');
-      
+
 
         return dispatch({
             type: GET_ALL_USERS,
@@ -46,7 +46,7 @@ export const getAllUsers = () => {
 };
 export const getUserById = (id) => {
     return async function (dispatch) {
-        const user = await axios("/users/"+ id );
+        const user = await axios("/users/" + id);
         return dispatch({
             type: GET_USER_BY_ID,
             payload: user.data
@@ -117,8 +117,8 @@ export function allOrders() {
     return async (dispatch) => {
         const NewOrder = await axios.get('/orders')
         return dispatch({
-        type: ALL_ORDERS,
-        payload: NewOrder.data,
+            type: ALL_ORDERS,
+            payload: NewOrder.data,
         })
     }
 }
@@ -166,7 +166,7 @@ export const getMyOrders = (userId) => {
     }
 }
 export const activeLoading = () => {
-    return function(dispatch) {
+    return function (dispatch) {
         return dispatch({
             type: ACTIVE_LOADING
         });
@@ -193,4 +193,11 @@ export function getUsers() {
 
 export function purchaseOrder(orderInfo) {
     //todo - pending
+}
+
+export async function registerUser(user) {
+    try {
+        const userRegistered = await axios.post("/users", user)
+        console.log(userRegistered);
+    } catch (err) { console.log(err) }
 }

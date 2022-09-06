@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {BrowserRouter as Router,  Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './views/LandingPage/LandingPage';
 import Home from './views/Home/Home';
 import NavBar from "./components/NavBar/NavBar";
@@ -15,17 +15,25 @@ import ProductEdit from "./views/ProductEdit/ProductEdit";
 import Favorites from "./components/Favorites/Favorites";
 import CookieCard from './components/CookieCard';
 import AlertMessage from "./components/Alerts/AlertMessage";
-import React, {useState} from "react";
-import {useSelector} from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import StripeComponent from './components/StripeComponent/StripeComponent';
 import ShoopingCart from "./components/ShoppingCart";
 import { useAuth0 } from '@auth0/auth0-react';
-import {Alert, AlertTitle, Snackbar} from "@mui/material";
+import { Alert, AlertTitle, Snackbar } from "@mui/material";
+import { registerUser } from './redux/actions';
 
 function App() {
 
     const alertInfo = useSelector(store => store.alertInfo)
-    const {isAuthenticated, user}=useAuth0()
+    const { isAuthenticated, user } = useAuth0()
+    useEffect(() => {
+        if(user){
+            if(user.email){
+                registerUser(user)
+            }
+        }
+    },[user])
     //-------------------------------
     //-------------------------------
     // alert para los fav y cart
@@ -50,23 +58,23 @@ function App() {
 
     return (<>
         <Router>
-            <NavBar/>
-            <CookieCard/>
+            <NavBar />
+            <CookieCard />
             <AlertMessage {...alertInfo} />
             <Routes>
-                <Route exact path="/" element={<LandingPage/>}/>
-                <Route path="/home" element={<Home handleAdded={handleAdded} handleNotAdded={handleNotAdded}/>}/>
-                <Route exact path='/contact' element={<ContactUs/>}/>
-                <Route path='/detail/:id' element={<ProductDetail handleAdded={handleAdded} handleNotAdded={handleNotAdded}/>}/>
-                <Route path='/edit/:id' element={<ProductEdit/>}/>
-                <Route exact path='/create' element={<CreateProduct/>}/>
-                <Route exact path='/profile/*' element={<UserProfile/>}/>
-                <Route exact path='/payment' element={<Payment/>}/>
-                <Route exact path='/about' element={<AboutUs/>}/>
-                <Route exact path='/favorites' element={<Favorites/>}/>
-                <Route exact path='/cart' element={<ShoopingCart/>}/>
-                <Route path='/stripe' element={<StripeComponent/>}/>
-                <Route path='*' element={<NotFound/>}/>
+                <Route exact path="/" element={<LandingPage />} />
+                <Route path="/home" element={<Home handleAdded={handleAdded} handleNotAdded={handleNotAdded} />} />
+                <Route exact path='/contact' element={<ContactUs />} />
+                <Route path='/detail/:id' element={<ProductDetail handleAdded={handleAdded} handleNotAdded={handleNotAdded} />} />
+                <Route path='/edit/:id' element={<ProductEdit />} />
+                <Route exact path='/create' element={<CreateProduct />} />
+                <Route exact path='/profile/*' element={<UserProfile />} />
+                <Route exact path='/payment' element={<Payment />} />
+                <Route exact path='/about' element={<AboutUs />} />
+                <Route exact path='/favorites' element={<Favorites />} />
+                <Route exact path='/cart' element={<ShoopingCart />} />
+                <Route path='/stripe' element={<StripeComponent />} />
+                <Route path='*' element={<NotFound />} />
             </Routes>
             <Snackbar open={added} autoHideDuration={1000} onClose={handleClose}>
                 <Alert onClose={() => handleClose()} severity="success" sx={{ width: '100%' }}>
@@ -80,7 +88,7 @@ function App() {
                     <strong>List maximum size exceeded</strong>
                 </Alert>
             </Snackbar>
-            <Footer/>
+            <Footer />
         </Router>
     </>
     );
