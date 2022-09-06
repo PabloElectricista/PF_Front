@@ -145,15 +145,18 @@ export default function CreateProduct() {
         });
     }
 
+    const postProduct = async () => {
+        return await axios.post('/products', { ...getUser(), ...inputForm })
+    }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (error.name === null && error.category === null && error.color === null &&
             error.price === null && error.stock === null && error.brand === null) {
             if (isAuthenticated) {
-                const response = await axios.post('/products', { ...getUser(), ...inputForm })
-                console.log("RESPONSE", response)
-                (response.status === 200) ? setSuccess(true) : setFail(true)
+                const response = postProduct()
+                await response.status === 201 ? setSuccess(true) :  setFail(true)
                 setInputForm({
                     name: '',
                     description: '',
