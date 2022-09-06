@@ -17,11 +17,17 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems} from './listItems';
+import { mainListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 import './Admin.css';
+import { useNavigate } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+import Loading from '../Loading/Loading';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserById } from '../../redux/actions';
+import { useState, useEffect } from 'react';
 
 // function Copyright(props) {
 //   return (
@@ -43,7 +49,7 @@ const AppBar = styled(MuiAppBar, {
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(
-['width', 'margin'], {
+    ['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
@@ -85,12 +91,29 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const mdTheme = createTheme();
 
-function DashboardContent() {
-  const [open, setOpen] = React.useState(true);
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
+export default function Dashboard() {
+  const { user, isAuthenticated, isLoading } = useAuth0()
+  const navigate = useNavigate()
+  const userDetail = useSelector(state => state.userDetail)
+  const [open, setOpen] = useState(true);
 
+
+
+  // useEffect(() => {
+  //   if (userDetail?.isAdmin) {
+  //     navigate('/home');
+  //   }
+  // }, [userDetail])
+
+  if (isLoading || !userDetail) {
+    return <Loading />
+  }
+
+  console.log("usuario", userDetail)
+  if (!userDetail.isAdmin) {
+    console.log("cargado no admin")
+    navigate("/") 
+  }
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -102,10 +125,9 @@ function DashboardContent() {
               alignItems: 'center',
               justifyContent: 'flex-end',
               px: [1],
-              
             }}
           >
-            <IconButton onClick={toggleDrawer}>
+            <IconButton onClick={() => setOpen(!open)}>
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
@@ -170,6 +192,4 @@ function DashboardContent() {
   );
 }
 
-export default function Dashboard() {
-  return <DashboardContent />;
-}
+

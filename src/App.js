@@ -14,21 +14,18 @@ import AboutUs from "./views/AboutUs/AboutUs";
 import ProductEdit from "./views/ProductEdit/ProductEdit";
 import Favorites from "./components/Favorites/Favorites";
 import CookieCard from './components/CookieCard';
-import Dashboard from './components/Administrator/admin';
 import AlertMessage from "./components/Alerts/AlertMessage";
 import React from "react";
 import {useSelector} from "react-redux";
 import StripeComponent from './components/StripeComponent/StripeComponent';
 import ShoopingCart from "./components/ShoppingCart";
-import UserControl from './components/UserControl/UserControl';
-import UserDetail from './components/UserControl/UserDetail';
-import UserEdit from './components/UserControl/UserEdit';
-import UserEditData from './components/UserProfile/UserEditData';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function App() {
 
     const alertInfo = useSelector(store => store.alertInfo)
-
+    const {isAuthenticated, user}=useAuth0()
+    console.log(user)
     return (<>
         <Router>
             <NavBar/>
@@ -46,10 +43,6 @@ function App() {
                 <Route exact path='/about' element={<AboutUs/>}/>
                 <Route exact path='/favorites' element={<Favorites/>}/>
                 <Route exact path='/cart' element={<ShoopingCart/>}/>
-                <Route exact path='/admin/*' element={<Dashboard/>}/>
-                <Route exact path='/admin/usercontrol' element={<UserControl/>}/>
-                <Route exact path='/admin/usercontrol/userdetail/:id' element={<UserDetail/>}/>
-                <Route exact path='/admin/usercontrol/userdetail/userEdit/:id' element={<UserEdit/>}/>
                 <Route path='/stripe' element={<StripeComponent/>}/>
                 <Route path='*' element={<NotFound/>}/>
             </Routes>

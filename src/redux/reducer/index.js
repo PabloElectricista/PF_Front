@@ -3,7 +3,6 @@ const {
     GET_PRODUCT_BY_ID,
     UPDATE_PRODUCT,
     FILTERED_INSTRUMENTS,
-    CREATE_PRODUCT,
     ORDER_PRODUCTS,
     GET_REVIEWS_BY_PRODUCT_ID,
     ADD_REVIEW,
@@ -95,12 +94,6 @@ export default function rootReducer(state = initialState, action) {
                 allInstruments: allInstrumentsUpdated,
                 instruments: instrumentsUpdated,
                 retrievedInstrument: action.payload
-            }
-
-        case CREATE_PRODUCT:
-            return {
-                ...state,
-                allInstruments: [action.payload, ...state.allInstruments]
             }
         case FILTERED_INSTRUMENTS:
             return {

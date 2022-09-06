@@ -2,7 +2,6 @@ import axios from 'axios'
 
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
-export const CREATE_PRODUCT = "CREATE_PRODUCT";
 export const GET_INSTRUMENT_BY_NAME = "GET_INSTRUMENTS_BY_NAME";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
@@ -101,13 +100,7 @@ export const putUser = (id, payload) => {
     };
 };
 
-export function createProduct(payload) {
-    return async function (dispatch) {
-        console.log(payload);
-        const response = await axios.post('/products', payload)
-        
-    }
-}
+
 
 export function filteredIntruments(payload) {
     return async function (dispatch) {
