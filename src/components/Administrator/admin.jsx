@@ -12,7 +12,6 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
@@ -21,8 +20,8 @@ import './Admin.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import Loading from '../Loading/Loading';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUserById } from '../../redux/actions';
+import { useSelector } from 'react-redux';
+
 import { useState, useEffect } from 'react';
 
 
@@ -76,28 +75,23 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 export default function Dashboard() {
-  const { user, isAuthenticated, isLoading } = useAuth0()
+  const { isLoading } = useAuth0()
   const navigate = useNavigate()
-  const userDetail = useSelector(state => state.userDetail)
+  const userDetail = useSelector(state => state.usersEmail)
   const [open, setOpen] = useState(true);
 
 
 
-  // useEffect(() => {
-  //   if (userDetail?.isAdmin) {
-  //     navigate('/home');
-  //   }
-  // }, [userDetail])
+  useEffect(() => {
+    if (Object.values(userDetail).length != 0 && !userDetail.isAdmin) {
+      navigate('/home');
+    }
+  }, [userDetail])
 
   if (isLoading || !userDetail) {
     return <Loading />
   }
 
-  console.log("usuario", userDetail)
-  if (!userDetail.isAdmin) {
-    console.log("cargado no admin")
-    navigate("/") 
-  }
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
