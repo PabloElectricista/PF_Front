@@ -6,10 +6,10 @@ const addToFav = ( id, name, price, rating, image, brand,handleAdded, handleNotA
       return
     }
     if (!favs.some(item => item.id === id)) {
-      favs.push({ id, name, price, rating, image, brand })
+      favs.push({ id, name, price, rating, image, brand, quantity: 1})
     }
   } else {
-    favs = [{ id, name, price, rating, image, brand }]
+    favs = [{ id, name, price, rating, image, brand, quantity: 1 }]
   }
   localStorage.setItem('favList', JSON.stringify(favs))
   handleAdded()
@@ -23,18 +23,26 @@ const addToCart = ( id, name, price, rating, image, brand,handleAdded, handleNot
       return
     }
     if (!cart.some(item => item.id === id)) {
-      cart.push({ id, name, price, rating, image, brand })
+      cart.push({ id, name, price, rating, image, brand , quantity: 1})
     }
   } else {
-    cart = [{ id, name, price, rating, image, brand }]
+    cart = [{ id, name, price, rating, image, brand , quantity: 1}]
   }
-  localStorage.setItem('totalPrice', JSON.stringify(price + JSON.parse(localStorage.getItem('totalPrice'))))
   localStorage.setItem('cartList', JSON.stringify(cart))
   handleAdded()
+}
+
+const getPrice = () => {
+  let total = 0
+  JSON.parse(localStorage.getItem('cartList')).forEach(e => {
+    total += e.price * e.quantity
+  })
+  return total.toFixed(2)
 }
 
 
 module.exports = {
   addToFav,
-  addToCart
+  addToCart,
+  getPrice
 }

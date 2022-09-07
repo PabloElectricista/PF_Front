@@ -49,35 +49,23 @@ const appearance = {
 const stripePromise = loadStripe('pk_test_51LZlZLAfFn4zXQabU5GwZV9N2mF4rWwZiphhNImIDe3ClFcAcspjPLm2unNFM81E9ljcZfjf2BBhb6L2UW3Vin6G00c54G75HA');
 
 function StripeComponent() {
-    // const products = useSelector((state) => state.cart);  //
-    // const [totalPrice, setTotalPrice] = useState(JSON.parse(localStorage.getItem('totalPrice')))
-    // const total = () => {
-    //     setTotalPrice()
-    //   }
-    //   console.log
     const [cartItem, setCartItem] = useState(JSON.parse(localStorage.getItem('cartList')))
 
     const deleteItem = (id) => {
-        let arr = cartItem.filter(instrument => instrument.id !== id)
-        localStorage.setItem('cartList', JSON.stringify(arr))
-        setCartItem(arr)
+        setCartItem(cartItem.filter(instrument => instrument.id !== id))
+        localStorage.setItem('cartList', JSON.stringify(cartItem))
     }
 
     function renderInstruments() {
-        if (!cartItem) {
-            return (
-                <h4>
-                    The CartItem list is empty.
-                </h4>
-            )
-        }
-        let cartItemMap = cartItem.map((instrument, idx) => <ShopCard
-            key={idx}
+        console.log(cartItem[0]);
+        let cartItemMap = cartItem.map(instrument => <ShopCard
+            key={instrument.id}
             id={instrument.id}
             name={instrument.name}
             price={instrument.price}
             brand={instrument.brand}
             rating={instrument.rating}
+            quantity={instrument.quantity}
             deleteItem={deleteItem}
             image={instrument.image} />);
         return (
@@ -94,12 +82,10 @@ function StripeComponent() {
 
         const handleSubmit = async (event) => {
             event.preventDefault();
-            console.log("hasta aqui");
             const { error, paymentMethod } = await stripe.createPaymentMethod({
                 type: 'card',
                 card: elements.getElement(CardElement),
             })
-            console.log("hasta aqui no llega");
             if (!error) {
                 try {
                     const cart = cartItem.map(product => {
@@ -112,7 +98,7 @@ function StripeComponent() {
                     })
 
                     const { data } = await axios.post('http://localhost:3001/api/checkout', { cart })
-                    console.log(data.message);  // success?
+                    console.log("localhost3001",data.message);  // success?
                     elements.getElement(CardElement).clear();
                 } catch (error) {
                     console.log(error);
@@ -123,7 +109,7 @@ function StripeComponent() {
             <>
                 <h1>Shopping Cart</h1>
                 {renderInstruments()}
-                <p>TOTAL A PAGAR</p>
+                <p>{JSON.parse(localStorage.getItem('cartList')).reduce((a, b)=> {return a.price*a.quantity + b.price*b.quantity})}</p>
             </>
             <form onSubmit={handleSubmit}>
                 <div className='cartContainer'>

@@ -7,16 +7,23 @@ import ListGroup from 'react-bootstrap/ListGroup';
 
 
 // , purchaseOrder,updateAmount
-export default function ShopCard({ id, name, price, rating, image, brand, deleteItem, updateQuantity, quantity }) {
+export default function ShopCard({ id, name, price, rating, image, brand, quantity, deleteItem }) {
+  const [qua, setQua] = useState(quantity)
 
   const plus = () => {
-    localStorage.setItem('totalPrice', JSON.stringify(price + JSON.parse(localStorage.getItem('totalPrice'))))
-    updateQuantity(id, quantity + 1)
+    const cartList = JSON.parse(localStorage.getItem('cartList'))
+    let found = cartList.find(e => e.id === id)
+    found.quantity += 1
+    localStorage.setItem('cartList', JSON.stringify(cartList))
+    setQua(qua + 1)
   }
   const minus = () => {
-    if (quantity > 1) {
-      localStorage.setItem('totalPrice', JSON.stringify(JSON.parse(localStorage.getItem('totalPrice'))- price))
-      updateQuantity(id, quantity - 1)
+    if (qua > 1) {
+      const cartList = JSON.parse(localStorage.getItem('cartList'))
+      let found = cartList.find(e => e.id === id)
+      found.quantity -= 1
+      localStorage.setItem('cartList', JSON.stringify(cartList))
+      setQua(qua - 1)
     }
   }
 
@@ -31,8 +38,8 @@ export default function ShopCard({ id, name, price, rating, image, brand, delete
         </Link>
         <ListGroup className='containerListDescription' variant="flush">
           <ListGroup.Item className='cardBrand'>{brand}</ListGroup.Item>
-          <ListGroup.Item className='cardPrice'>Unitary ${price}</ListGroup.Item>
-          <ListGroup.Item className='cardPrice'>Total ${price * quantity}</ListGroup.Item>
+          <ListGroup.Item className='cardPrice'>Unitary ${price.toFixed(2)}</ListGroup.Item>
+          <ListGroup.Item className='cardPrice'>Total ${(price * qua).toFixed(2)}</ListGroup.Item>
           <ListGroup.Item className='cardRating'>
             <p className={rating >= 1 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
             <p className={rating >= 2 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
@@ -45,7 +52,7 @@ export default function ShopCard({ id, name, price, rating, image, brand, delete
       <div className='containerButton'>
         <AiFillDelete className='CardIcon' onClick={() => deleteItem(id)} />
         <AiFillPlusCircle className='CardIcon' onClick={plus} />
-        <h3>{quantity}</h3>
+        <h3>{qua}</h3>
         <AiFillMinusCircle className='CardIcon' onClick={minus} />
       </div>
     </Card>

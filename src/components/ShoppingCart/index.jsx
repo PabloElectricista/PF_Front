@@ -1,10 +1,14 @@
 import ShopCard from "./ShopCard";
 import './Card.css'
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import Paypal from "../paypal/Paypal";
+import { getPrice } from '../Card/favAndCart'
 
 export default function ShoppingCart() {
 
   const [cartItem, setCartItem] = useState(JSON.parse(localStorage.getItem('cartList')))
+  const [checkout, setCheckOut] = useState(false);
 
   const deleteItem = (id) => {
     let arr = cartItem.filter(instrument => instrument.id !== id)
@@ -35,6 +39,7 @@ export default function ShoppingCart() {
       price={instrument.price}
       brand={instrument.brand}
       rating={instrument.rating}
+      quantity={instrument.quantity}
       deleteItem={deleteItem}
       updateQuantity={updateQuantity}
       quantity={instrument.quantity ? instrument.quantity : 1}
@@ -50,6 +55,22 @@ export default function ShoppingCart() {
     <div className="containerHome cartItemContainer">
       <h1>Cart</h1>
       {renderInstruments()}
+      <h1>
+        {getPrice()}
+      </h1>
+      <div>
+      {checkout ? (
+        <Paypal/>
+      ) : (
+        <button
+          onClick={() => {
+            setCheckOut(true);
+          }}
+        >
+          Checkout
+        </button>
+      )}
+      </div>
     </div>
 
   );
