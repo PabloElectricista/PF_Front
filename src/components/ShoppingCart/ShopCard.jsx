@@ -1,14 +1,17 @@
+
 import './Card.css'
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+// React utilities
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+// Styles
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { AiFillPlusCircle, AiFillMinusCircle, AiFillDelete } from 'react-icons/ai';
 import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
 
-
-// , purchaseOrder,updateAmount
-export default function ShopCard({ id, name, price, rating, image, brand, quantity, deleteItem }) {
-  const [qua, setQua] = useState(quantity)
+export default function ShopCard({ id, name, price, image, color, quantity, deleteItem }) {
+  const [qua, setQua] = useState(quantity);
 
   const plus = () => {
     const cartList = JSON.parse(localStorage.getItem('cartList'))
@@ -28,33 +31,23 @@ export default function ShopCard({ id, name, price, rating, image, brand, quanti
   }
 
   return (
-    <Card className="card shop" >
-      <Link className='containCardImage' to={"/detail/" + id}>
-        <img className='cardImage' src={image} alt={name} />
+    <div className="cardShoppingCart">
+      <Link className='cardContainerImageSC' to={"/detail/" + id}>
+        <img className='cardImageSC' src={image} alt={name} />
       </Link>
-      <Card.Body className='containCardBody'>
-        <Link to={"/detail/" + id}>
-          <Card.Title className='containerName'>{name}</Card.Title>
-        </Link>
-        <ListGroup className='containerListDescription' variant="flush">
-          <ListGroup.Item className='cardBrand'>{brand}</ListGroup.Item>
-          <ListGroup.Item className='cardPrice'>Unitary ${price.toFixed(2)}</ListGroup.Item>
-          <ListGroup.Item className='cardPrice'>Total ${(price * qua).toFixed(2)}</ListGroup.Item>
-          <ListGroup.Item className='cardRating'>
-            <p className={rating >= 1 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
-            <p className={rating >= 2 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
-            <p className={rating >= 3 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
-            <p className={rating >= 4 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
-            <p className={rating === 5 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
-          </ListGroup.Item>
-        </ListGroup>
-      </Card.Body>
-      <div className='containerButton'>
-        <AiFillDelete className='CardIcon' onClick={() => deleteItem(id)} />
-        <AiFillPlusCircle className='CardIcon' onClick={plus} />
-        <h3>{qua}</h3>
-        <AiFillMinusCircle className='CardIcon' onClick={minus} />
+      <div className='containerBodySC'>
+        <h5>{name}</h5>
+        <p><span>Color: </span>{color[0].toUpperCase() + color.substring(1)}</p>
+        <p><span  className='priceSC'>${price * qua}</span> ({qua} Items)</p>
       </div>
-    </Card>
+      <div className='containerButtonsSC'>
+        <div className='selectQuantity'>
+            <AddCircleIcon onClick={plus} />
+            <p>{qua}</p>
+            <RemoveCircleIcon onClick={minus} />
+          </div>
+          <DeleteIcon onClick={() => deleteItem(id)} />
+        </div>
+    </div>
   )
 }

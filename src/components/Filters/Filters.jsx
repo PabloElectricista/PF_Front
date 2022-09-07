@@ -22,14 +22,17 @@ export default function Filters() {
     const price = searchParams.get('price');
     const status = searchParams.get('status');
     const color = searchParams.get('color');
+    const category = searchParams.get('category');
     // Intruments' propierties
     const brandArrayAll = [];
     const pricesAll = [];
     const colorsArrayAll = [];
+    const categoryArrayAll = [];
     products.map(product => {
         brandArrayAll.push(product.brand);
         pricesAll.push(product.price);
         colorsArrayAll.push(product.color);
+        product.category.map(category => categoryArrayAll.push(category));
         return null;
     });
     // Repeated results are eliminated from the arrays
@@ -39,9 +42,13 @@ export default function Filters() {
     const colorAll = colorsArrayAll.filter((item, index) => {
         return colorsArrayAll.indexOf(item) === index;
     });
+    const categoryAll = categoryArrayAll.filter((item, index) => {
+        return categoryArrayAll.indexOf(item) === index;
+    });
     // Alphabetize the arrays in alphabetical order
     colorAll.sort();
     brandAll.sort();
+    categoryAll.sort();
     // Local state
     const [priceSlide, setPriceSlide] = useState([Math.floor(Math.min(...pricesAll)), Math.ceil(Math.max(...pricesAll))]);
     // Send selected filters
@@ -129,6 +136,32 @@ export default function Filters() {
                     >
                         <MenuItem value="New">New</MenuItem>
                         <MenuItem value="Used">Used</MenuItem>
+                    </Select>
+                </FormControl>
+                </> : null
+            }
+            {
+                !category ? <>
+                <b>Category: </b>
+                <FormControl className='categoryFilter'>
+                    <Select
+                        name="category"
+                        variant="filled"
+                        fullWidth
+                        size='small'
+                        onChange={(e) => handlerSubmit(e)}
+                    >
+                    {
+                        categoryAll.map((category, i) => {
+                            return (
+                                <MenuItem 
+                                    key={i} 
+                                    value={category}
+                                >
+                                {category} </MenuItem>
+                            )
+                        })
+                    }
                     </Select>
                 </FormControl>
                 </> : null

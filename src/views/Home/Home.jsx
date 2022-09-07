@@ -146,6 +146,7 @@ export default function Home({handleAdded, handleNotAdded}) {
                           name={instrument.name}
                           price={instrument.price}
                           brand={instrument.brand}
+                          color={instrument.color}
                           rating={Math.floor((Math.random() * 6))}
                           image={instrument.image}
                           handleAdded={handleAdded}
