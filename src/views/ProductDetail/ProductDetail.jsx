@@ -35,8 +35,11 @@ export default function ProductDetail({handleAdded, handleNotAdded}) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const instrumentItem = useSelector((state) => state.retrievedInstrument);
-    const { name, price, rating, image, brand } = instrumentItem ? instrumentItem : {};
-    const [quantity, setQuantity] = useState(1);
+    const { name, price, rating, image, brand, color } = instrumentItem ? instrumentItem : {};
+
+    const localStoreList = JSON.parse(localStorage.getItem('cartList'));
+    const localStoreItem = localStoreList.find(item => item.id === id);
+    const [quantity, setQuantity] = useState(localStoreItem.quantity ? localStoreItem.quantity : 1);
 
     useEffect(() => {
         if (!instrumentItem || (id !== instrumentItem._id && !instrumentItem.error)) {
@@ -64,8 +67,16 @@ export default function ProductDetail({handleAdded, handleNotAdded}) {
         setOpen(false);
     };
 
+    const updateQuantity = (id, quantity) => {
+        let updatedList = localStoreList.map(item =>
+            item.id !== id ? item : {...item, quantity}
+        );
+        localStorage.setItem('cartList', JSON.stringify(updatedList));
+    }
+
     function handlerQuantity (e) {
         setQuantity(e.target.value)
+        updateQuantity(id, e.target.value)
     }
 
     return (
@@ -124,7 +135,7 @@ export default function ProductDetail({handleAdded, handleNotAdded}) {
                                 <Form.Label>Quantity</Form.Label>
                                 <Form.Select size="sm" value={quantity} onChange={(e) => handlerQuantity(e)}>
                                     {
-                                        [...Array(instrumentItem.stock)].map((e, i) => <option value={i + 1}key={i}>{i + 1}</option>)
+                                        [...Array(instrumentItem.stock)].map((e, i) => <option value={i + 1} key={i}>{i + 1}</option>)
                                     }
                                 </Form.Select>
                             </Form.Group>
@@ -132,7 +143,7 @@ export default function ProductDetail({handleAdded, handleNotAdded}) {
                                 Total: <span>${instrumentItem.price * quantity}</span>
                             </div>
                             <Button variant="contained">Buy Now</Button>
-                            <Button onClick={() => addToCart(id, name, price, rating, image, brand, handleAdded, handleNotAdded)} variant="outlined" startIcon={<ShoppingCartOutlinedIcon />}>
+                            <Button onClick={() => addToCart(id, name, price, rating, image, brand, color, handleAdded, handleNotAdded)} variant="outlined" startIcon={<ShoppingCartOutlinedIcon />}>
                                 Add to cart
                             </Button>
                         </Form>

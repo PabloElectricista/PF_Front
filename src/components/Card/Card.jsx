@@ -11,7 +11,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import './Card.css'
 
 
-export default function ProductCard({ id, name, price, rating, image, brand, handleAdded, handleNotAdded }) {
+export default function ProductCard({ id, name, price, rating, image, brand, color, handleAdded, handleNotAdded }) {
 
   return (
     <Card className="card" >
@@ -39,7 +39,7 @@ export default function ProductCard({ id, name, price, rating, image, brand, han
       </Card.Body>
       <div className='containerButton'>
         <BsStarFill className='CardIcon' onClick={() => addToFav(id, name, price, rating, image, brand, handleAdded, handleNotAdded)} />
-        <BsCartFill className='CardIcon' onClick={() => addToCart(id, name, price, rating, image, brand, handleAdded, handleNotAdded)} />
+        <BsCartFill className='CardIcon' onClick={() => addToCart(id, name, price, rating, image, brand, color, handleAdded, handleNotAdded)} />
       </div>
     </Card>
   )

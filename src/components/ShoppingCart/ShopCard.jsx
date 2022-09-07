@@ -1,54 +1,43 @@
-import './Card.css';
-import React, { useState } from 'react';
+// React utilities
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { AiFillPlusCircle, AiFillMinusCircle, AiFillDelete } from 'react-icons/ai';
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
+// Styles
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import './Card.css';
 
-
-// , purchaseOrder,updateAmount
-export default function ShopCard({ id, name, price, rating, image, brand, deleteItem }) {
-  const [quantity, setQuantity] = useState(1)
+export default function ShopCard({ id, name, price, image, color, deleteItem, updateQuantity, quantity }) {
 
   const plus = () => {
     localStorage.setItem('totalPrice', JSON.stringify(price + JSON.parse(localStorage.getItem('totalPrice'))))
-    setQuantity(quantity + 1)
+    updateQuantity(id, quantity + 1)
   }
   const minus = () => {
     if (quantity > 1) {
       localStorage.setItem('totalPrice', JSON.stringify(JSON.parse(localStorage.getItem('totalPrice'))- price))
-      setQuantity(quantity - 1)
+      updateQuantity(id, quantity - 1)
     }
   }
 
   return (
-    <Card className="cardShoppingCart" >
+    <div className="cardShoppingCart">
       <Link className='cardContainerImageSC' to={"/detail/" + id}>
         <img className='cardImageSC' src={image} alt={name} />
       </Link>
-      <Card.Body className='containCardBody'>
-        <Link to={"/detail/" + id}>
-          <Card.Title className='containerName'>{name}</Card.Title>
-        </Link>
-        <ListGroup className='containerListDescription' variant="flush">
-          <ListGroup.Item className='cardBrand'>{brand}</ListGroup.Item>
-          <ListGroup.Item className='cardPrice'>Unitary ${price}</ListGroup.Item>
-          <ListGroup.Item className='cardPrice'>Total ${price * quantity}</ListGroup.Item>
-          <ListGroup.Item className='cardRating'>
-            <p className={rating >= 1 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
-            <p className={rating >= 2 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
-            <p className={rating >= 3 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
-            <p className={rating >= 4 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
-            <p className={rating === 5 ? 'cardStarActive' : 'cardStar'}>&#9733;</p>
-          </ListGroup.Item>
-        </ListGroup>
-      </Card.Body>
-      <div className='containerButton'>
-        <AiFillDelete className='CardIcon' onClick={() => deleteItem(id)} />
-        <AiFillPlusCircle className='CardIcon' onClick={plus} />
-        <h3>{quantity}</h3>
-        <AiFillMinusCircle className='CardIcon' onClick={minus} />
+      <div className='containerBodySC'>
+        <h5>{name}</h5>
+        <p><span>Color: </span>{color[0].toUpperCase() + color.substring(1)}</p>
+        <p><span  className='priceSC'>${price * quantity}</span> ({quantity} Items)</p>
       </div>
-    </Card>
+      <div className='containerButtonsSC'>
+      <div className='selectQuantity'>
+          <AddCircleIcon onClick={plus} />
+          <p>{quantity}</p>
+          <RemoveCircleIcon onClick={minus} />
+        </div>
+        <DeleteIcon onClick={() => deleteItem(id)} />
+      </div>
+    </div>
   )
 }
