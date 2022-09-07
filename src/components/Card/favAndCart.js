@@ -32,8 +32,17 @@ const addToCart = ( id, name, price, rating, image, brand,handleAdded, handleNot
   handleAdded()
 }
 
+const getPrice = () => {
+  let total = 0
+  JSON.parse(localStorage.getItem('cartList')).forEach(e => {
+    total += e.price * e.quantity
+  })
+  return total.toFixed(2)
+}
+
 
 module.exports = {
   addToFav,
-  addToCart
+  addToCart,
+  getPrice
 }
