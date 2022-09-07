@@ -38,9 +38,7 @@ export default function ProductDetail({handleAdded, handleNotAdded}) {
     const instrumentItem = useSelector((state) => state.retrievedInstrument);
     const { name, price, rating, image, brand, color } = instrumentItem ? instrumentItem : {};
 
-    const localStoreList = JSON.parse(localStorage.getItem('cartList'));
-    const localStoreItem = localStoreList.find(item => item.id === id);
-    const [quantity, setQuantity] = useState(localStoreItem.quantity ? localStoreItem.quantity : 1);
+    const [quantity, setQuantity] = useState();
 
     useEffect(() => {
         if (!instrumentItem || (id !== instrumentItem._id && !instrumentItem.error)) {
@@ -68,16 +66,21 @@ export default function ProductDetail({handleAdded, handleNotAdded}) {
         setOpen(false);
     };
 
-    const updateQuantity = (id, quantity) => {
-        let updatedList = localStoreList.map(item =>
-            item.id !== id ? item : {...item, quantity}
-        );
-        localStorage.setItem('cartList', JSON.stringify(updatedList));
-    }
+    // const updateQuantity = (id, quantity) => {
+    //     let updatedList = localStoreList.map(item =>
+    //         item.id !== id ? item : {...item, quantity}
+    //     );
+    //     localStorage.setItem('cartList', JSON.stringify(updatedList));
+    // }
 
     function handlerQuantity (e) {
+        addToCart(id, name, price, rating, image, brand, color, handleAdded, handleNotAdded)
+        const localStoreList = JSON.parse(localStorage.getItem('cartList'));
+        const localStoreItem = localStoreList.find(item => item.id === id);
+        localStoreItem.quantity = e.target.value
+        localStorage.setItem("cartList",JSON.stringify(localStoreList))
         setQuantity(e.target.value)
-        updateQuantity(id, e.target.value)
+        // updateQuantity(id, e.target.value)
     }
 
     return (
