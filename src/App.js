@@ -16,21 +16,23 @@ import Favorites from "./components/Favorites/Favorites";
 import CookieCard from './components/CookieCard';
 import AlertMessage from "./components/Alerts/AlertMessage";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import StripeComponent from './components/StripeComponent/StripeComponent';
 import ShoopingCart from "./components/ShoppingCart";
 import { useAuth0 } from '@auth0/auth0-react';
 import { Alert, AlertTitle, Snackbar } from "@mui/material";
-import { registerUser } from './redux/actions';
+import { getUserByEmail, registerUser } from './redux/actions';
 
 function App() {
 
     const alertInfo = useSelector(store => store.alertInfo)
     const { user } = useAuth0()
+    const dispatch = useDispatch()
+
     useEffect(() => {
-        if (user && user.email) {
-            console.log("user", user)
+        if (user) {
             registerUser(user)
+            dispatch(getUserByEmail(user.email))
         }
     }, [user])
     //-------------------------------
