@@ -38,7 +38,6 @@ export const getAllProducts = () => {
 export const getAllUsers = () => {
     return async function (dispatch) {
         const users = await axios('/users');
-        console.log("getAllUsers", users.data);
         return dispatch({
             type: GET_ALL_USERS,
             payload: users.data
@@ -59,20 +58,19 @@ export function getUserByEmail(email) {
     return async function (dispatch) {
         try {
             const user = await axios.get(`users/${email}`);
-            console.log(user.data.email, 'EMAIL');
             dispatch({
                 type: GET_USER_BY_EMAIL,
                 payload: user.data
             });
         } catch (error) {
-            console.log(error)
+            console.log("axios getUserByEmail",error)
         };
     }
 };
+
 export async function registerUser(user) {
     try {
-        const userRegistered = await axios.post("/users", user)
-        console.log(userRegistered);
+        await axios.post("/users", user)
     } catch (err) { console.log(err) }
 }
 
@@ -114,8 +112,8 @@ export const updateProduct = (instrumentItem) => {
 
 export const putUser = (email, payload) => {
     return async function (dispatch) {
-        const response = await axios.put(`/users/${email}`,
-            payload);
+        const response = await axios.put(`/users/${email}`, payload);
+        console.log("RESPONSE PUT USER",response)
         return dispatch({
             type: UPDATE_USER,
             payload: response.data

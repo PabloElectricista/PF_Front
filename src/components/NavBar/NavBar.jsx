@@ -16,10 +16,12 @@ import { useAuth0 } from '@auth0/auth0-react';
 import 'bootstrap/dist/css/bootstrap.css';
 import './NavBar.css';
 import { NavDropdown } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 export default function NavBar() {
 
     const { user, isAuthenticated, isLoading } = useAuth0()
+    const userDetail = useSelector(state => state.usersEmail)
 
     return (
         <nav className="navbar mb-2 p-2 bg-dark sticky-top rounded">
@@ -50,7 +52,7 @@ export default function NavBar() {
                             <NavDropdown.Item href="/profile/sold" className="dropDown" >Sales History</NavDropdown.Item>
                             <NavDropdown.Item href='/profile/shop-history' className="dropDown" >Shopping history</NavDropdown.Item>
                             <NavDropdown.Item href='/profile/my-products' className="dropDown" >My Products</NavDropdown.Item>
-                            <NavDropdown.Item href='/profile/admin' className="dropDown" >Admin panel</NavDropdown.Item>
+                            {userDetail.isAdmin && <NavDropdown.Item href='/profile/admin' className="dropDown" >Admin panel</NavDropdown.Item>}
                         </NavDropdown>
                         <LogOutBtn />
                     </>

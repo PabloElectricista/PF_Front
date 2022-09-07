@@ -8,6 +8,7 @@ import ShopCard from "./ShopCard";
 import Button from '@mui/material/Button';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import './Card.css'
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
 import {
@@ -16,8 +17,8 @@ import {
     useStripe,
     useElements
 } from '@stripe/react-stripe-js';
-const stripePromise = loadStripe('pk_test_51LZlZLAfFn4zXQabU5GwZV9N2mF4rWwZiphhNImIDe3ClFcAcspjPLm2unNFM81E9ljcZfjf2BBhb6L2UW3Vin6G00c54G75HA');
 
+const stripePromise = loadStripe('pk_test_51LZlZLAfFn4zXQabU5GwZV9N2mF4rWwZiphhNImIDe3ClFcAcspjPLm2unNFM81E9ljcZfjf2BBhb6L2UW3Vin6G00c54G75HA');
 
 export default function ShoppingCart() {
 
@@ -31,21 +32,18 @@ export default function ShoppingCart() {
         })
         .catch(error => console.log(error));
     }, [])
+    const [totalPrice, setTotalPrice] = useState(getPrice());
 
     const deleteItem = (id) => {
         let arr = cartItem.filter(instrument => instrument.id !== id)
         localStorage.setItem('cartList', JSON.stringify(arr))
         setCartItem(arr)
+        setTotalPrice(getPrice())
     }
 
-    const updateQuantity = (id, quantity) => {
-        let updatedList = cartItem.map(item =>
-            item.id !== id ? item : { ...item, quantity }
-        );
-        localStorage.setItem('cartList', JSON.stringify(updatedList));
-        setCartItem(updatedList);
+    const updateQuantity = () => {
+        setTotalPrice(getPrice())
     }
-
     function renderInstruments() {
         if (!cartItem) {
             return (
@@ -54,9 +52,9 @@ export default function ShoppingCart() {
                 </h4>
             )
         }
-        let cartItemMap = cartItem.map((instrument, idx) =>
+        let cartItemMap = cartItem.map((instrument) =>
             <ShopCard
-                key={idx}
+                key={instrument.id}
                 id={instrument.id}
                 name={instrument.name}
                 price={instrument.price}
@@ -65,7 +63,7 @@ export default function ShoppingCart() {
                 color={instrument.color}
                 deleteItem={deleteItem}
                 updateQuantity={updateQuantity}
-                quantity={instrument.quantity ? instrument.quantity : 1}
+                quantity={instrument.quantity}
                 image={instrument.image}
             />
         )
@@ -104,9 +102,10 @@ export default function ShoppingCart() {
                 }
             }
         }
-        return <form onSubmit={handleSubmit}>
-            <div>
-                <CardElement className='cartContainer' />
+        return <form className="formPayment" onSubmit={handleSubmit}>
+            <label>Enter your card</label>
+            <div className='pricipalContainerPAY' >
+                <CardElement />
             </div>
 
             <Button
@@ -126,7 +125,7 @@ export default function ShoppingCart() {
             <div className="principalSC">
                 {renderInstruments()}
                 <div className="paymentDetailSC">
-                    <p>Subtotal: <span>${getPrice()}</span></p>
+                    <p>Subtotal: <span>${totalPrice}</span></p>
                     <div>
                         <Elements stripe={stripePromise}>
                             <CheckoutForm />
