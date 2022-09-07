@@ -22,28 +22,26 @@ export default function SearchBar() {
     function handleSubmit(e) {
         e.preventDefault();
         if (name) {
-            location.search = `?name=${name}`;
-            navigate(location);
-            setName('');
+            navigate(`/home?name=${name}`)
         }
     }
 
     return (
         <div className='containerSearchBar d-flex'>
             <form className="d-flex input-group" role="search" onSubmit={(e) => { handleSubmit(e) }}>
-                <button 
-                    className="input-group-text" 
-                    id="inputGroup-sizing-default" 
+                <button
+                    className="input-group-text"
+                    id="inputGroup-sizing-default"
                     type='submit'
                 >
-                    <img src={iconSearch} alt="search Icon" width="25" height="25"/>
+                    <img src={iconSearch} alt="search Icon" width="25" height="25" />
                 </button>
-                <input 
-                    className="form-control me-2" 
-                    value={name} 
-                    name={"name"} 
-                    onChange={(e) => { handleInputChange(e) }} 
-                    placeholder='Type your search...' 
+                <input
+                    className="form-control me-2"
+                    value={name}
+                    name={"name"}
+                    onChange={(e) => { handleInputChange(e) }}
+                    placeholder='Type your search...'
                 />
             </form>
         </div>
