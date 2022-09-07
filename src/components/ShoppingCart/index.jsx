@@ -1,5 +1,5 @@
 // React utilities
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // Actions
 import { getPrice } from '../Card/favAndCart'
 // Components
@@ -21,8 +21,16 @@ const stripePromise = loadStripe('pk_test_51LZlZLAfFn4zXQabU5GwZV9N2mF4rWwZiphhN
 
 export default function ShoppingCart() {
 
+    const [user, setUser] = useState({})
     const [cartItem, setCartItem] = useState(JSON.parse(localStorage.getItem('cartList')))
-
+    
+    useEffect(()=>{
+        axios('/users/mariana.stocco@outlook.com')
+        .then(({data}) => {
+            setUser(data._id);
+        })
+        .catch(error => console.log(error));
+    }, [])
 
     const deleteItem = (id) => {
         let arr = cartItem.filter(instrument => instrument.id !== id)
@@ -84,13 +92,13 @@ export default function ShoppingCart() {
                     const cart = {
                         paymentMethodid: paymentMethod.id,
                         products: [...cartItem],
-                        customer: "6318c1e8409bf52757b70bcd"
+                        customer: user
                     }
                     console.log(cart);
 
                     const { data } = await axios.post('/api/checkout', { ...cart })
                     console.log(data);
-                    elements.getElement(CardElement).clear();
+                    // elements.getElement(CardElement).clear();
                 } catch (error) {
                     console.log(error);
                 }
