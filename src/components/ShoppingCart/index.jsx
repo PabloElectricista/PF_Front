@@ -93,9 +93,10 @@ export default function ShoppingCart() {
                 }
             }
         }
-        return <form onSubmit={handleSubmit}>
-            <div>
-                <CardElement className='cartContainer' />
+        return <form className="formPayment" onSubmit={handleSubmit}>
+            <label>Enter your card</label>
+            <div className='pricipalContainerPAY' >
+                <CardElement />
             </div>
 
             <Button

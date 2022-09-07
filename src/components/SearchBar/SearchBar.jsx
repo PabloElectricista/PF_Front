@@ -21,11 +21,7 @@ export default function SearchBar() {
     // Send the content that is in the SearchBar
     function handleSubmit(e) {
         e.preventDefault();
-        if (name) {
-            location.search = `?name=${name}`;
-            navigate(location);
-            setName('');
-        }
+        navigate(`/home?name=${name}`);
     }
 
     return (
