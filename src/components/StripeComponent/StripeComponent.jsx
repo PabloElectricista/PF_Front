@@ -20,6 +20,7 @@ import "bootswatch/dist/lux/bootstrap.min.css";
 import { useState } from 'react';
 import ShopCard from "../ShoppingCart";
 import '../ShoppingCart/Card.css'
+import { getPrice } from '../Card/favAndCart';
 
 
 const appearance = {
@@ -51,30 +52,6 @@ const stripePromise = loadStripe('pk_test_51LZlZLAfFn4zXQabU5GwZV9N2mF4rWwZiphhN
 function StripeComponent() {
     const [cartItem, setCartItem] = useState(JSON.parse(localStorage.getItem('cartList')))
 
-    const deleteItem = (id) => {
-        setCartItem(cartItem.filter(instrument => instrument.id !== id))
-        localStorage.setItem('cartList', JSON.stringify(cartItem))
-    }
-
-    function renderInstruments() {
-        console.log(cartItem[0]);
-        let cartItemMap = cartItem.map(instrument => <ShopCard
-            key={instrument.id}
-            id={instrument.id}
-            name={instrument.name}
-            price={instrument.price}
-            brand={instrument.brand}
-            rating={instrument.rating}
-            quantity={instrument.quantity}
-            deleteItem={deleteItem}
-            image={instrument.image} />);
-        return (
-            <div className="favoriteCards">
-                {cartItemMap}
-            </div>
-        );
-    }
-
     function CheckoutForm() {
         const stripe = useStripe();
         const elements = useElements();
@@ -96,8 +73,7 @@ function StripeComponent() {
                             amount: product.price  // price en centavoss
                         }
                     })
-
-                    const { data } = await axios.post('http://localhost:3001/api/checkout', { cart })
+                    const { data } = await axios.post('http://localhost:4000/api/checkout', { cart })
                     console.log("localhost3001",data.message);  // success?
                     elements.getElement(CardElement).clear();
                 } catch (error) {
@@ -107,9 +83,7 @@ function StripeComponent() {
         }
         return (<div >
             <>
-                <h1>Shopping Cart</h1>
-                {renderInstruments()}
-                <p>{JSON.parse(localStorage.getItem('cartList')).reduce((a, b)=> {return a.price*a.quantity + b.price*b.quantity})}</p>
+                <p>Total: {getPrice()}</p>
             </>
             <form onSubmit={handleSubmit}>
                 <div className='cartContainer'>

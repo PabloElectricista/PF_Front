@@ -42,8 +42,8 @@ export default function UserProfile() {
         <Route exact path='/data/edit' element={<UserEditData />} />
         <Route exact path='/admin/*' element={<Dashboard />} />
         <Route exact path='/admin/usercontrol' element={<UserControl />} />
-        <Route exact path='/admin/usercontrol/userdetail/:id' element={<UserDetail />} />
-        <Route exact path='/admin/usercontrol/userdetail/userEdit/:id' element={<UserEdit />} />
+        <Route exact path='/admin/usercontrol/userdetail/:email' element={<UserDetail />} />
+        <Route exact path='/admin/usercontrol/userdetail/userEdit/:email' element={<UserEdit />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>

@@ -1,17 +1,12 @@
 import { useAuth0 } from "@auth0/auth0-react"
-import { useDispatch, } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { createProduct } from '../../redux/actions'
 import './CreateProduct.css'
-import { useNavigate } from "react-router-dom";
 import { Alert, AlertTitle, Snackbar } from "@mui/material"
 import axios from "axios"
 
 export default function CreateProduct() {
 
     const { user, isAuthenticated } = useAuth0();
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [error, setError] = useState({})
     const [inputForm, setInputForm] = useState({
         name: '',
@@ -45,7 +40,7 @@ export default function CreateProduct() {
     //-------------------------
     function getUser() {
         return {
-            user: user.sub.substring(user.sub.indexOf("|") + 1),
+            email: user.email,
         }
     }
 
@@ -143,6 +138,7 @@ export default function CreateProduct() {
             ...inputForm,
             image: aux,
         });
+        console.log("cloudinary")
     }
 
     const postProduct = async () => {
@@ -297,7 +293,6 @@ export default function CreateProduct() {
                         <div id='input-name' className='form-inputs'>
                             <label>Status:</label>
                             <select onChange={(e) => { handleSelectS(e) }} placeholder="-Select at least one-" >
-                                <option value="default"> -Select one</option>
                                 <option value="New"> New </option>
                                 <option value="Used"> Used </option>
                             </select>
