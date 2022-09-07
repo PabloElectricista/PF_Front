@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserByEmail, putUser } from '../../redux/actions'
+import { getAllUsers, getUserByEmail, putUser } from '../../redux/actions'
 import './User.css'
 
 
@@ -10,17 +10,18 @@ import './User.css'
 export default function UserEdit() {
 
   const dispatch = useDispatch();
-  const currentClient = useSelector((store) => store.usersEmail);
+  const allUsers = useSelector((store) => store.users);
   const { email } = useParams();
+  const thisUser = allUsers.find(e => e.email === email)
 
-  useEffect(() => {
-    dispatch(getUserByEmail(email));
-  }, [dispatch])
+  useEffect(()=>{
+    dispatch(getAllUsers())
+  }, [allUsers])
 
   const [input, setInput] = useState({
-    isAdmin: currentClient.isAdmin,
-    isActive: currentClient.isActive,
-    isBloked: currentClient.isBloked,
+    isAdmin: thisUser.isAdmin,
+    isActive: thisUser.isActive,
+    isBloked: thisUser.isBloked,
   });
 
   async function handleSubmit(e) {
@@ -53,7 +54,6 @@ export default function UserEdit() {
               name='isAdmin'
               onChange={(e) => handleChange(e)}
             >
-              <option>select</option>
               <option value={true}>Yes</option>
               <option value={false} >No</option>
             </select>
@@ -65,7 +65,6 @@ export default function UserEdit() {
               name='isActive'
               onChange={(e) => handleChange(e)}
             >
-              <option>select</option>
               <option value={true}>Yes</option>
               <option value={false} >No</option>
             </select>
@@ -77,17 +76,16 @@ export default function UserEdit() {
               name='isBloked'
               onChange={(e) => handleChange(e)}
             >
-              <option>select</option>
               <option value={true}>Yes</option>
               <option value={false} >No</option>
             </select>
           </div>
           <div className="UserEditMargin">
             <button className="btn btn-outline-success me-2" type='submit' onClick={handleSubmit}>
-              <Link to={`/profile/admin/usercontrol/userdetail/${currentClient.email}`}>Modify</Link>
+              <Link to={`/profile/admin/usercontrol/userdetail/${thisUser.email}`}>Modify</Link>
             </button>
             <button className="btn btn-outline-success me-2">
-              <Link to={`/profile/admin/usercontrol/userdetail/${currentClient.email}`}>Cancel</Link>
+              <Link to={`/profile/admin/usercontrol/userdetail/${thisUser.email}`}>Cancel</Link>
             </button>
           </div>
         </form>

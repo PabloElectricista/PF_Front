@@ -14,7 +14,6 @@ export default function CookieCard() {
     const CookieDiv = document.getElementById('Cookie')
     CookieDiv.classList.add('Accepted')
     localStorage.setItem('localstorage', true)
-    localStorage.setItem('lightTheme', true)
     localStorage.setItem('cartList', "[]")
   }
 

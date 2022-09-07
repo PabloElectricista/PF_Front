@@ -75,7 +75,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 export default function Dashboard() {
-  const { user, isAuthenticated, isLoading } = useAuth0()
+  const { isLoading } = useAuth0()
   const navigate = useNavigate()
   const userDetail = useSelector(state => state.usersEmail)
   const [open, setOpen] = useState(true);
@@ -83,7 +83,7 @@ export default function Dashboard() {
 
 
   useEffect(() => {
-    if (userDetail && !userDetail.isAdmin) {
+    if (Object.values(userDetail).length != 0 && !userDetail.isAdmin) {
       navigate('/home');
     }
   }, [userDetail])
