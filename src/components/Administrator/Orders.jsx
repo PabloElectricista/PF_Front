@@ -52,10 +52,10 @@ export default function Orders() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {allOrder.map((row, idx) => (row.status !== "cancelled" &&
+          {allOrder.map((row, idx) => (row.status !== "cancelled" && row.user !== null && getPrice(row.products) !== 0 &&
             <TableRow key={idx}>
               <TableCell>{row.createdAt.toString().slice(0,10)}</TableCell>
-              <TableCell>{row.user ? row.user.username : "null"}</TableCell>
+              <TableCell>{ row.user.username}</TableCell>
               <TableCell>{row.status}</TableCell>
               <TableCell>{`$${(getProfit(row.products)).toFixed(2)}`}</TableCell>
               <TableCell align="right">{`$${(getPrice(row.products)).toFixed(2)}`}</TableCell>

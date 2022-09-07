@@ -1,29 +1,16 @@
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import './User.css'
 
+export default function UsersCard({ username, email, _id }) {
 
-
-
-
-export default function UsersCard({username, email, _id}){
-    
-
-    return(
-        <div className="card"  >
-
-    
-            <div> 
-
-
-            
-          <Link to={`/admin/usercontrol/userdetail/${_id}`}>
-                 <p>Name : {username}</p>
-           </Link> 
-                <p>Email : {email}</p>
-
-                                
-             </div> 
-            
-            
+    return (
+        <div className="card UserProductCard UserProfileCard UserEditContainer"  >
+                <Link to={`/profile/admin/usercontrol/userdetail/${email}`}>
+            <ul>
+                    <li className='UserCardLi'>Name : {username}</li>
+                    <li className='UserCardLi'>Email : {email}</li>
+            </ul>
+                </Link>
         </div>
     )
 }

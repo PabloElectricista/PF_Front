@@ -17,7 +17,12 @@ body.Dark .MuiBox-root , body.Dark .MuiTableCell-root{
     color: azure;
 }
 
-.Typography-root{
+.MuiTypography-root{
     font-weight: 800 !important;
     font-size: 1.4rem !important;
+}
+
+.Title-root{
+    font-weight: 800 !important;
+    font-size: 1.4rem !important; 
 }

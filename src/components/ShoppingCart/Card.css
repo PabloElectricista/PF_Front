@@ -54,7 +54,7 @@
   gap: .7em;
 }
 
-.cardShoppingCart p {
+.shoppingCart p {
   margin: 0;
 }
 
@@ -81,6 +81,7 @@
 
 .containerButtonsSC .MuiSvgIcon-root{
   color: #169E85;
+  cursor: pointer;
 }
 
 .selectQuantity {
@@ -93,9 +94,29 @@
 }
 
 .paymentDetailSC {
-  background-color: rgba(0,0,0,.06);
   width: 20%;
-  height: 15em;
   margin-left: auto;
   margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  align-items: center;
+}
+
+.paymentDetailSC .MuiButton-contained {
+  background-color: #169E85;
+}
+
+.paymentDetailSC .MuiButton-contained:hover {
+  background-color: #0F6B5A;
+}
+
+.paymentDetailSC p {
+  font-size: 1.5em;
+  padding-bottom: .3em;
+  border-bottom: 1px solid rgb(0, 0, 0, .4);
+}
+
+.paymentDetailSC span {
+  font-weight: 600;
 }

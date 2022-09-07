@@ -3,7 +3,6 @@ const {
     GET_PRODUCT_BY_ID,
     UPDATE_PRODUCT,
     FILTERED_INSTRUMENTS,
-    CREATE_PRODUCT,
     ORDER_PRODUCTS,
     GET_REVIEWS_BY_PRODUCT_ID,
     ADD_REVIEW,
@@ -13,7 +12,8 @@ const {
     SHOW_ALERT,
     ALL_ORDERS,
     GET_ALL_USERS,
-    GET_USER_BY_ID,
+    GET_USER_BY_EMAIL,
+    GET_USER_BY_ID
 
 } = require('../actions/index');
 
@@ -40,7 +40,7 @@ const initialState = {
     productReviewList: [],
     myOrders: [],
     users: [],
-    userDetail:{},
+    userDetail: {},
     isLoading: true,
     alertInfo: {
         displayAlert: false,
@@ -48,7 +48,8 @@ const initialState = {
         alertTitle: '',
         alertText: ''
     },
-    orders:[]
+    orders: [],
+    usersEmail: {}
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -95,12 +96,6 @@ export default function rootReducer(state = initialState, action) {
                 allInstruments: allInstrumentsUpdated,
                 instruments: instrumentsUpdated,
                 retrievedInstrument: action.payload
-            }
-
-        case CREATE_PRODUCT:
-            return {
-                ...state,
-                allInstruments: [action.payload, ...state.allInstruments]
             }
         case FILTERED_INSTRUMENTS:
             return {
@@ -174,19 +169,27 @@ export default function rootReducer(state = initialState, action) {
                 }
             };
 
-            case GET_ALL_USERS:
-                return {
-                    ...state,
-                    users: action.payload,
-                    isLoading: false
-                }
+        case GET_ALL_USERS:
+            return {
+                ...state,
+                users: action.payload,
+                isLoading: false
+            }
 
-            case GET_USER_BY_ID:
-                return {
-                    ...state,
-                    userDetail: action.payload,
-                    isLoading: false
-                }
+        case GET_USER_BY_EMAIL:
+            console.log("GETUSERBYEMAIL", action.payload)
+            return {
+                ...state,
+                usersEmail: action.payload,
+                isLoading: false
+            }
+
+        case GET_USER_BY_ID:
+            return {
+                ...state,
+                userDetail: action.payload,
+                isLoading: false
+            }
 
 
 

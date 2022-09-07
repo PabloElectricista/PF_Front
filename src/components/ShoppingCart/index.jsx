@@ -1,13 +1,20 @@
 // React utilities
 import React, { useState } from "react";
+// Actions
+import { getPrice } from '../Card/favAndCart'
 // Components
 import ShopCard from "./ShopCard";
 // Styles
+import Button from '@mui/material/Button';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import './Card.css'
+// Paypal
+import Paypal from "../paypal/Paypal";
 
 export default function ShoppingCart() {
 
   const [cartItem, setCartItem] = useState(JSON.parse(localStorage.getItem('cartList')))
+  const [checkout, setCheckOut] = useState(false);
 
   const deleteItem = (id) => {
     let arr = cartItem.filter(instrument => instrument.id !== id)
@@ -24,23 +31,28 @@ export default function ShoppingCart() {
   }
 
   function renderInstruments() {
-    if (!cartItem.length) {
+    if (!cartItem) {
       return (
-        <div className="empyShoppingCart">
-          <h3>Your Shopping Cart is empty.</h3>
-        </div>
+        <h4>
+          The CartItem list is empty.
+        </h4>
       )
     }
-    let cartItemMap = cartItem.map((instrument, idx) => <ShopCard
-      key={idx}
-      id={instrument.id}
-      name={instrument.name}
-      price={instrument.price}
-      color={instrument.color}
-      deleteItem={deleteItem}
-      updateQuantity={updateQuantity}
-      quantity={instrument.quantity ? instrument.quantity : 1}
-      image={instrument.image} />);
+    let cartItemMap = cartItem.map((instrument, idx) => 
+        <ShopCard
+          key={idx}
+          id={instrument.id}
+          name={instrument.name}
+          price={instrument.price}
+          brand={instrument.brand}
+          rating={instrument.rating}
+          color={instrument.color}
+          deleteItem={deleteItem}
+          updateQuantity={updateQuantity}
+          quantity={instrument.quantity ? instrument.quantity : 1}
+          image={instrument.image} 
+        />
+      )
     return (
       <div className="containerCardsSC">
         {cartItemMap}
@@ -53,12 +65,21 @@ export default function ShoppingCart() {
       <h2>Your Shopping Cart</h2>
       <div className="principalSC">
         {renderInstruments()}
-        <div className='paymentDetailSC'>
-          <div className="goToPaySC">go To Pay</div>
+        <div className="paymentDetailSC">
+          <p>Subtotal: <span>${getPrice()}</span></p>
+          { 
+            checkout ? (<Paypal/>) : 
+            <Button 
+              onClick={() => {setCheckOut(true);}} 
+              type="submit" 
+              variant="contained" 
+              endIcon={<ShoppingCartCheckoutIcon />}
+              >
+                Checkout
+            </Button>
+          }
         </div>
       </div>
-      
     </div>
-
   );
 }

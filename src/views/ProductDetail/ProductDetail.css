@@ -180,6 +180,7 @@
 }
 
 .containerDetails .MuiButton-contained {
+    width: 100%;
     background-color: #169E85;
 }
 

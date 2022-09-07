@@ -2,12 +2,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // React utilities
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getProductById } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import {addToFav, addToCart} from '../../components/Card/favAndCart';
 // Components
+import {addToFav, addToCart} from '../../components/Card/favAndCart';
 import Loading from "../../components/Loading/Loading";
 import ReviewList from "../../components/ReviewList/ReviewList";
 import ReviewForm from "../../components/ReviewForm/ReviewForm";
@@ -142,7 +143,9 @@ export default function ProductDetail({handleAdded, handleNotAdded}) {
                             <div className="total">
                                 Total: <span>${instrumentItem.price * quantity}</span>
                             </div>
-                            <Button variant="contained">Buy Now</Button>
+                            <Link to='/cart'>
+                                <Button variant="contained">Buy Now</Button>
+                            </Link>
                             <Button onClick={() => addToCart(id, name, price, rating, image, brand, color, handleAdded, handleNotAdded)} variant="outlined" startIcon={<ShoppingCartOutlinedIcon />}>
                                 Add to cart
                             </Button>

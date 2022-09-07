@@ -16,6 +16,7 @@ export default function UserProducts() {
 
   if (isAuthenticated) {
 
+    console.log(products.map(e => e.user));
     const myProducts = products.filter(product => product.user._id === user.sub.slice(user.sub.indexOf("|") + 1))
     if (myProducts.length === 0) {
       return (
