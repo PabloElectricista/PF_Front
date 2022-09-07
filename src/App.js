@@ -26,7 +26,7 @@ import { registerUser } from './redux/actions';
 function App() {
 
     const alertInfo = useSelector(store => store.alertInfo)
-    const { isAuthenticated, user } = useAuth0()
+    const { user } = useAuth0()
     useEffect(() => {
         if (user && user.email) {
             console.log("user", user)

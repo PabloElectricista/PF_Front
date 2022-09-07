@@ -8,7 +8,7 @@ import UserEditData from "../../components/UserProfile/UserEditData";
 import { useAuth0 } from "@auth0/auth0-react";
 import Loading from "../../components/Loading/Loading";
 import { useEffect } from "react";
-import { getUserById } from "../../redux/actions";
+import { getUserByEmail } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import UserControl from '../../components/UserControl/UserControl';
 import UserDetail from '../../components/UserControl/UserDetail';
@@ -22,7 +22,7 @@ export default function UserProfile() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(getUserById(user.sub.slice(user.sub.indexOf("|") + 1)))
+      dispatch(getUserByEmail(user.email))
     }
   }, [isAuthenticated])
 

@@ -40,7 +40,7 @@ const initialState = {
     productReviewList: [],
     myOrders: [],
     users: [],
-    userDetail:{},
+    userDetail: {},
     isLoading: true,
     alertInfo: {
         displayAlert: false,
@@ -48,8 +48,8 @@ const initialState = {
         alertTitle: '',
         alertText: ''
     },
-    orders:[],
-    usersEmail: []
+    orders: [],
+    usersEmail: {}
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -169,26 +169,27 @@ export default function rootReducer(state = initialState, action) {
                 }
             };
 
-            case GET_ALL_USERS:
-                return {
-                    ...state,
-                    users: action.payload,
-                    isLoading: false
-                }
+        case GET_ALL_USERS:
+            return {
+                ...state,
+                users: action.payload,
+                isLoading: false
+            }
 
-            case GET_USER_BY_EMAIL:
-                return {
-                    ...state,
-                    usersEmail: action.payload,
-                    isLoading: false
-                }
+        case GET_USER_BY_EMAIL:
+            console.log("GETUSERBYEMAIL", action.payload)
+            return {
+                ...state,
+                usersEmail: action.payload,
+                isLoading: false
+            }
 
-            case GET_USER_BY_ID:
-                return {
-                    ...state,
-                    userDetail: action.payload,
-                    isLoading: false
-                }
+        case GET_USER_BY_ID:
+            return {
+                ...state,
+                userDetail: action.payload,
+                isLoading: false
+            }
 
 
 

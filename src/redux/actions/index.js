@@ -45,33 +45,36 @@ export const getAllUsers = () => {
         });
     };
 };
-export const getUserById = (id) => {
-    return async function (dispatch) {
-        const user = await axios("/users/" + id);
-        return dispatch({
-            type: GET_USER_BY_ID,
-            payload: user.data
-        });
-    };
-};
+// export const getUserById = (id) => {
+//     return async function (dispatch) {
+//         const user = await axios("/users/" + id);
+//         return dispatch({
+//             type: GET_USER_BY_ID,
+//             payload: user.data
+//         });
+//     };
+// };
 
 export function getUserByEmail(email) {
     return async function (dispatch) {
         try {
             const user = await axios.get(`users/${email}`);
-
-
             console.log(user.data.email, 'EMAIL');
             dispatch({
                 type: GET_USER_BY_EMAIL,
                 payload: user.data
             });
-
         } catch (error) {
             console.log(error)
         };
     }
 };
+export async function registerUser(user) {
+    try {
+        const userRegistered = await axios.post("/users", user)
+        console.log(userRegistered);
+    } catch (err) { console.log(err) }
+}
 
 
 export const getAllCategories = () => {
@@ -215,9 +218,3 @@ export function purchaseOrder(orderInfo) {
     //todo - pending
 }
 
-export async function registerUser(user) {
-    try {
-        const userRegistered = await axios.post("/users", user)
-        console.log(userRegistered);
-    } catch (err) { console.log(err) }
-}

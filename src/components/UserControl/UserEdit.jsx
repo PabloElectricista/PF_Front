@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useParams} from "react-router-dom";
 import {useEffect} from 'react'
 import { useDispatch,useSelector } from 'react-redux'
-import {getUserById, putUser}  from '../../redux/actions'
+import {getUserByEmail, putUser}  from '../../redux/actions'
 import './User.css'
 
     
@@ -10,15 +10,14 @@ import './User.css'
 export default function UserEdit() {
 
   const dispatch = useDispatch();
-  const currentClient = useSelector((store)=> store.userDetail);
-  const {id} = useParams();
+  const currentClient = useSelector((store)=> store.userEmail);
+  const {email} = useParams();
   const [error, setError] = useState({})
-
 
 
     
 useEffect(() => {
-        dispatch(getUserById(id));
+        dispatch(getUserByEmail(email));
     },[dispatch])
 
 
@@ -46,7 +45,7 @@ useEffect(() => {
   async function handleSubmit(e) {
     e.preventDefault();
     if(error.username === null && error.email === null){
-    dispatch(putUser(id, input));
+    dispatch(putUser(email, input));
     alert("The user was updated succesfully");
    
   } else{

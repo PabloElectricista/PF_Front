@@ -28,6 +28,7 @@ export default function ShoppingCart() {
       price={instrument.price}
       brand={instrument.brand}
       rating={instrument.rating}
+      quantity={instrument.quantity}
       deleteItem={deleteItem}
       image={instrument.image} />);
     return (

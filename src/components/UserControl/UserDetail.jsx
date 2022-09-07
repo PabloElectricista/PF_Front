@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserById } from '../../redux/actions'
+import { getUserByEmail } from '../../redux/actions'
 import axios from 'axios'
 import './User.css'
 
@@ -9,19 +9,18 @@ import './User.css'
 
 export default function UserDetail() {
     const dispatch = useDispatch();
-    const currentClient = useSelector((store) => store.userDetail);
-    const { id } = useParams();
+    const [currentClient] = useSelector((store) => store.usersEmail);
+    const { email } = useParams();
     const navigate = useNavigate();
 
-
     useEffect(() => {
-        dispatch(getUserById(id));
+        dispatch(getUserByEmail(email));
     }, [dispatch])
 
 
 
     function handleEdit() {
-        navigate(`/profile/admin/usercontrol/userdetail/userEdit/${id}`);
+        navigate(`/profile/admin/usercontrol/userdetail/userEdit/${email}`);
     }
 
     console.log(currentClient)
