@@ -32,7 +32,7 @@ export default function ShoppingCart() {
         setTotalPrice(getPrice())
     }
 
-    const updateQuantity = (id, quantity) => {
+    const updateQuantity = () => {
         setTotalPrice(getPrice())
     }
     function renderInstruments() {
@@ -43,9 +43,9 @@ export default function ShoppingCart() {
                 </h4>
             )
         }
-        let cartItemMap = cartItem.map((instrument, idx) =>
+        let cartItemMap = cartItem.map((instrument) =>
             <ShopCard
-                key={idx}
+                key={instrument.id}
                 id={instrument.id}
                 name={instrument.name}
                 price={instrument.price}
@@ -54,7 +54,7 @@ export default function ShoppingCart() {
                 color={instrument.color}
                 deleteItem={deleteItem}
                 updateQuantity={updateQuantity}
-                quantity={instrument.quantity ? instrument.quantity : 1}
+                quantity={instrument.quantity}
                 image={instrument.image}
             />
         )
