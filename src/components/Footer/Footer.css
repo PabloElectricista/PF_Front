@@ -9,6 +9,11 @@
     font-size: 0.7rem !important;
 }
 
-.footerAboutUs:hover {
+.footerContact:hover {
     color: #dddddd;
+}
+
+.contact {
+    display: flex;
+    gap: 1em;
 }

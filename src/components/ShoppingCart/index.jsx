@@ -16,6 +16,14 @@ export default function ShoppingCart() {
     setCartItem(arr)
   }
 
+  const updateQuantity = (id, quantity) => {
+    let updatedList = cartItem.map(item =>
+        item.id !== id ? item : {...item, quantity}
+    );
+    localStorage.setItem('cartList', JSON.stringify(updatedList));
+    setCartItem(updatedList);
+  }
+
   function renderInstruments() {
     if (!cartItem) {
       return (
@@ -33,6 +41,8 @@ export default function ShoppingCart() {
       rating={instrument.rating}
       quantity={instrument.quantity}
       deleteItem={deleteItem}
+      updateQuantity={updateQuantity}
+      quantity={instrument.quantity ? instrument.quantity : 1}
       image={instrument.image} />);
     return (
       <div className="favoriteCards">

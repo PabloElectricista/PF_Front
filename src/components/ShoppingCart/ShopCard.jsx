@@ -1,7 +1,6 @@
 import './Card.css'
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { BsCartFill, BsStarFill } from 'react-icons/bs';
 import { AiFillPlusCircle, AiFillMinusCircle, AiFillDelete } from 'react-icons/ai';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';

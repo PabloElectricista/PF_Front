@@ -1,11 +1,17 @@
-import React, {useState} from "react";
+// React utilities
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ReactStars from 'react-stars'; //source: https://www.npmjs.com/package/react-stars
-import {useDispatch, useSelector} from "react-redux";
-import {addReview} from "../../redux/actions";
-import {useAuth0} from "@auth0/auth0-react";
+// Actions
+import { addReview } from "../../redux/actions";
+// Auth0
+import { useAuth0 } from "@auth0/auth0-react";
+// Styles
+import Button from '@mui/material/Button';
+import CommentIcon from '@mui/icons-material/Comment';
 import './ReviewForm.css';
 
-function ReviewForm(props) {
+export default function ReviewForm(props) {
 
     const productId = props.productId;
     const dispatch = useDispatch();
@@ -104,47 +110,51 @@ function ReviewForm(props) {
     function renderReviewForm() {
         return (
             <div className='ratingContainer'>
+                <h2>Leave a comment</h2>
                 <form>
                     <div className='starRating'>
-                        <legend>Rating: </legend>
-                        <ReactStars
-                            value={reviewItem.rating}
-                            onChange={(newRate) => handleRateChange(newRate)}
-                            edit={true}
-                            size={30}
-                            color1={'#888'}
-                            color2={'#169E85'}
-                        />
+                        <div className="principalRating">
+                            <label>Rating: </label>
+                            <ReactStars
+                                value={reviewItem.rating}
+                                onChange={(newRate) => handleRateChange(newRate)}
+                                edit={true}
+                                size={30}
+                                color1={'#888'}
+                                color2={'#169E85'}
+                            />
+                        </div>
                         <span className="errorMessage">{errorRating}</span>
                     </div>
 
-                    <div className='inputLabelField'>
-                        <label>Review: </label>
-                        <textarea placeholder='Write a review comment...'
-                                  onChange={(e) => handleCommentChange(e)}
-                                  onBlur={() => validateComment(reviewItem)}
-                                  value={reviewItem.comment}
-                                  rows={5}
-                                  name={'comment'}/>
+                    <div className='inputReview'>
+                        <div className="principalReview">
+                            <label>Review: </label>
+                            <textarea placeholder='Write a review comment...'
+                                onChange={(e) => handleCommentChange(e)}
+                                onBlur={() => validateComment(reviewItem)}
+                                value={reviewItem.comment}
+                                name={'comment'}/>
+                        </div>                        
                         <span className="errorMessage">{errorComment}</span>
                     </div>
+                    <Button 
+                        onClick={e => handleSubmit(e)} 
+                        type="submit" 
+                        variant="contained" 
+                        endIcon={<CommentIcon />}
+                        >
+                        Send
+                    </Button>
                 </form>
-                <button className='submitReviewButton'
-                        type='button'
-                        onClick={e => handleSubmit(e)}
-                >Submit
-                </button>
             </div>
 
         );
     }
 
     return (
-        <div className='Details'>
-            <h1>Leave a review</h1>
+        <>
             {renderReviewForm()}
-        </div>
+        </>
     );
 }
-
-export default ReviewForm;

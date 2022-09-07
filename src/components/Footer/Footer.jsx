@@ -24,12 +24,14 @@ export default function Footer() {
             <Navbar.Text className="terms">
                 <div>© B. Goode, 2022. All rights reserved.</div>
             </Navbar.Text>
-            <Navbar.Text>
-                <Link to='/about'><div className="footerAboutUs">About Us</div></Link>
-            </Navbar.Text>
-            <Navbar.Text>
-                <Link to='/contact' className="nav-link">Contact us</Link>
-            </Navbar.Text>
+            <div className="contact">
+                <Navbar.Text>
+                    <Link to='/about'><div className="footerContact">About Us</div></Link>
+                </Navbar.Text>
+                <Navbar.Text>
+                    <Link to='/contact'><div className="footerContact">Contact us</div></Link>
+                </Navbar.Text>
+            </div> 
         </Navbar>
     );
 }
