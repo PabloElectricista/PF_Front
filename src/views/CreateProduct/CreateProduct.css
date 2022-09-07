@@ -41,12 +41,7 @@ label {
     height: 100vh;
     width: 100vw;
 }
-.form-cont label{
-    color: var(--color-primary);
-    font-size: 1.2em;
-    font-weight: bold;
 
-}
 #form-create p{
     color: rgb(255, 0, 0);
 
@@ -63,7 +58,6 @@ label {
     color: var(--color-primary);
     font-size: 1.2em;
     font-weight: bold;
-
 }
 
 .form-inputs{
@@ -144,3 +138,4 @@ body.Dark .bgImg {
 body.Dark h1 {
     color: white;
 }
+

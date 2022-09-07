@@ -1,15 +1,14 @@
-import {useState,useEffect} from 'react'
-import { useDispatch,useSelector } from 'react-redux'
-import { getAllUsers} from '../../redux/actions'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllUsers } from '../../redux/actions'
 import UsersCard from './UsersCard';
 
 
-export default function UserControl(){
+export default function UserControl() {
     const dispatch = useDispatch();
-    const users = useSelector((store)=> store.users);
-  
+    const users = useSelector((store) => store.users);
 
-   const currentUser = {
+    const currentUser = {
         "_id": {
             "$oid": "6313a6f4bee5ce14957dd99c"
         },
@@ -52,65 +51,24 @@ export default function UserControl(){
         }
     }
 
-
-useEffect(()=>{
+    useEffect(() => {
         dispatch(getAllUsers())
-     
-    },[dispatch])
+    }, [dispatch])
 
-
-
-  return(
-   
-
-
-  <div>{
-    !currentUser.isAdmin ? (
-    <h1>no sos admin chaon</h1>
-    ) : (
-
-    <div>
-        <div>
-            <h1>Users List</h1>
-            <br/>
-            <span>Choose one to see details</span>
-            <br/>
-        </div>
-
-
-            <div>{
-      
-              users.map( u => {
-                return(
-                <div class="card">
-                  <UsersCard username={u && u.username} email={u && u.email} _id={u && u._id} />
-                </div>)
-      
-               })
-               }
-
-
+    return (
+        <>
+            <div>
+                <h1 className='UserControlTitle'>Users List</h1>
             </div>
-
-
-    </div>
-       
-         
-       
-    )}
-
-  </div>
-
-
-
-
-
-
-
-
-
-
-  )
+            <div>
+                {users.map(u => {
+                    return (<>
+                        <UsersCard username={u && u.username} email={u && u.email} _id={u && u._id} />
+                    </>)
+                })}
+            </div>
+        </>
+    )
 
 }
-    
+

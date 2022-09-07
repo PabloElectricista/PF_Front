@@ -5,6 +5,7 @@ import { createProduct } from '../../redux/actions'
 import './CreateProduct.css'
 import { useNavigate } from "react-router-dom";
 import { Alert, AlertTitle, Snackbar } from "@mui/material"
+import axios from "axios"
 
 export default function CreateProduct() {
 
@@ -12,9 +13,7 @@ export default function CreateProduct() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [error, setError] = useState({})
-    //const [img, setImg] = useState('')
     const [inputForm, setInputForm] = useState({
-
         name: '',
         description: '',
         image: [],
@@ -24,23 +23,24 @@ export default function CreateProduct() {
         stock: 0,
         brand: '',
         status: '',
-
     })
-    console.log(inputForm)
-    console.log(isAuthenticated)
+    //-------------------------
+    //-------------------------
+    const [warning, setWarning] = useState(true);
+    const [success, setSuccess] = useState(false);
+    const [fail, setFail] = useState(false);
 
-    //-------------------------
-    //-------------------------
-    const [open, setOpen] = useState(true);
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-        setOpen(false);
+        setWarning(false);
+        setSuccess(false);
+        setFail(false);
     };
-    useEffect(()=>{
-        setOpen(!isAuthenticated)
-    },[isAuthenticated])
+    useEffect(() => {
+        setWarning(!isAuthenticated)
+    }, [isAuthenticated])
     //-------------------------
     //-------------------------
     function getUser() {
@@ -145,17 +145,18 @@ export default function CreateProduct() {
         });
     }
 
+    const postProduct = async () => {
+        return await axios.post('/products', { ...getUser(), ...inputForm })
+    }
 
-    function handleSubmit(e) {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (error.name === null && error.category === null && error.color === null &&
-            error.price === null && error.stock === null &&
-            error.brand === null) {
-
+            error.price === null && error.stock === null && error.brand === null) {
             if (isAuthenticated) {
-                dispatch(createProduct({ ...getUser(), ...inputForm }))
-                alert('Successfully created')
-                navigate("/home");
+                const response = postProduct()
+                await response.status === 201 ? setSuccess(true) :  setFail(true)
                 setInputForm({
                     name: '',
                     description: '',
@@ -169,21 +170,31 @@ export default function CreateProduct() {
                 })
                 return
             }
-            alert('need to be logedin to submit a product')
-
+            setWarning(true)
         } else {
-            alert('Fixes flagged errors and fills in required spaces')
+            setFail(true)
         }
     }
 
 
     return (
-
         <div className="bgImg">
-            <Snackbar elevation={6} open={open} onClose={handleClose}>
-                <Alert onClose={handleClose}  variant='filled' severity="warning" sx={{ width: '100%' }}>
+            <Snackbar elevation={6} open={warning} onClose={handleClose}>
+                <Alert onClose={handleClose} variant='filled' severity="error" sx={{ width: '100%' }}>
                     <AlertTitle><strong>Warning</strong></AlertTitle>
                     <strong>must be loged to submit a product</strong>
+                </Alert>
+            </Snackbar>
+            <Snackbar elevation={6} autoHideDuration={1500} open={success} onClose={handleClose}>
+                <Alert onClose={handleClose} variant='filled' severity="success" sx={{ width: '100%' }}>
+                    <AlertTitle><strong>Success</strong></AlertTitle>
+                    <strong>You've post a product</strong>
+                </Alert>
+            </Snackbar>
+            <Snackbar elevation={6} autoHideDuration={1500} open={fail} onClose={handleClose}>
+                <Alert onClose={handleClose} variant='filled' severity="warning" sx={{ width: '100%' }}>
+                    <AlertTitle><strong>Fail</strong></AlertTitle>
+                    <strong>Some fields may be wrong</strong>
                 </Alert>
             </Snackbar>
             <div id='container-create'>
@@ -191,7 +202,6 @@ export default function CreateProduct() {
                     <h1>Post your sale!</h1>
                 </div>
                 <form onSubmit={(e) => { handleSubmit(e) }}>
-
                     <div id='form-cont-left'>
                         <div id='input-name' className='form-inputs'>
                             <label>* Name:</label>
@@ -202,9 +212,7 @@ export default function CreateProduct() {
                                 onChange={(e) => { handleChange(e) }} />
                             {error.name && (
                                 <p>{error.name}</p>)}
-
                         </div>
-
                         <div id='input-dsc' className='form-inputs'>
                             <label>Description:</label>
                             <input
@@ -212,13 +220,10 @@ export default function CreateProduct() {
                                 value={inputForm.description}
                                 name='description'
                                 onChange={(e) => { handleChange(e) }} />
-
                         </div>
-
                         <div id='input-name' className='form-inputs'>
                             <label>*Category:</label>
                             <select onChange={(e) => { handleSelect(e) }} placeholder="-Select at least one-" >
-
                                 <option value="default"> -Select one</option>
                                 <option value="Wind"> Wind </option>
                                 <option value="Electric"> Electric </option>
@@ -226,10 +231,7 @@ export default function CreateProduct() {
                                 <option value="String"> String </option>
                             </select>
                         </div>
-
                         <div>
-
-
                             <div>
                                 <label>*Image:</label>
                                 <input
@@ -241,12 +243,9 @@ export default function CreateProduct() {
                             </div>
                             <br />
                         </div>
-
-
                         <div id='input-name' className='form-inputs'>
                             <label>Color:</label>
                             <select onChange={(e) => { handleSelectC(e) }}>
-
                                 <option value="default"> -Select at least one</option>
                                 <option value="Yellow "> Yellow </option>
                                 <option value="Green"> Green </option>
@@ -260,11 +259,8 @@ export default function CreateProduct() {
                                 <option value="Black"> Black </option>
                                 <option value="Other"> Other </option>
                                 <option value="Art Graph"> Art Graph </option>
-
                             </select>
                         </div>
-
-
                         <div id='input-name' className='form-inputs'>
                             <label>Price:</label>
                             <input
@@ -275,10 +271,7 @@ export default function CreateProduct() {
                             {error.price && (
                                 <p>{error.price}</p>
                             )}
-
-
                         </div>
-
                         <div id='input-stk' className='form-inputs'>
                             <label>*Stock:</label>
                             <input
@@ -289,10 +282,7 @@ export default function CreateProduct() {
                             {error.stock && (
                                 <p>{error.stock}</p>
                             )}
-
-
                         </div>
-
                         <div id='input-brn' className='form-inputs'>
                             <label >Brand:</label>
                             <input
@@ -303,31 +293,21 @@ export default function CreateProduct() {
                             {error.brand && (
                                 <p>{error.brand}</p>
                             )}
-
-
                         </div>
-
                         <div id='input-name' className='form-inputs'>
                             <label>Status:</label>
                             <select onChange={(e) => { handleSelectS(e) }} placeholder="-Select at least one-" >
-
                                 <option value="default"> -Select one</option>
                                 <option value="New"> New </option>
                                 <option value="Used"> Used </option>
                             </select>
                         </div>
-
                         <div id='cont-btn-submit'>
                             <button className="btn btn-secondary">Sell Product</button>
                         </div>
-
-
                     </div>
-
                 </form>
-
             </div>
-
         </div>
     )
 }

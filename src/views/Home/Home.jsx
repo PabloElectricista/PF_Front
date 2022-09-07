@@ -23,33 +23,9 @@ import Select from '@mui/material/Select';
 import CloseButton from 'react-bootstrap/CloseButton';
 import 'bootstrap/dist/css/bootstrap.css';
 import './Home.css';
-import { Alert, AlertTitle, Snackbar } from "@mui/material";
 
-export default function Home() {
+export default function Home({handleAdded, handleNotAdded}) {
 
-  //-------------------------------
-  //-------------------------------
-  // alert para los fav y cart
-  const [added, setAdded] = useState(false);
-  const [notAdded, setNotAdded] = useState(false);
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setAdded(false);
-    setNotAdded(false)
-  };
-  const handleAdded = () => {
-    setAdded(true)
-  }
-  const handleNotAdded = () => {
-    setNotAdded(true)
-  }
-  //-------------------------------
-  //-------------------------------
-  
-  
   //Hooks
   const location = useLocation();
   const navigate = useNavigate();
@@ -185,18 +161,6 @@ export default function Home() {
             : <NothingFound />}
         </div>
       }
-      <Snackbar open={added} autoHideDuration={1000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-        <AlertTitle>Success</AlertTitle>
-        <strong>Added correctly</strong>
-        </Alert>
-      </Snackbar>
-      <Snackbar open={notAdded} autoHideDuration={1000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="warning" sx={{ width: '100%' }}>
-        <AlertTitle>Fail</AlertTitle>
-        <strong>List maximum size exceeded</strong>
-        </Alert>
-      </Snackbar>
     </>
   )
 }

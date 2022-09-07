@@ -2,7 +2,6 @@ import axios from 'axios'
 
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
-export const CREATE_PRODUCT = "CREATE_PRODUCT";
 export const GET_INSTRUMENT_BY_NAME = "GET_INSTRUMENTS_BY_NAME";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
@@ -11,8 +10,8 @@ export const ORDER_PRODUCTS = "ORDER_PRODUCTS";
 export const GET_REVIEWS_BY_PRODUCT_ID = "GET_REVIEWS_BY_PRODUCT_ID";
 export const ADD_REVIEW = "ADD_REVIEW";
 export const GET_MY_ORDERS = "GET_MY_ORDERS";
-export const ACTIVE_LOADING = "ACTIVE_LOADING"; 
-export const CREATE_CONTACT = "CREATE_CONTACT"; 
+export const ACTIVE_LOADING = "ACTIVE_LOADING";
+export const CREATE_CONTACT = "CREATE_CONTACT";
 export const SHOW_ALERT = "SHOW_ALERT";
 export const ALL_ORDERS = "ALL_ORDERS";
 export const GET_ALL_USERS = "GET_ALL_USERS";
@@ -39,8 +38,7 @@ export const getAllProducts = () => {
 export const getAllUsers = () => {
     return async function (dispatch) {
         const users = await axios('/users');
-      
-console.log(users.data);
+        console.log("getAllUsers", users.data);
         return dispatch({
             type: GET_ALL_USERS,
             payload: users.data
@@ -49,7 +47,7 @@ console.log(users.data);
 };
 export const getUserById = (id) => {
     return async function (dispatch) {
-        const user = await axios("/users/"+ id );
+        const user = await axios("/users/" + id);
         return dispatch({
             type: GET_USER_BY_ID,
             payload: user.data
@@ -57,21 +55,21 @@ export const getUserById = (id) => {
     };
 };
 
-export function getUserByEmail (email)  {
+export function getUserByEmail(email) {
     return async function (dispatch) {
-    try {
-        const user = await axios.get(`users/${email}`);
+        try {
+            const user = await axios.get(`users/${email}`);
 
 
-        console.log(user.data.email, 'EMAIL');
-         dispatch({
-            type: GET_USER_BY_EMAIL,
-            payload: user.data
-        });
-        
-    } catch (error) {
-        console.log(error)
-    };
+            console.log(user.data.email, 'EMAIL');
+            dispatch({
+                type: GET_USER_BY_EMAIL,
+                payload: user.data
+            });
+
+        } catch (error) {
+            console.log(error)
+        };
     }
 };
 
@@ -122,13 +120,7 @@ export const putUser = (email, payload) => {
     };
 };
 
-export function createProduct(payload) {
-    return async function (dispatch) {
-        console.log(payload);
-        const response = await axios.post('/products', payload)
-        
-    }
-}
+
 
 export function filteredIntruments(payload) {
     return async function (dispatch) {
@@ -145,8 +137,8 @@ export function allOrders() {
     return async (dispatch) => {
         const NewOrder = await axios.get('/orders')
         return dispatch({
-        type: ALL_ORDERS,
-        payload: NewOrder.data,
+            type: ALL_ORDERS,
+            payload: NewOrder.data,
         })
     }
 }
@@ -194,7 +186,7 @@ export const getMyOrders = (userId) => {
     }
 }
 export const activeLoading = () => {
-    return function(dispatch) {
+    return function (dispatch) {
         return dispatch({
             type: ACTIVE_LOADING
         });
@@ -221,4 +213,11 @@ export function getUsers() {
 
 export function purchaseOrder(orderInfo) {
     //todo - pending
+}
+
+export async function registerUser(user) {
+    try {
+        const userRegistered = await axios.post("/users", user)
+        console.log(userRegistered);
+    } catch (err) { console.log(err) }
 }

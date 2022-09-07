@@ -3,7 +3,7 @@ import { Link, useParams} from "react-router-dom";
 import {useEffect} from 'react'
 import { useDispatch,useSelector } from 'react-redux'
 import {getUserById, putUser}  from '../../redux/actions'
-
+import './User.css'
 
     
 
@@ -68,61 +68,49 @@ useEffect(() => {
   
 
 return (
-    <div>
-        <div>
+    <div className="UserEditContainer">
+        <div className="UserEditMargin">
           <h1>SUPER ADMIN USERS EDITION V-3.0</h1>
         </div>
-        <br/>
-
-        <div>
+        <div className="UserEditMargin">
           <h3>User edit</h3>
         </div>
-        <br/>
-        <br/>
-
-        <div>
+        <div className="UserEditMargin">
             <form onSubmit={(e) => handleSubmit(e)}>
-            
             <div>
-            <p>Username</p>
+            <label>Username:</label>
             <input
               type='text'
               value={input.username}
               name='username'
               onChange={(e) => handleChange(e)}
-            /> {error.username&& (
-              <p>{error.username}</p>)}
+              /> {error.username&& (
+                <p>{error.username}</p>)}
             </div>
-
-
-          <br />
-          <div >
-            <p>Email </p>
+          <div className="UserEditMargin">
+                <label>Email:</label>
             <input
               type='text'
               value={input.email}
               name='email'
               onChange={(e) => handleChange(e)}
-            /> {error.email&& (
-              <p>{error.email}</p>)}
+              /> {error.email&& (
+                <p>{error.email}</p>)}
           </div>
-          <br />
-
-        <div >
-            <p>Is Admin? </p>
+        <div className="UserEditMargin">
+                <label>Admin:</label>
             <select
               value={input.isAdmin}
               name='isAdmin'
               onChange={(e) => handleChange(e)}
-            >
+              >
               <option>select</option>
               <option value= {true}>Yes</option>
               <option value= {false} >No</option>
             </select>
         </div>
-
-        <div >
-            <p>Is Active? </p>
+        <div className="UserEditMargin">
+              <label>Active:</label>
             <select
               value={input.isActive}
               name='isActive'
@@ -133,11 +121,8 @@ return (
               <option value= {false} >No</option>
             </select>
         </div>
-
-
-          <br />
-        <div>
-            <label>Is Banned? </label>
+        <div className="UserEditMargin">
+            <label>Banned:</label>
             <select
               value={input.isBloked}
               name='isBloked'
@@ -148,15 +133,13 @@ return (
               <option value= {false} >No</option>
             </select>
         </div>
-
-
-          <div>
-            <button className="btn btn-outline-success me-2" type='submit'>Modify</button>
-
+          <div className="UserEditMargin">
+            <button className="btn btn-outline-success me-2" type='submit'>
+              <Link to={`/profile/admin/usercontrol/userdetail/${currentClient.email}`}>Modify</Link>
+              </button>
             <button className="btn btn-outline-success me-2">
-              <Link to={`/admin/usercontrol/userdetail/${currentClient._id}`}>Cancel</Link>
+              <Link to={`/profile/admin/usercontrol/userdetail/${currentClient.email}`}>Cancel</Link>
             </button>
-
           </div>
         </form>
       </div>
