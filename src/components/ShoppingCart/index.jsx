@@ -88,7 +88,7 @@ export default function ShoppingCart() {
                     }
                     console.log(cart);
 
-                    const { data } = await axios.post('http://localhost:4000/api/checkout', { ...cart })
+                    const { data } = await axios.post('/api/checkout', { ...cart })
                     console.log(data);
                     elements.getElement(CardElement).clear();
                 } catch (error) {
