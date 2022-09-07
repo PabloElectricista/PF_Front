@@ -28,12 +28,11 @@ function App() {
     const alertInfo = useSelector(store => store.alertInfo)
     const { isAuthenticated, user } = useAuth0()
     useEffect(() => {
-        if(user){
-            if(user.email){
-                registerUser(user)
-            }
+        if (user && user.email) {
+            console.log("user", user)
+            registerUser(user)
         }
-    },[user])
+    }, [user])
     //-------------------------------
     //-------------------------------
     // alert para los fav y cart

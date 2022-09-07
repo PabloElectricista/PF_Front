@@ -135,10 +135,10 @@ return (
         </div>
           <div className="UserEditMargin">
             <button className="btn btn-outline-success me-2" type='submit'>
-              <Link to={`/profile/admin/usercontrol/userdetail/${currentClient._id}`}>Modify</Link>
+              <Link to={`/profile/admin/usercontrol/userdetail/${currentClient.email}`}>Modify</Link>
               </button>
             <button className="btn btn-outline-success me-2">
-              <Link to={`/profile/admin/usercontrol/userdetail/${currentClient._id}`}>Cancel</Link>
+              <Link to={`/profile/admin/usercontrol/userdetail/${currentClient.email}`}>Cancel</Link>
             </button>
           </div>
         </form>

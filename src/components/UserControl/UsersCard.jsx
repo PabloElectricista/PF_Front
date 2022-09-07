@@ -5,7 +5,7 @@ export default function UsersCard({ username, email, _id }) {
 
     return (
         <div className="card UserProductCard UserProfileCard UserEditContainer"  >
-                <Link to={`/profile/admin/usercontrol/userdetail/${_id}`}>
+                <Link to={`/profile/admin/usercontrol/userdetail/${email}`}>
             <ul>
                     <li className='UserCardLi'>Name : {username}</li>
                     <li className='UserCardLi'>Email : {email}</li>
