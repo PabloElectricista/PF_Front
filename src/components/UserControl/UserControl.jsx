@@ -61,9 +61,9 @@ export default function UserControl() {
                 <h1 className='UserControlTitle'>Users List</h1>
             </div>
             <div>
-                {users.map(u => {
+                {users.map((u, idx) => {
                     return (<>
-                        <UsersCard username={u && u.username} email={u && u.email} _id={u && u._id} />
+                        <UsersCard key={idx} username={u && u.username} email={u && u.email} _id={u && u._id} />
                     </>)
                 })}
             </div>

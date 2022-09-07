@@ -29,15 +29,17 @@ const UserProf = () => {
   return (
     <div className="FormDiv">
       <div className="FormLabel">
-        <h1 className="FormTextArea">Welcome:</h1>
+        <h1 className="">Welcome: {user.name}</h1>
         <img className="pic" src={user.picture} alt='profilePic' />
-        <h3>
-          {user.name}
-        </h3>
+        <ul>
+          <p>{user.email}</p>
+          <p>{user.nickname}</p>
+
+        </ul>
       </div>
       <div className="FormTextArea">
-        <Link to='/profile/data/edit'  >
-          <button className="SubmitBtn">Personal Info</button>
+        <Link to='/profile/data/edit'>
+          <button className="SubmitBtn">Edit Info</button>
         </Link>
       </div>
     </div>

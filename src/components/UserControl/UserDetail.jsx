@@ -9,9 +9,10 @@ import './User.css'
 
 export default function UserDetail() {
     const dispatch = useDispatch();
-    const [currentClient] = useSelector((store) => store.usersEmail);
+    const currentClient = useSelector((store) => store.usersEmail);
     const { email } = useParams();
     const navigate = useNavigate();
+    console.log(email)
 
     useEffect(() => {
         dispatch(getUserByEmail(email));
@@ -30,7 +31,7 @@ export default function UserDetail() {
             <div className="UserEditMargin">
                 <h1>User Detail</h1>
             </div>
-            <p className="UserEditMargin">Name : {currentClient.username}</p>
+            <p className="UserEditMargin">Name : {currentClient.username || currentClient.nickname}</p>
             <p className="UserEditMargin">Email : {currentClient.email}</p>
             <p className="UserEditMargin">Blocked? : {currentClient.isBLoked ? "true" : "false"}</p>
             <p className="UserEditMargin">Admin? : {currentClient.isAdmin ? "true" : "false"}</p>
