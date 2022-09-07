@@ -84,7 +84,7 @@ export default function ShoppingCart() {
                     const cart = {
                         paymentMethodid: paymentMethod.id,
                         products: [...cartItem],
-                        customer: "6313a99fa2bf043157cb78b8"
+                        customer: "6318c1e8409bf52757b70bcd"
                     }
                     console.log(cart);
 
