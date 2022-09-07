@@ -1,24 +1,22 @@
 import './Card.css'
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { BsCartFill, BsStarFill } from 'react-icons/bs';
 import { AiFillPlusCircle, AiFillMinusCircle, AiFillDelete } from 'react-icons/ai';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 
 // , purchaseOrder,updateAmount
-export default function ShopCard({ id, name, price, rating, image, brand, deleteItem }) {
-  const [quantity, setQuantity] = useState(1)
+export default function ShopCard({ id, name, price, rating, image, brand, deleteItem, updateQuantity, quantity }) {
 
   const plus = () => {
     localStorage.setItem('totalPrice', JSON.stringify(price + JSON.parse(localStorage.getItem('totalPrice'))))
-    setQuantity(quantity + 1)
+    updateQuantity(id, quantity + 1)
   }
   const minus = () => {
     if (quantity > 1) {
       localStorage.setItem('totalPrice', JSON.stringify(JSON.parse(localStorage.getItem('totalPrice'))- price))
-      setQuantity(quantity - 1)
+      updateQuantity(id, quantity - 1)
     }
   }
 

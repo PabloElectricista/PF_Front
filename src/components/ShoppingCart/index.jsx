@@ -1,7 +1,6 @@
 import ShopCard from "./ShopCard";
 import './Card.css'
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 export default function ShoppingCart() {
 
@@ -11,6 +10,14 @@ export default function ShoppingCart() {
     let arr = cartItem.filter(instrument => instrument.id !== id)
     localStorage.setItem('cartList', JSON.stringify(arr))
     setCartItem(arr)
+  }
+
+  const updateQuantity = (id, quantity) => {
+    let updatedList = cartItem.map(item =>
+        item.id !== id ? item : {...item, quantity}
+    );
+    localStorage.setItem('cartList', JSON.stringify(updatedList));
+    setCartItem(updatedList);
   }
 
   function renderInstruments() {
@@ -29,6 +36,8 @@ export default function ShoppingCart() {
       brand={instrument.brand}
       rating={instrument.rating}
       deleteItem={deleteItem}
+      updateQuantity={updateQuantity}
+      quantity={instrument.quantity ? instrument.quantity : 1}
       image={instrument.image} />);
     return (
       <div className="favoriteCards">
