@@ -19,7 +19,7 @@ Poner un boton en la homepage que dirija a este componente cuando el usuario ya 
   customer = "_id"  (comprador)
   products = [
                {
-                  products: "_id",
+                  id: "_id",
                   quantity: 1
                 },{
                   products: "_id",
