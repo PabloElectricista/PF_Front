@@ -9,16 +9,7 @@ export default function LightDarktn() {
     const btnSwitch = document.getElementById('switch');
     document.body.classList.toggle('Dark');
     btnSwitch.classList.toggle('pressed');
-    localStorage.getItem('lightTheme') === 'true' ? localStorage.setItem('lightTheme', 'false') : localStorage.setItem('lightTheme', 'true')
   }
-
-  useEffect(() => {
-    if (localStorage.getItem('lightTheme') !== 'true') {
-      const btnSwitch = document.getElementById('switch');
-      document.body.classList.toggle('Dark');
-      btnSwitch.classList.toggle('pressed');
-    }
-  })
 
   return (
     <button className="switch" id="switch" onClick={handleClick}>

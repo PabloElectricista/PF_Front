@@ -10,11 +10,11 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import './Card.css'
 // Paypal
 import Paypal from "../paypal/Paypal";
+import { Link } from "react-router-dom";
 
 export default function ShoppingCart() {
 
   const [cartItem, setCartItem] = useState(JSON.parse(localStorage.getItem('cartList')))
-  const [checkout, setCheckOut] = useState(false);
   const [totalPrice, setTotalPrice] = useState(getPrice());
 
   const deleteItem = (id) => {
@@ -36,21 +36,21 @@ export default function ShoppingCart() {
         </h4>
       )
     }
-    let cartItemMap = cartItem.map((instrument, idx) => 
-        <ShopCard
-          key={idx}
-          id={instrument.id}
-          name={instrument.name}
-          price={instrument.price}
-          brand={instrument.brand}
-          rating={instrument.rating}
-          color={instrument.color}
-          deleteItem={deleteItem}
-          updateQuantity={updateQuantity}
-          quantity={instrument.quantity ? instrument.quantity : 1}
-          image={instrument.image} 
-        />
-      )
+    let cartItemMap = cartItem.map((instrument, idx) =>
+      <ShopCard
+        key={idx}
+        id={instrument.id}
+        name={instrument.name}
+        price={instrument.price}
+        brand={instrument.brand}
+        rating={instrument.rating}
+        color={instrument.color}
+        deleteItem={deleteItem}
+        updateQuantity={updateQuantity}
+        quantity={instrument.quantity ? instrument.quantity : 1}
+        image={instrument.image}
+      />
+    )
     return (
       <div className="containerCardsSC">
         {cartItemMap}
@@ -65,17 +65,8 @@ export default function ShoppingCart() {
         {renderInstruments()}
         <div className="paymentDetailSC">
           <p>Subtotal: <span>${totalPrice}</span></p>
-          { 
-            checkout ? (<Paypal/>) : 
-            <Button 
-              onClick={() => {setCheckOut(true);}} 
-              type="submit" 
-              variant="contained" 
-              endIcon={<ShoppingCartCheckoutIcon />}
-              >
-                Checkout
-            </Button>
-          }
+          <Link to="/stripe">Checkout</Link>
+
         </div>
       </div>
     </div>
