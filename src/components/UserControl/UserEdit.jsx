@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllUsers, getUserByEmail, putUser } from '../../redux/actions'
+import { getAllUsers, putUser } from '../../redux/actions'
 import './User.css'
 
 
@@ -26,7 +26,6 @@ export default function UserEdit() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("hasta aca nillega")
     dispatch(putUser(email, input));
   }
 

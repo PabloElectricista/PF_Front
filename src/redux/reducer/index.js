@@ -13,8 +13,6 @@ const {
     ALL_ORDERS,
     GET_ALL_USERS,
     GET_USER_BY_EMAIL,
-    GET_USER_BY_ID
-
 } = require('../actions/index');
 
 function orderMayMen(array, prop) {
@@ -55,7 +53,6 @@ export default function rootReducer(state = initialState, action) {
     switch (action.type) {
 
         case GET_MY_ORDERS:
-            console.log("acion: myOrders", state.myOrders);
             if (!action.payload) { return state }
             const NewOrders = action.payload.orders.map(element => {
                 return {

@@ -63,7 +63,7 @@ export function getUserByEmail(email) {
                 payload: user.data
             });
         } catch (error) {
-            console.log("axios getUserByEmail",error)
+            return
         };
     }
 };
@@ -71,7 +71,7 @@ export function getUserByEmail(email) {
 export async function registerUser(user) {
     try {
         await axios.post("/users", user)
-    } catch (err) { console.log(err) }
+    } catch (err) { return }
 }
 
 
@@ -113,7 +113,6 @@ export const updateProduct = (instrumentItem) => {
 export const putUser = (email, payload) => {
     return async function (dispatch) {
         const response = await axios.put(`/users/${email}`, payload);
-        console.log("RESPONSE PUT USER",response)
         return dispatch({
             type: UPDATE_USER,
             payload: response.data
@@ -182,7 +181,7 @@ export const getMyOrders = (userId) => {
                 payload: response.data
             });
         } catch (err) {
-            console.log("callToGetMyOrders", err)
+            return
         }
     }
 }

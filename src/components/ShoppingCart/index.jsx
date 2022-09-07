@@ -8,7 +8,6 @@ import ShopCard from "./ShopCard";
 import Button from '@mui/material/Button';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import './Card.css'
-import { Link } from "react-router-dom";
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
 import {
@@ -83,13 +82,9 @@ export default function ShoppingCart() {
                         products: [...cartItem],
                         customer: "6313a99fa2bf043157cb78b8"
                     }
-                    console.log(cart);
-
-                    const { data } = await axios.post('/api/checkout', { ...cart })
-                    console.log(data);
+                    await axios.post('/api/checkout', { ...cart })
                     elements.getElement(CardElement).clear();
                 } catch (error) {
-                    console.log(error);
                 }
             }
         }

@@ -4,7 +4,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import { AiFillEdit } from 'react-icons/ai';
 import './UserProductCard.css'
 import { TiDelete } from 'react-icons/ti';
-// import { getMyProducts } from '../../redux/actions';
 import axios from 'axios';
 
 export default function UserProductCard({ id, name, price, rating, image, brand }) {

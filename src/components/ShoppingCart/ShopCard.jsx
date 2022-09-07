@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import {getPrice} from '../Card/favAndCart'
 
 export default function ShopCard({ id, name, price, image, color, quantity, deleteItem, updateQuantity }) {
   const [qua, setQua] = useState(quantity);

@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { allOrders, getAllProducts } from '../../redux/actions';
 
 export default function Chart() {
-  
+
   const dispatch = useDispatch()
   const allOrder = useSelector((state) => state.orders)
   const allInstruments = useSelector((state) => state.allInstruments)
-  
+
   useEffect(() => {
     dispatch(allOrders())
     dispatch(getAllProducts())
   }, [dispatch])
-  
+
   const getPrice = (products) => {
     const instrument = []
     products.forEach(element => {
@@ -34,13 +34,13 @@ export default function Chart() {
 
 
   let data = [];
-  allOrder.map((row) =>{
+  allOrder.map((row) => {
     data.push({
-  date: row.createdAt.toString().slice(5,10),
-  profit: getProfit(row.products).toFixed(2),
-  sales: getPrice(row.products).toFixed(2), 
-})
-})
+      date: row.createdAt.toString().slice(5, 10),
+      profit: getProfit(row.products).toFixed(2),
+      sales: getPrice(row.products).toFixed(2),
+    })
+  })
 
   return (
     <ResponsiveContainer width="100%" height="100%">

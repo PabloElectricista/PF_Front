@@ -9,7 +9,6 @@ export default function UserProducts() {
   const { user, isAuthenticated } = useAuth0()
   const myUser = useSelector(state => state.usersEmail)
   const allProducts = useSelector(state => state.allInstruments)
-  console.log(myUser)
   const dispatch = useDispatch()
   let myProducts = []
   useEffect(() => {
@@ -36,7 +35,6 @@ export default function UserProducts() {
       </>
     )
   }
-  console.log(myProducts)
   let mapProducts = myProducts.map(instrument => {
     return (
       <UserProductCard

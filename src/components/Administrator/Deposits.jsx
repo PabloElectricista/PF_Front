@@ -4,11 +4,7 @@ import Typography from '@mui/material/Typography';
 import Title from './Title';
 import { useDispatch, useSelector } from 'react-redux';
 import { allOrders, getAllProducts } from '../../redux/actions';
-import { TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-
-function preventDefault(event) {
-  event.preventDefault();
-}
+import { TableHead } from '@mui/material';
 
 export default function Deposits() {
   const dispatch = useDispatch()
@@ -32,11 +28,11 @@ export default function Deposits() {
     return total
   }
 
-  const getProfit = (price) => {
-    let total = getPrice(price)
-    let profit = 0
-    return profit += total * 0.012
-  }
+  // const getProfit = (price) => {
+  //   let total = getPrice(price)
+  //   let profit = 0
+  //   return profit += total * 0.012
+  // }
 
   const getAllProfit = (price) => {
     let total = getPrice(price)
@@ -44,8 +40,7 @@ export default function Deposits() {
     for (let i = 0; i < total.length; i++) {
       array1.push(total[i]);
     }
-    console.log(total);
-    console.log(array1, 'SUPUESTO TOTAL');
+
     const initialValue = 0;
     const sumWithInitial = array1.reduce(
       (previousValue, currentValue) => previousValue + currentValue,
@@ -63,20 +58,20 @@ export default function Deposits() {
       <TableHead>
         <Title>Estimated Profit</Title>
       </TableHead>
-      
-         {allOrder.map((row, idx) => (row.status !== "cancelled" && row.user !== null && getPrice(row.products) !== 0 &&
-         <div>
-           <Typography component="p" variant="h4">
-             {getAllProfit(row.products).toFixed(2)}
-           </Typography>
-     
-           <Typography color="text.secondary" sx={{ flex: 1 }}>
-             {now}
-           </Typography>
 
-         </div>
-             ))}
-      
+      {allOrder.map((row, idx) => (row.status !== "cancelled" && row.user !== null && getPrice(row.products) !== 0 &&
+        <div>
+          <Typography component="p" variant="h4">
+            {getAllProfit(row.products).toFixed(2)}
+          </Typography>
+
+          <Typography color="text.secondary" sx={{ flex: 1 }}>
+            {now}
+          </Typography>
+
+        </div>
+      ))}
+
 
     </React.Fragment>
   );

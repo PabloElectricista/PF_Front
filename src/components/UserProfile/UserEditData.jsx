@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-// import { useNavigate } from 'react-router-dom'
-import { Alert, AlertTitle, Button, Snackbar } from '@mui/material'
-import { putUser, getAllUsers, getUserByEmail } from '../../redux/actions'
+import { Alert, AlertTitle, Snackbar } from '@mui/material'
+import { putUser, getUserByEmail } from '../../redux/actions'
 import { useAuth0 } from '@auth0/auth0-react';
 import Loading from '../Loading/Loading';
 import './UserProf.css'
@@ -223,7 +222,6 @@ const UserEditData = () => {
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(getUserByEmail(user.email))
-      console.log(user, "despachado");
     }
   }, [isAuthenticated])
 
@@ -294,7 +292,7 @@ const UserEditData = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (Object.values(error).length != 0) {
+    if (Object.values(error).length !== 0) {
       handleNotEdited()
       return
     } else {

@@ -3,7 +3,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 // // Files and extra code
 import logo from '../img/assets/ChuckBerry.png';
-import { toTheTop } from "../../customScripts";
 // Styles
 import Navbar from 'react-bootstrap/Navbar';
 import './Footer.css';

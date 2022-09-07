@@ -74,10 +74,9 @@ function StripeComponent() {
                         }
                     })
                     const { data } = await axios.post('http://localhost:4000/api/checkout', { cart })
-                    console.log("localhost3001",data.message);  // success?
                     elements.getElement(CardElement).clear();
                 } catch (error) {
-                    console.log(error);
+                    return
                 }
             }
         }

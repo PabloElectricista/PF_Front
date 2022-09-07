@@ -1,12 +1,7 @@
 import { Link } from 'react-router-dom'
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { AiFillEdit } from 'react-icons/ai';
 import { TiDelete } from 'react-icons/ti';
-import { getAllProducts, getMyOrders } from '../../redux/actions';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from "react-redux";
 
 export default function SalesHistoryCard( {instrument, status, quantity} ) {
 

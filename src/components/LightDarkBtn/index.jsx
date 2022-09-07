@@ -1,7 +1,6 @@
 import './LightDarkBtn.css'
 import { BsMoonFill } from 'react-icons/bs';
 import { FaSun } from 'react-icons/fa';
-import { useEffect } from 'react';
 
 export default function LightDarktn() {
 

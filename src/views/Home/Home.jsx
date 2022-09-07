@@ -66,7 +66,6 @@ export default function Home({handleAdded, handleNotAdded}) {
 
   // Clear filters
   function clearFilter(filter) {
-    console.log(filter);
     searchParams.delete(filter);
     location.search = `?${searchParams.toString()}`;
     navigate(location);
