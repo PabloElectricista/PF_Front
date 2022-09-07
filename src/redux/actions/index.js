@@ -16,8 +16,10 @@ export const CREATE_CONTACT = "CREATE_CONTACT";
 export const SHOW_ALERT = "SHOW_ALERT";
 export const ALL_ORDERS = "ALL_ORDERS";
 export const GET_ALL_USERS = "GET_ALL_USERS";
-export const GET_USER_BY_ID = "GET_USER_BY_ID";
+export const GET_USER_BY_EMAIL = "GET_USER_BY_EMAIL";
 export const UPDATE_USER = "UPDATE_USER";
+export const GET_USER_BY_ID = "GET_USER_BY_ID";
+
 
 
 
@@ -38,7 +40,7 @@ export const getAllUsers = () => {
     return async function (dispatch) {
         const users = await axios('/users');
       
-
+console.log(users.data);
         return dispatch({
             type: GET_ALL_USERS,
             payload: users.data
@@ -54,6 +56,25 @@ export const getUserById = (id) => {
         });
     };
 };
+
+export function getUserByEmail (email)  {
+    return async function (dispatch) {
+    try {
+        const user = await axios.get(`users/${email}`);
+
+
+        console.log(user.data.email, 'EMAIL');
+         dispatch({
+            type: GET_USER_BY_EMAIL,
+            payload: user.data
+        });
+        
+    } catch (error) {
+        console.log(error)
+    };
+    }
+};
+
 
 export const getAllCategories = () => {
     return function (dispatch) {
@@ -90,9 +111,9 @@ export const updateProduct = (instrumentItem) => {
     };
 };
 
-export const putUser = (id, payload) => {
+export const putUser = (email, payload) => {
     return async function (dispatch) {
-        const response = await axios.put(`/users/${id}`,
+        const response = await axios.put(`/users/${email}`,
             payload);
         return dispatch({
             type: UPDATE_USER,

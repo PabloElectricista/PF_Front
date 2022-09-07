@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { getUserById } from '../../redux/actions'
+import { Link, useParams } from 'react-router-dom'
+import { getUserByEmail } from '../../redux/actions'
 import Loading from '../Loading/Loading'
 import './UserProf.css'
 
 const UserProf = () => {
   const { isAuthenticated, isLoading, user } = useAuth0()
   const dispatch = useDispatch();
-  const userDetail = useSelector((state) => state.userDetail)
-
-  console.log(user, 'USER AUTH0')
-  console.log(userDetail, 'DETALLE')
-
+  const userDetail = useSelector((state) => state.usersEmail)
+  // const {email} = useParams()
+  
+  
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(getUserById(user.sub.slice(user.sub.indexOf("|") + 1)))
-      console.log("despachado");
+      // const email = user.email
+      dispatch(getUserByEmail(user.email))
     }
   }, [isAuthenticated])
+  // console.log(email, 'DETALLE')
+  console.log(user, 'USER AUTH0')
 
 
   if (isLoading) {

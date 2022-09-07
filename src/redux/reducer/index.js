@@ -13,7 +13,8 @@ const {
     SHOW_ALERT,
     ALL_ORDERS,
     GET_ALL_USERS,
-    GET_USER_BY_ID,
+    GET_USER_BY_EMAIL,
+    GET_USER_BY_ID
 
 } = require('../actions/index');
 
@@ -48,7 +49,8 @@ const initialState = {
         alertTitle: '',
         alertText: ''
     },
-    orders:[]
+    orders:[],
+    usersEmail: []
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -178,6 +180,13 @@ export default function rootReducer(state = initialState, action) {
                 return {
                     ...state,
                     users: action.payload,
+                    isLoading: false
+                }
+
+            case GET_USER_BY_EMAIL:
+                return {
+                    ...state,
+                    usersEmail: action.payload,
                     isLoading: false
                 }
 

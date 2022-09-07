@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 // import { useNavigate } from 'react-router-dom'
 import { Button } from '@mui/material'
-import { putUser, getAllUsers, getUserById } from '../../redux/actions'
+import { putUser, getAllUsers, getUserByEmail } from '../../redux/actions'
 import { useAuth0 } from '@auth0/auth0-react';
 import Loading from '../Loading/Loading';
 import './UserProf.css'
@@ -207,7 +207,7 @@ const UserEditData = () => {
     'Zimbabue',
   ]
   const { isAuthenticated, isLoading, user } = useAuth0()
-  const userDetail = useSelector((state) => state.userDetail)
+  const userDetail = useSelector((state) => state.usersEmail)
   const dispatch = useDispatch()
   // const navigate = useNavigate()
   const [errors, setErrors] = useState({})
@@ -222,7 +222,7 @@ const UserEditData = () => {
   })
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(getUserById(user.sub.slice(user.sub.indexOf("|") + 1)))
+      dispatch(getUserByEmail(user.email))
       console.log(user, "despachado");
     }
   }, [isAuthenticated])
@@ -287,10 +287,10 @@ const UserEditData = () => {
     if (Object.values(errors).length > 0) {
       return alert(Object.values(errors))
     } else {
-      const id = userDetail._id
-      dispatch(putUser(id, input))
+      const email = userDetail.email
+      dispatch(putUser(email, input))
       alert('Personal data updated', 'updateInfo')
-      dispatch(getUserById())
+      dispatch(getUserByEmail(email))
     }
   }
   if (isLoading) {
