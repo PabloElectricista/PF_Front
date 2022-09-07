@@ -38,9 +38,21 @@ export default function ProductDetail({handleAdded, handleNotAdded}) {
     const instrumentItem = useSelector((state) => state.retrievedInstrument);
     const { name, price, rating, image, brand, color } = instrumentItem ? instrumentItem : {};
 
-    const localStoreList = JSON.parse(localStorage.getItem('cartList'));
-    const localStoreItem = localStoreList.find(item => item.id === id);
+    let localStoreList = JSON.parse(localStorage.getItem('cartList'));
+    const localStoreItem = getLocalStoreItem();
     const [quantity, setQuantity] = useState(localStoreItem.quantity ? localStoreItem.quantity : 1);
+
+    function getLocalStoreItem() {
+        if(localStoreList === null) {
+            localStoreList = [];
+        }
+        const item = localStoreList.find(item => item.id === id);
+        if (item) {
+            return item;
+        } else {
+            return {quantity: 1}
+        }
+    }
 
     useEffect(() => {
         if (!instrumentItem || (id !== instrumentItem._id && !instrumentItem.error)) {
@@ -69,9 +81,16 @@ export default function ProductDetail({handleAdded, handleNotAdded}) {
     };
 
     const updateQuantity = (id, quantity) => {
-        let updatedList = localStoreList.map(item =>
-            item.id !== id ? item : {...item, quantity}
-        );
+        let updatedList;
+        const item = localStoreList.find(item => item.id === id);
+        if(item) {
+            updatedList = localStoreList.map(item =>
+                item.id !== id ? item : {...item, quantity}
+            );
+        } else {
+            const updatedItem = {...instrumentItem, id, quantity};
+            updatedList =[...localStoreList, updatedItem];
+        }
         localStorage.setItem('cartList', JSON.stringify(updatedList));
     }
 
@@ -141,7 +160,7 @@ export default function ProductDetail({handleAdded, handleNotAdded}) {
                                 </Form.Select>
                             </Form.Group>
                             <div className="total">
-                                Total: <span>${instrumentItem.price * quantity}</span>
+                                Total: <span>${(instrumentItem.price * quantity).toFixed(2)}</span>
                             </div>
                             <Link to='/cart'>
                                 <Button variant="contained">Buy Now</Button>
