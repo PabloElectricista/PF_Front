@@ -15,19 +15,17 @@ export default function ShoppingCart() {
 
   const [cartItem, setCartItem] = useState(JSON.parse(localStorage.getItem('cartList')))
   const [checkout, setCheckOut] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(getPrice());
 
   const deleteItem = (id) => {
     let arr = cartItem.filter(instrument => instrument.id !== id)
     localStorage.setItem('cartList', JSON.stringify(arr))
     setCartItem(arr)
+    setTotalPrice(getPrice())
   }
 
   const updateQuantity = (id, quantity) => {
-    let updatedList = cartItem.map(item =>
-        item.id !== id ? item : {...item, quantity}
-    );
-    localStorage.setItem('cartList', JSON.stringify(updatedList));
-    setCartItem(updatedList);
+    setTotalPrice(getPrice())
   }
 
   function renderInstruments() {
@@ -66,7 +64,7 @@ export default function ShoppingCart() {
       <div className="principalSC">
         {renderInstruments()}
         <div className="paymentDetailSC">
-          <p>Subtotal: <span>${getPrice()}</span></p>
+          <p>Subtotal: <span>${totalPrice}</span></p>
           { 
             checkout ? (<Paypal/>) : 
             <Button 

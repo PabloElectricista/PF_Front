@@ -25,6 +25,7 @@ export default function UserEdit() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    console.log("hasta aca nillega")
     dispatch(putUser(email, input));
   }
 
@@ -82,7 +83,7 @@ export default function UserEdit() {
             </select>
           </div>
           <div className="UserEditMargin">
-            <button className="btn btn-outline-success me-2" type='submit'>
+            <button className="btn btn-outline-success me-2" type='submit' onClick={handleSubmit}>
               <Link to={`/profile/admin/usercontrol/userdetail/${currentClient.email}`}>Modify</Link>
             </button>
             <button className="btn btn-outline-success me-2">
@@ -91,7 +92,6 @@ export default function UserEdit() {
           </div>
         </form>
       </div>
-
     </div>
   );
 }

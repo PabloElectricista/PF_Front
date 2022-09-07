@@ -114,8 +114,8 @@ export const updateProduct = (instrumentItem) => {
 
 export const putUser = (email, payload) => {
     return async function (dispatch) {
-        const response = await axios.put(`/users/${email}`,
-            payload);
+        const response = await axios.put(`/users/${email}`, payload);
+        console.log("RESPONSE PUT USER",response)
         return dispatch({
             type: UPDATE_USER,
             payload: response.data

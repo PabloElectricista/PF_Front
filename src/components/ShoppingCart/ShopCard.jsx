@@ -7,10 +7,8 @@ import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import { AiFillPlusCircle, AiFillMinusCircle, AiFillDelete } from 'react-icons/ai';
-import Card from 'react-bootstrap/Card';
 
-export default function ShopCard({ id, name, price, image, color, quantity, deleteItem }) {
+export default function ShopCard({ id, name, price, image, color, quantity, deleteItem, updateQuantity }) {
   const [qua, setQua] = useState(quantity);
 
   const plus = () => {
@@ -19,6 +17,7 @@ export default function ShopCard({ id, name, price, image, color, quantity, dele
     found.quantity += 1
     localStorage.setItem('cartList', JSON.stringify(cartList))
     setQua(qua + 1)
+    updateQuantity()
   }
   const minus = () => {
     if (qua > 1) {
@@ -27,6 +26,7 @@ export default function ShopCard({ id, name, price, image, color, quantity, dele
       found.quantity -= 1
       localStorage.setItem('cartList', JSON.stringify(cartList))
       setQua(qua - 1)
+      updateQuantity()
     }
   }
 

@@ -231,11 +231,11 @@ const UserEditData = () => {
   const [Edited, setEdited] = useState(false);
 
   const handleClose = (event, reason) => {
-      if (reason === 'clickaway') {
-          return;
-      }
-      setNotEdited(false);
-      setEdited(false);
+    if (reason === 'clickaway') {
+      return;
+    }
+    setNotEdited(false);
+    setEdited(false);
   };
 
   const handleNotEdited = () => {
@@ -259,37 +259,31 @@ const UserEditData = () => {
   //   })
   // }, [])
 
-  // useEffect(() => {
-  //   setErros(validate(input))
-  // }, [input])
+  const validate = (input) => {
+    const error = {}
+    if (input.name && !input.name.match(/^[a-zA-Z ]*$/g)) {
+      error.name = 'only letters*'
+    }
+    if (input.lastname && !input.lastname.match(/^[a-zA-Z ]*$/g)) {
+      error.lastname = 'only letters*'
+    }
+    if (input.cuil && !input.cuil.match(/^[\d]{1,3}\.?[\d]{3,3}\.?[\d]{3,3}$/)) {
+      error.cuil = 'Must be a valid ID number*'
+    }
+    if (
+      input.phone && !input.phone.match(/^\(?\d{2}\)?[\s\.-]?\d{4}[\s\.-]?\d{4}$/)
+    ) {
+      error.phone = 'Must be a valid phone number*'
+    }
+    if (!input.address.match(/^[A-Za-z0-9\s]+$/g) && input.address) {
+      error.address = 'Symbols are not allowed*'
+    }
+    if (input.postal && !input.postal.match(/^(\d{4})$/g)) {
+      error.postal = 'Must be a valid ZIP Code*'
+    }
 
-  // const validate = (input) => {
-  //   const erros = {}
-
-  //   if (input.name && !input.name.match(/^[a-zA-Z ]*$/g)) {
-  //     error.name = 'only letters*'
-  //   }
-  //   if (input.lastname && !input.lastname.match(/^[a-zA-Z ]*$/g)) {
-  //     error.lastname = 'only letters*'
-  //   }
-  //   if (input.cuil && !input.cuil.match(/^[\d]{1,3}\.?[\d]{3,3}\.?[\d]{3,3}$/)) {
-  //     error.cuil = 'Must be a valid ID number*'
-  //   }
-  //   if (
-  //     input.phone &&
-  //     !input.phone.match(/^\(?\d{2}\)?[\s\.-]?\d{4}[\s\.-]?\d{4}$/)
-  //   ) {
-  //     error.phone = 'Must be a valid phone number*'
-  //   }
-  //   if (!input.address.match(/^[A-Za-z0-9\s]+$/g) && input.address) {
-  //     error.address = 'Symbols are not allowed*'
-  //   }
-  //   if (input.postal && !input.postal.match(/^(\d{4})$/g)) {
-  //     error.postal = 'Must be a valid ZIP Code*'
-  //   }
-
-  //   return error
-  // }
+    return error
+  }
 
   const handleChange = (e) => {
     setInput({
