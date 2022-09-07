@@ -1,7 +1,6 @@
-import './Card.css'
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { BsCartFill, BsStarFill } from 'react-icons/bs';
+import './Card.css';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AiFillPlusCircle, AiFillMinusCircle, AiFillDelete } from 'react-icons/ai';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -23,9 +22,9 @@ export default function ShopCard({ id, name, price, rating, image, brand, delete
   }
 
   return (
-    <Card className="card shop" >
-      <Link className='containCardImage' to={"/detail/" + id}>
-        <img className='cardImage' src={image} alt={name} />
+    <Card className="cardShoppingCart" >
+      <Link className='cardContainerImageSC' to={"/detail/" + id}>
+        <img className='cardImageSC' src={image} alt={name} />
       </Link>
       <Card.Body className='containCardBody'>
         <Link to={"/detail/" + id}>

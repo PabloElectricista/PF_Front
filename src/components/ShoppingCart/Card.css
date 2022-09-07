@@ -1,34 +1,29 @@
-.shop {
-  width: 50% !important;
-}
-
-.cartContainer{
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  flex-direction: column !important;
-}
-
-.containerHome {
+.shoppingCart {
+  padding: 1em 2em;
+  margin: 1.5em 3em;
   display: flex;
   flex-direction: column;
-  padding-left: 3em;
-  padding-right: 3em;
+  background-color: white;
+  border-radius: 1em;
+  box-shadow: .5em .5em 2em #282c34;
+}
+
+.shoppingCart .cardShoppingCart {
+  margin: 1em;
+  display: flex;
+  flex-direction: row;
   width: 100%;
-  min-height: 72vh;
 }
 
-.containerContent {
-  display: flex;
-  align-items: flex-start;
-  gap: 1em;
-  margin-bottom: 1em;
+.cardShoppingCart .cardContainerImageSC{
+  margin: 1em;
+  height: 15em;
+  width: 40%;
+  border: 1px solid black;
 }
 
-.containerCards{
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  width: 72%;
-  gap: 1em;
+.cardShoppingCart .cardImageSC {
+  width: 100%;
+  height: 15em;
+  object-fit: contain;
 }

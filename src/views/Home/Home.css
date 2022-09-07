@@ -2,10 +2,10 @@
 .containerHome {
     display: flex;
     flex-direction: column;
-    padding-left: 3em;
-    padding-right: 3em;
+    padding: 0 3em;
     width: 100%;
     min-height: 72vh;
+    margin-bottom: 1em;
 }
 
 .containerContent {

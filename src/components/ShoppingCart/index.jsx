@@ -1,7 +1,10 @@
-import ShopCard from "./ShopCard";
-import './Card.css'
+// React utilities
+import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+// Components 
+import ShopCard from "./ShopCard";
+// Styles
+import './Card.css'
 
 export default function ShoppingCart() {
 
@@ -14,32 +17,32 @@ export default function ShoppingCart() {
   }
 
   function renderInstruments() {
-    if (!cartItem) {
+    if (!cartItem.length) {
       return (
-        <h4>
-          The CartItem list is empty.
-        </h4>
+        <div className="empyShoppingCart">
+          <h3>Your Shopping Cart is empty.</h3>
+        </div>
       )
     }
     let cartItemMap = cartItem.map((instrument, idx) => <ShopCard
-      key={idx}
-      id={instrument.id}
-      name={instrument.name}
-      price={instrument.price}
-      brand={instrument.brand}
-      rating={instrument.rating}
-      deleteItem={deleteItem}
-      image={instrument.image} />);
-    return (
-      <div className="favoriteCards">
-        {cartItemMap}
-      </div>
-    );
+        key={idx}
+        id={instrument.id}
+        name={instrument.name}
+        price={instrument.price}
+        brand={instrument.brand}
+        rating={instrument.rating}
+        deleteItem={deleteItem}
+        image={instrument.image} />);
+      return (
+        <div className="containerCards">
+          {cartItemMap}
+        </div>
+      );
   }
 
   return (
-    <div className="containerHome cartItemContainer">
-      <h1>Cart</h1>
+    <div className="shoppingCart">
+      <h2>Your Shopping Cart</h2>
       {renderInstruments()}
     </div>
 
