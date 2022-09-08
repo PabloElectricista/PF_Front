@@ -38,7 +38,7 @@ export default function ProductDetail({ handleAdded, handleNotAdded }) {
     const instrumentItem = useSelector((state) => state.retrievedInstrument);
     const thisUser = useSelector((state) => state.usersEmail);
     const { name, price, rating, image, brand, color } = instrumentItem ? instrumentItem : {};
-    const [quantity, setQuantity] = useState();
+    const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
         if (!instrumentItem || (id !== instrumentItem._id && !instrumentItem.error)) {

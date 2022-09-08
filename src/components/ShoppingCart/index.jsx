@@ -108,7 +108,7 @@ export default function ShoppingCart() {
                     console.log(data);
                     elements.getElement(CardElement).clear();
 
-                    if(true){
+                    if(data.paymentstatus === "succeeded"){
                         setTotalPrice(0)
                         localStorage.setItem('cartList', JSON.stringify([]))
                         setCartItem([])
@@ -153,13 +153,13 @@ export default function ShoppingCart() {
                     </div>
                 </div>
             </div>
-            <Snackbar elevation={6} autoHideDuration={1500} open={warning} onClose={handleClose}>
+            <Snackbar elevation={6} autoHideDuration={4000} open={warning} onClose={handleClose}>
                 <Alert onClose={handleClose} variant='filled' severity="error" sx={{ width: '100%' }}>
                     <AlertTitle><strong>Fail</strong></AlertTitle>
                     <strong>A purchase error has occurred</strong>
                 </Alert>
             </Snackbar>
-            <Snackbar elevation={6} autoHideDuration={1500} open={success} onClose={handleClose}>
+            <Snackbar elevation={6} autoHideDuration={4000} open={success} onClose={handleClose}>
                 <Alert onClose={handleClose} variant='filled' severity="success" sx={{ width: '100%' }}>
                     <AlertTitle><strong>Success</strong></AlertTitle>
                     <strong>Congratulations you have purchased successfully</strong>
