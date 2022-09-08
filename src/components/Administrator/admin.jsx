@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -79,8 +80,6 @@ export default function Dashboard() {
   const navigate = useNavigate()
   const userDetail = useSelector(state => state.usersEmail)
   const [open, setOpen] = useState(true);
-
-
 
   useEffect(() => {
     if (Object.values(userDetail).length !== 0 && !userDetail.isAdmin) {
