@@ -94,3 +94,7 @@
     position: center;
     border-radius: 50%;
   }
+
+  .error{
+    color: red;
+  }

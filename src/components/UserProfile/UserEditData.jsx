@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-// import { useNavigate } from 'react-router-dom'
-import { Alert, AlertTitle, Button, Snackbar } from '@mui/material'
-import { putUser, getAllUsers, getUserByEmail } from '../../redux/actions'
+import { putUser, getUserByEmail } from '../../redux/actions'
 import { useAuth0 } from '@auth0/auth0-react';
 import Loading from '../Loading/Loading';
 import './UserProf.css'
+import { useNavigate } from 'react-router-dom';
 
 
 const UserEditData = () => {
@@ -209,7 +208,7 @@ const UserEditData = () => {
   const { isAuthenticated, isLoading, user } = useAuth0()
   const userDetail = useSelector((state) => state.usersEmail)
   const dispatch = useDispatch()
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const [error, setErrors] = useState({})
   const [input, setInput] = useState({
     name: '',
@@ -226,62 +225,28 @@ const UserEditData = () => {
       console.log(user, "despachado");
     }
   }, [isAuthenticated])
-
-  const [notEdited, setNotEdited] = useState(false);
-  const [Edited, setEdited] = useState(false);
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setNotEdited(false);
-    setEdited(false);
-  };
-
-  const handleNotEdited = () => {
-    setNotEdited(true)
-  }
-  const handleEdited = () => {
-    setEdited(true)
-  }
-
-
-  // useEffect(() => {
-  //   setInput({
-  //     ...input,
-  //     name: userDetail.username,
-  //     lastname: userDetail.userdata.lastname,
-  //     country: userDetail.userdata.country,
-  //     cuil: userDetail.userdata.cuil,
-  //     phone: userDetail.userdata.phone,
-  //     address: userDetail.userdata.address,
-  //     postal: userDetail.userdata.postal,
-  //   })
-  // }, [])
+  
 
   const validate = (input) => {
     const error = {}
     if (input.name && !input.name.match(/^[a-zA-Z ]*$/g)) {
-      error.name = 'only letters*'
+      error.name = 'only letters'
     }
     if (input.lastname && !input.lastname.match(/^[a-zA-Z ]*$/g)) {
-      error.lastname = 'only letters*'
+      error.lastname = 'only letters'
     }
     if (input.cuil && !input.cuil.match(/^[\d]{1,3}\.?[\d]{3,3}\.?[\d]{3,3}$/)) {
-      error.cuil = 'Must be a valid ID number*'
+      error.cuil = 'Must be a valid ID number'
     }
-    if (
-      input.phone && !input.phone.match(/^\(?\d{2}\)?[\s\.-]?\d{4}[\s\.-]?\d{4}$/)
-    ) {
-      error.phone = 'Must be a valid phone number*'
+    if (input.phone && !input.phone.match(/^\(?\d{2}\)?[\s\.-]?\d{4}[\s\.-]?\d{4}$/)) {
+      error.phone = 'Must be a valid phone number'
     }
-    if (!input.address.match(/^[A-Za-z0-9\s]+$/g) && input.address) {
-      error.address = 'Symbols are not allowed*'
+    if (input.address && !input.address.match(/^[A-Za-z0-9\s]+$/g)) {
+      error.address = 'Symbols are not allowed'
     }
     if (input.postal && !input.postal.match(/^(\d{4})$/g)) {
-      error.postal = 'Must be a valid ZIP Code*'
+      error.postal = 'Must be a valid ZIP Code'
     }
-
     return error
   }
 
@@ -290,18 +255,21 @@ const UserEditData = () => {
       ...input,
       [e.target.name]: e.target.value,
     })
+    setErrors(validate({
+      ...input,
+      [e.target.name]: e.target.value
+    }))
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (Object.values(error).length != 0) {
-      handleNotEdited()
+    if (Object.values(error).length !== 0) {
       return
     } else {
       const email = userDetail.email
       dispatch(putUser(email, input))
-      handleEdited()
       dispatch(getUserByEmail(email))
+      navigate("/profile/data")
     }
   }
 
@@ -316,7 +284,7 @@ const UserEditData = () => {
         <legend className="FormTextArea">Personal Data</legend>
         <div>
           <label className="FormLabel">Country:</label>
-          <select name='country' onChange={(e) => handleChange(e)}>
+          <select name='country' onChange={(e) => handleChange(e)} required>
             <option value=''>Select</option>
             {paises.map((e) => {
               return (<option key={e} value={e}>{e}</option>)
@@ -325,42 +293,26 @@ const UserEditData = () => {
         </div>
         <div>
           <label className="FormLabel">Identification Number: <span className="error"> {error.cuil ? error.cuil : ""}</span></label>
-          <input type='text' name='cuil' onChange={(e) => handleChange(e)} value={input.cuil} />
+          <input required type='text' name='cuil' onChange={(e) => handleChange(e)} value={input.cuil} />
         </div>
         <div>
           <label className="FormLabel">Birthday: <span className="error"> {error.birthday ? error.birthday : ""}</span> </label>
-          <input type='text' name='birthday' onChange={(e) => handleChange(e)} value={input.birthday} />
+          <input required type='date' name='birthday' onChange={(e) => handleChange(e)} value={input.birthday} />
         </div>
         <div>
           <label className="FormLabel">Phone: <span className="error"> {error.phone ? error.phone : ""}</span> </label>
-          <input type='text' name='phone' onChange={(e) => handleChange(e)} value={input.phone} />
+          <input required type='text' name='phone' onChange={(e) => handleChange(e)} value={input.phone} />
         </div>
         <div>
-          <label className="FormLabel">City: <span className="error"> {error.city ? error.city : ""}</span> </label>
-          <input type='number' name='city' onChange={(e) => handleChange(e)} value={input.city} />
-        </div>
-        <div>
-          <label className="FormLabel">Address: <span className="error"> {error.phone ? error.phone : ""}</span> </label>
-          <input type='text' name='address' onChange={(e) => handleChange(e)} value={input.address} />
+          <label className="FormLabel">Address: <span className="error"> {error.address ? error.address : ""}</span> </label>
+          <input required type='text' name='address' onChange={(e) => handleChange(e)} value={input.address} />
         </div>
         <div>
           <label className="FormLabel">ZIP Code: <span className="error"> {error.postal ? error.postal : ""}</span> </label>
-          <input type='number' name='postal' onChange={(e) => handleChange(e)} value={input.postal} />
+          <input required type='number' name='postal' onChange={(e) => handleChange(e)} value={input.postal} />
         </div>
         <button className="btn btn-outline-success me-2">Update</button>
       </form>
-      <Snackbar open={notEdited} autoHideDuration={2000} onClose={handleClose}>
-        <Alert onClose={() => handleClose()} severity="warning" sx={{ width: '100%' }}>
-          <AlertTitle>Fail</AlertTitle>
-          <strong>Some fields may be wrong</strong>
-        </Alert>
-      </Snackbar>
-      <Snackbar open={Edited} autoHideDuration={2000} onClose={handleClose}>
-        <Alert onClose={() => handleClose()} severity="success" sx={{ width: '100%' }}>
-          <AlertTitle>Edited</AlertTitle>
-          <strong>Edited successfully</strong>
-        </Alert>
-      </Snackbar>
     </>
   )
 }
