@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllUsers } from '../../redux/actions'
 import UsersCard from './UsersCard';
@@ -19,7 +19,7 @@ export default function UserControl() {
             </div>
             <div>
                 {users.map(u => {
-                    return (<UsersCard key={u._id} username={u && u.nickname} email={u && u.email} />)
+                    return (<UsersCard key={u._id} username={u.nickname} email={u.email} />)
                 })}
             </div>
         </>

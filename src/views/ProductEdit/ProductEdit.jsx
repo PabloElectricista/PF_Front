@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useNavigate, useParams} from "react-router-dom";
-import {getProductById, updateProduct, showAlert} from "../../redux/actions";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { getProductById, updateProduct, showAlert, getUserByEmail } from "../../redux/actions";
 import './ProductEdit.css';
 import Loading from "../../components/Loading/Loading";
 import ModalVerification from "../../components/Modal/ModalVerification"
+import { useAuth0 } from "@auth0/auth0-react";
 
 function ProductEdit() {
-
     const regexInteger = /^\d*$/;
     const regexDecimal = /^(\d+\.?\d*|\.\d+)$/;
     const regexAlphanumeric = /^[\dA-Za-záéíóúüñç\-,:_;.'“”"/()&\s]*$/;
@@ -15,8 +15,11 @@ function ProductEdit() {
 
     const dispatch = useDispatch();
     const instrumentRetrieved = useSelector((state) => state.retrievedInstrument);
-    const {id} = useParams();
+    const userDetail = useSelector((state) => state.usersEmail);
+    const { id } = useParams();
     const navigate = useNavigate();
+    const { user, isAuthenticated, isLoading } = useAuth0()
+
 
     const [instrumentItem, setInstrumentItem] = React.useState({
         id: 0,
@@ -55,7 +58,7 @@ function ProductEdit() {
     const [showModal, setShowModal] = useState(false);
 
     function handleChange(event) {
-        setInstrumentItem({...instrumentItem, [event.target.name]: event.target.value})
+        setInstrumentItem({ ...instrumentItem, [event.target.name]: event.target.value })
     }
 
     useEffect(() => {
@@ -66,9 +69,22 @@ function ProductEdit() {
         }
     }, [dispatch, instrumentRetrieved, id]);
 
+    useEffect(() => {
+        if (Object.values(userDetail).length === 0 && user) {
+            dispatch(getUserByEmail(user.email))
+        }
+        if (!isLoading && Object.values(userDetail).length !== 0) {
+            if (!userDetail.products.some(e => e === id)) { navigate("/") }
+        }
+    }, [dispatch, user, userDetail])
+    
+    if (isLoading || Object.values(userDetail).length === 0) {
+        return <Loading />
+    }
+    
     function renderInstrument() {
         if (!instrumentRetrieved || (id !== instrumentRetrieved._id && !instrumentRetrieved.error)) {
-            return <Loading/>;
+            return <Loading />;
         }
         if (instrumentRetrieved.error) {
             return (
@@ -86,7 +102,7 @@ function ProductEdit() {
         }
         return instrumentItem.category.map((item, index) =>
             <option key={index}
-                    value={item}
+                value={item}
             >{item}</option>
         );
     }
@@ -101,7 +117,7 @@ function ProductEdit() {
         }
         return instrumentItem.image.map((item, index) =>
             <option key={index}
-                    value={item}
+                value={item}
             >{item}</option>
         );
     }
@@ -178,31 +194,31 @@ function ProductEdit() {
                     <div className='inputLabelField'>
                         <label>Name: </label>
                         <input placeholder='Instrument name'
-                               onChange={(e) => handleChange(e)}
-                               onBlur={() => validateAlpha('name', instrumentItem.name)}
-                               value={instrumentItem.name}
-                               type='text' name={'name'}/>
+                            onChange={(e) => handleChange(e)}
+                            onBlur={() => validateAlpha('name', instrumentItem.name)}
+                            value={instrumentItem.name}
+                            type='text' name={'name'} />
                         <span className="errorMessage">{errorInfo.name}</span>
                     </div>
 
                     <div className='inputLabelField'>
                         <label>Price: $</label>
                         <input placeholder='Instrument price'
-                               onChange={(e) => handleChange(e)}
-                               onBlur={() => validateDecimal('price', instrumentItem.price)}
-                               value={instrumentItem.price}
-                               type='text' name={'price'}/>
+                            onChange={(e) => handleChange(e)}
+                            onBlur={() => validateDecimal('price', instrumentItem.price)}
+                            value={instrumentItem.price}
+                            type='text' name={'price'} />
                         <span className="errorMessage">{errorInfo.price}</span>
                     </div>
 
                     <div className='inputLabelField'>
                         <label>Description: </label>
                         <textarea placeholder='Instrument description'
-                                  onChange={(e) => handleChange(e)}
-                                  onBlur={() => validateAlpha('description', instrumentItem.description)}
-                                  value={instrumentItem.description}
-                                  name={'description'}
-                                  rows={4}/>
+                            onChange={(e) => handleChange(e)}
+                            onBlur={() => validateAlpha('description', instrumentItem.description)}
+                            value={instrumentItem.description}
+                            name={'description'}
+                            rows={4} />
                         <span className="errorMessage">{errorInfo.description}</span>
                     </div>
 
@@ -210,13 +226,13 @@ function ProductEdit() {
                         <label>Url Image: </label>
                         <div className="addImageField">
                             <input placeholder='Instrument image'
-                                   onChange={(e) => handleChangeNewImage(e)}
-                                   onBlur={() => validateUrl('image', newImage)}
-                                   value={newImage}
-                                   type='text' name={'image'}/>
+                                onChange={(e) => handleChangeNewImage(e)}
+                                onBlur={() => validateUrl('image', newImage)}
+                                value={newImage}
+                                type='text' name={'image'} />
                             <button className='addImageButton'
-                                    type='button'
-                                    onClick={() => handleImageAddChange()}
+                                type='button'
+                                onClick={() => handleImageAddChange()}
 
                             >Add Image
                             </button>
@@ -229,13 +245,13 @@ function ProductEdit() {
                         <label>Added Images: </label>
                         <div className="addImageField">
                             <select size={5}
-                                    onChange={(e) => handleSelectedImage(e)}
+                                onChange={(e) => handleSelectedImage(e)}
                             >
                                 {renderImageList()}
                             </select>
                             <button className='removeImageButton'
-                                    type='button'
-                                    onClick={() => handleImageRemoveChange()}
+                                type='button'
+                                onClick={() => handleImageRemoveChange()}
                             >Remove Image
                             </button>
                         </div>
@@ -245,20 +261,20 @@ function ProductEdit() {
                     <div className='inputLabelField'>
                         <label>Stock: </label>
                         <input placeholder='Instrument stock'
-                               onChange={(e) => handleChange(e)}
-                               onBlur={() => validateInteger('stock', instrumentItem.stock)}
-                               value={instrumentItem.stock}
-                               type='text' name={'stock'}/>
+                            onChange={(e) => handleChange(e)}
+                            onBlur={() => validateInteger('stock', instrumentItem.stock)}
+                            value={instrumentItem.stock}
+                            type='text' name={'stock'} />
                         <span className="errorMessage">{errorInfo.stock}</span>
                     </div>
 
                     <div className='inputLabelField'>
                         <label>Color: </label>
                         <input placeholder='Instrument color'
-                               onChange={(e) => handleChange(e)}
-                               onBlur={() => validateAlpha('color', instrumentItem.color)}
-                               value={instrumentItem.color}
-                               type='text' name={'color'}/>
+                            onChange={(e) => handleChange(e)}
+                            onBlur={() => validateAlpha('color', instrumentItem.color)}
+                            value={instrumentItem.color}
+                            type='text' name={'color'} />
                         <span className="errorMessage">{errorInfo.color}</span>
                     </div>
 
@@ -266,7 +282,7 @@ function ProductEdit() {
                         <div className='selectLabelField'>
                             <label>Available Categories:</label>
                             <select size={5}
-                                    onChange={(e) => handleCategoryPlusChange(e)}
+                                onChange={(e) => handleCategoryPlusChange(e)}
                             >
                                 <option> Wind</option>
                                 <option> Electric</option>
@@ -278,7 +294,7 @@ function ProductEdit() {
                         <div className='selectLabelField'>
                             <label>Selected Categories: </label>
                             <select size={5}
-                                    onChange={(e) => handleCategoryMinusChange(e)}
+                                onChange={(e) => handleCategoryMinusChange(e)}
                             >
                                 {renderProductCategories()}
                             </select>
@@ -288,20 +304,20 @@ function ProductEdit() {
                     <div className='inputLabelField'>
                         <label>Brand: </label>
                         <input placeholder='Instrument brand'
-                               onChange={(e) => handleChange(e)}
-                               onBlur={() => validateAlpha('brand', instrumentItem.brand)}
-                               value={instrumentItem.brand}
-                               type='text' name={'brand'}/>
+                            onChange={(e) => handleChange(e)}
+                            onBlur={() => validateAlpha('brand', instrumentItem.brand)}
+                            value={instrumentItem.brand}
+                            type='text' name={'brand'} />
                         <span className="errorMessage">{errorInfo.brand}</span>
                     </div>
 
                     <div className='inputLabelField'>
                         <label>Location: </label>
                         <input placeholder='Instrument location'
-                               onChange={(e) => handleChange(e)}
-                               onBlur={() => validateAlpha('location', instrumentItem.location)}
-                               value={instrumentItem.location}
-                               type='text' name={'location'}/>
+                            onChange={(e) => handleChange(e)}
+                            onBlur={() => validateAlpha('location', instrumentItem.location)}
+                            value={instrumentItem.location}
+                            type='text' name={'location'} />
                         <span className="errorMessage">{errorInfo.location}</span>
                     </div>
 
@@ -309,26 +325,26 @@ function ProductEdit() {
                         <label>Status: </label>
                         <label>
                             <input id="new"
-                                   className='radioInput'
-                                   name="status"
-                                   type="radio"
-                                   value="New"
-                                   checked={instrumentItem.status.toLowerCase() === 'new'}
-                                   onChange={(e) => handleChange(e)}
-                                   onBlur={() => validateAlpha('status', instrumentItem.status)}
+                                className='radioInput'
+                                name="status"
+                                type="radio"
+                                value="New"
+                                checked={instrumentItem.status.toLowerCase() === 'new'}
+                                onChange={(e) => handleChange(e)}
+                                onBlur={() => validateAlpha('status', instrumentItem.status)}
                             />
                             New
                         </label>
 
                         <label>
                             <input id="used"
-                                   className='radioInput'
-                                   name="status"
-                                   type="radio"
-                                   value="Used"
-                                   checked={instrumentItem.status.toLowerCase() === 'used'}
-                                   onChange={(e) => handleChange(e)}
-                                   onBlur={() => validateAlpha('status', instrumentItem.status)}
+                                className='radioInput'
+                                name="status"
+                                type="radio"
+                                value="Used"
+                                checked={instrumentItem.status.toLowerCase() === 'used'}
+                                onChange={(e) => handleChange(e)}
+                                onBlur={() => validateAlpha('status', instrumentItem.status)}
                             />
                             Used
                         </label>
@@ -337,8 +353,8 @@ function ProductEdit() {
                     <div className="buttonsGroup">
                         <button className='submitButton' type='submit'>Save</button>
                         <button className='cancelButton'
-                                type='button'
-                                onClick={() => handleVerifyCancel()}
+                            type='button'
+                            onClick={() => handleVerifyCancel()}
                         >Cancel
                         </button>
                     </div>
@@ -377,8 +393,8 @@ function ProductEdit() {
         const errorStatus = validateAlpha('status', instrumentItem.status);
 
         return errorName || errorPrice || errorDescription ||
-               errorStock || errorColor || errorBrand ||
-               errorLocation || errorStatus;
+            errorStock || errorColor || errorBrand ||
+            errorLocation || errorStatus;
     }
 
     function validateInteger(key, value) {

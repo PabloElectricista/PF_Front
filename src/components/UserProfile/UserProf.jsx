@@ -10,18 +10,13 @@ const UserProf = () => {
   const { isAuthenticated, isLoading, user } = useAuth0()
   const dispatch = useDispatch();
   const userDetail = useSelector((state) => state.usersEmail)
-  // const {email} = useParams()
-  
-  
+
+
   useEffect(() => {
     if (isAuthenticated) {
-      // const email = user.email
       dispatch(getUserByEmail(user.email))
     }
   }, [isAuthenticated])
-  // console.log(email, 'DETALLE')
-  console.log(user, 'USER AUTH0')
-
 
   if (isLoading) {
     return <Loading />
@@ -32,9 +27,14 @@ const UserProf = () => {
         <h1 className="">Welcome: {user.name}</h1>
         <img className="pic" src={user.picture} alt='profilePic' />
         <ul>
-          <p>{user.email}</p>
-          <p>{user.nickname}</p>
-
+          {console.log("USERDETAIL",userDetail)}
+          <p>email: {user.email}</p>
+          <p>nickname: {user.nickname}</p>
+          <p>phone: {userDetail.phone}</p>
+          <p>address: {userDetail.address}</p>
+          <p>country: {userDetail.country}</p>
+          <p>ZIP code: {userDetail.postal}</p>
+          <p>birthday: {userDetail.birthday}</p>
         </ul>
       </div>
       <div className="FormTextArea">

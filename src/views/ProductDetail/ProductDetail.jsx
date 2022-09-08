@@ -3,12 +3,12 @@
 // React utilities
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getProductById } from "../../redux/actions";
+import { getProductById, getUserByEmail } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 // Components
-import {addToFav, addToCart} from '../../components/Card/favAndCart';
+import { addToFav, addToCart } from '../../components/Card/favAndCart';
 import Loading from "../../components/Loading/Loading";
 import ReviewList from "../../components/ReviewList/ReviewList";
 import ReviewForm from "../../components/ReviewForm/ReviewForm";
@@ -26,25 +26,28 @@ import Button from '@mui/material/Button';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import './ProductDetail.css';
 
-export default function ProductDetail({handleAdded, handleNotAdded}) {
+export default function ProductDetail({ handleAdded, handleNotAdded }) {
 
     // Auth0
-    const { isAuthenticated } = useAuth0()
+    const { isAuthenticated, user } = useAuth0()
 
     // Hooks
     const { id } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const instrumentItem = useSelector((state) => state.retrievedInstrument);
+    const thisUser = useSelector((state) => state.usersEmail);
     const { name, price, rating, image, brand, color } = instrumentItem ? instrumentItem : {};
-
-    const [quantity, setQuantity] = useState();
+    const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
         if (!instrumentItem || (id !== instrumentItem._id && !instrumentItem.error)) {
             dispatch(getProductById(id));
         }
-    }, [dispatch, instrumentItem, id])
+        if (isAuthenticated) {
+            dispatch(getUserByEmail(user.email))
+        }
+    }, [dispatch, instrumentItem, isAuthenticated,])
 
     // Go to edit the product
     function handleEdit() {
@@ -61,7 +64,7 @@ export default function ProductDetail({handleAdded, handleNotAdded}) {
     };
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
-        return;
+            return;
         }
         setOpen(false);
     };
@@ -73,102 +76,102 @@ export default function ProductDetail({handleAdded, handleNotAdded}) {
     //     localStorage.setItem('cartList', JSON.stringify(updatedList));
     // }
 
-    function handlerQuantity (e) {
+    function handlerQuantity(e) {
         addToCart(id, name, price, rating, image, brand, color, handleAdded, handleNotAdded)
         const localStoreList = JSON.parse(localStorage.getItem('cartList'));
         const localStoreItem = localStoreList.find(item => item.id === id);
         localStoreItem.quantity = e.target.value
-        localStorage.setItem("cartList",JSON.stringify(localStoreList))
+        localStorage.setItem("cartList", JSON.stringify(localStoreList))
         setQuantity(e.target.value)
         // updateQuantity(id, e.target.value)
     }
 
     return (
         (!instrumentItem || (id !== instrumentItem._id && !instrumentItem.error)) ? <Loading /> :
-        <div className="containerDetails">
-            <div className="principalData">
-                <Carousel variant="dark" >
-                    {
-                        instrumentItem.image.map((imageItem, index) => {
-                            return(
-                                <Carousel.Item interval={3000} key={index}>
-                                    <img className="imageDetail"
-                                        src={imageItem}
-                                        alt=""
-                                    />
-                                </Carousel.Item>
-                            ) 
-                        })
-                    }
-                </Carousel>
+            <div className="containerDetails">
+                <div className="principalData">
+                    <Carousel variant="dark" >
+                        {
+                            instrumentItem.image.map((imageItem, index) => {
+                                return (
+                                    <Carousel.Item interval={3000} key={index}>
+                                        <img className="imageDetail"
+                                            src={imageItem}
+                                            alt=""
+                                        />
+                                    </Carousel.Item>
+                                )
+                            })
+                        }
+                    </Carousel>
 
-                <div className="productData">
-                    <h3>{instrumentItem.name}</h3>
-                    <p>{instrumentItem.description}</p>
-                    <ul>
-                        <div className="listProductDetail">
-                            <li><b>Brand:</b> {instrumentItem.brand}</li>
-                            <li><b>Stock:</b> {instrumentItem.stock}</li>
-                            <li><b>Condition:</b> {instrumentItem.status}</li>
-                        </div>
-                        <div className="listProductDetail">
-                            <li><b>Color:</b> {instrumentItem.color[0].toUpperCase() + instrumentItem.color.substring(1)}</li>
-                            <li><b>Category:</b> {instrumentItem.category.join(', ')}</li>
-                            <li><b>Location:</b> {instrumentItem.location}</li>
-                        </div>
-                    </ul>
-                </div>
-
-                <div className="productsOptions">
-                    <div className="share-favorite">
-                        <CopyToClipboard text={window.location.href}>
-                            <p><ShareOutlinedIcon onClick={handleClick}/> Share</p>
-                        </CopyToClipboard>
-                        <p><FavoriteBorderOutlinedIcon onClick={() => addToFav(id, name, price, rating, image, brand, handleAdded, handleNotAdded)}/> Favorite</p>
-                        <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
-                                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                                Link copied to clipboard 
-                                </Alert>
-                        </Snackbar>
-                    </div>
-                    
-                    <div className="detailPayment">
-                        <h5>${instrumentItem.price}</h5>
-                        <Form className="formDetailProduct">
-                            <Form.Group className="selectInput">
-                                <Form.Label>Quantity</Form.Label>
-                                <Form.Select size="sm" value={quantity} onChange={(e) => handlerQuantity(e)}>
-                                    {
-                                        [...Array(instrumentItem.stock)].map((e, i) => <option value={i + 1} key={i}>{i + 1}</option>)
-                                    }
-                                </Form.Select>
-                            </Form.Group>
-                            <div className="total">
-                                Total: <span>${instrumentItem.price * quantity}</span>
+                    <div className="productData">
+                        <h3>{instrumentItem.name}</h3>
+                        <p>{instrumentItem.description}</p>
+                        <ul>
+                            <div className="listProductDetail">
+                                <li><b>Brand:</b> {instrumentItem.brand}</li>
+                                <li><b>Stock:</b> {instrumentItem.stock}</li>
+                                <li><b>Condition:</b> {instrumentItem.status}</li>
                             </div>
-                            <Link to='/cart'>
-                                <Button variant="contained">Buy Now</Button>
-                            </Link>
-                            <Button onClick={() => addToCart(id, name, price, rating, image, brand, color, handleAdded, handleNotAdded)} variant="outlined" startIcon={<ShoppingCartOutlinedIcon />}>
-                                Add to cart
-                            </Button>
-                        </Form>
+                            <div className="listProductDetail">
+                                <li><b>Color:</b> {instrumentItem.color[0].toUpperCase() + instrumentItem.color.substring(1)}</li>
+                                <li><b>Category:</b> {instrumentItem.category.join(', ')}</li>
+                                <li><b>Location:</b> {instrumentItem.location}</li>
+                            </div>
+                        </ul>
                     </div>
 
-                    {
-                        isAuthenticated ? 
-                        <button className='editButton'
-                            type='button'
-                            onClick={() => handleEdit()}
-                        >Edit
-                        </button>
-                        : null 
-                    }
+                    <div className="productsOptions">
+                        <div className="share-favorite">
+                            <CopyToClipboard text={window.location.href}>
+                                <p><ShareOutlinedIcon onClick={handleClick} /> Share</p>
+                            </CopyToClipboard>
+                            <p><FavoriteBorderOutlinedIcon onClick={() => addToFav(id, name, price, rating, image, brand, handleAdded, handleNotAdded)} /> Favorite</p>
+                            <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+                                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                                    Link copied to clipboard
+                                </Alert>
+                            </Snackbar>
+                        </div>
+
+                        <div className="detailPayment">
+                            <h5>${instrumentItem.price}</h5>
+                            <Form className="formDetailProduct">
+                                <Form.Group className="selectInput">
+                                    <Form.Label>Quantity</Form.Label>
+                                    <Form.Select size="sm" value={quantity} onChange={(e) => handlerQuantity(e)}>
+                                        {
+                                            [...Array(instrumentItem.stock)].map((e, i) => <option value={i + 1} key={i}>{i + 1}</option>)
+                                        }
+                                    </Form.Select>
+                                </Form.Group>
+                                <div className="total">
+                                    Total: <span>${instrumentItem.price * quantity}</span>
+                                </div>
+                                <Link to='/cart'>
+                                    <Button variant="contained">Buy Now</Button>
+                                </Link>
+                                <Button onClick={() => addToCart(id, name, price, rating, image, brand, color, handleAdded, handleNotAdded)} variant="outlined" startIcon={<ShoppingCartOutlinedIcon />}>
+                                    Add to cart
+                                </Button>
+                            </Form>
+                        </div>
+                        {
+                            (Object.values(thisUser).length !== 0 &&
+                                (isAuthenticated && thisUser.products.some(e => e === id))) ?
+                                <button className='editButton'
+                                    type='button'
+                                    onClick={() => handleEdit()}
+                                >Edit
+                                </button>
+                                : null
+                        }
+                    </div>
                 </div>
+                <Divider />
+                <ReviewList productId={id} />
+                <ReviewForm productId={id} />
             </div>
-            <Divider />
-            <ReviewList productId={id}/>
-            <ReviewForm productId={id}/>
-        </div>
     );
 }
