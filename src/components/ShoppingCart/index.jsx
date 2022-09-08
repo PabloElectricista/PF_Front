@@ -8,7 +8,6 @@ import ShopCard from "./ShopCard";
 import Button from '@mui/material/Button';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import './Card.css'
-import { Link } from "react-router-dom";
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
 import {
@@ -17,10 +16,21 @@ import {
     useStripe,
     useElements
 } from '@stripe/react-stripe-js';
+import { Alert, AlertTitle, Snackbar } from "@mui/material";
 
 const stripePromise = loadStripe('pk_test_51LZlZLAfFn4zXQabU5GwZV9N2mF4rWwZiphhNImIDe3ClFcAcspjPLm2unNFM81E9ljcZfjf2BBhb6L2UW3Vin6G00c54G75HA');
 
 export default function ShoppingCart() {
+    const [warning, setWarning] = useState(false);
+    const [success, setSuccess] = useState(false);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setWarning(false);
+        setSuccess(false);
+    };
 
     const [user, setUser] = useState({})
     const [cartItem, setCartItem] = useState(JSON.parse(localStorage.getItem('cartList')))
@@ -97,6 +107,16 @@ export default function ShoppingCart() {
                     const { data } = await axios.post('/api/checkout', { ...cart })
                     console.log(data);
                     elements.getElement(CardElement).clear();
+
+                    if(true){
+                        setTotalPrice(0)
+                        localStorage.setItem('cartList', JSON.stringify([]))
+                        setCartItem([])
+                        setSuccess(true)
+                    }else{
+                        setWarning(true)
+                    }
+
                 } catch (error) {
                     console.log(error);
                 }
@@ -133,6 +153,18 @@ export default function ShoppingCart() {
                     </div>
                 </div>
             </div>
+            <Snackbar elevation={6} autoHideDuration={1500} open={warning} onClose={handleClose}>
+                <Alert onClose={handleClose} variant='filled' severity="error" sx={{ width: '100%' }}>
+                    <AlertTitle><strong>Fail</strong></AlertTitle>
+                    <strong>A purchase error has occurred</strong>
+                </Alert>
+            </Snackbar>
+            <Snackbar elevation={6} autoHideDuration={1500} open={success} onClose={handleClose}>
+                <Alert onClose={handleClose} variant='filled' severity="success" sx={{ width: '100%' }}>
+                    <AlertTitle><strong>Success</strong></AlertTitle>
+                    <strong>Congratulations you have purchased successfully</strong>
+                </Alert>
+            </Snackbar>
         </div>
     );
 }
