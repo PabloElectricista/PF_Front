@@ -96,7 +96,7 @@ export default function ShoppingCart() {
 
                     const { data } = await axios.post('/api/checkout', { ...cart })
                     console.log(data);
-                    // elements.getElement(CardElement).clear();
+                    elements.getElement(CardElement).clear();
                 } catch (error) {
                     console.log(error);
                 }
