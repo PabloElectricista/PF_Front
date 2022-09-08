@@ -83,7 +83,7 @@ export default function Dashboard() {
 
 
   useEffect(() => {
-    if (Object.values(userDetail).length != 0 && !userDetail.isAdmin) {
+    if (Object.values(userDetail).length !== 0 && !userDetail.isAdmin) {
       navigate('/home');
     }
   }, [userDetail])

@@ -49,8 +49,7 @@ export default function NavBar() {
                         <img className="ProfileImg" src={user.picture} alt="user" referrerPolicy="no-referrer" />
                         <NavDropdown title={user.nickname} id="navbarScrollingDropdown">
                             <NavDropdown.Item href='/profile/data' className="dropDown" >Personal Data</NavDropdown.Item>
-                            <NavDropdown.Item href="/profile/sold" className="dropDown" >Sales History</NavDropdown.Item>
-                            <NavDropdown.Item href='/profile/shop-history' className="dropDown" >Shopping history</NavDropdown.Item>
+                            {/* <NavDropdown.Item href='/profile/shop-history' className="dropDown" >Shopping history</NavDropdown.Item> */}
                             <NavDropdown.Item href='/profile/my-products' className="dropDown" >My Products</NavDropdown.Item>
                             {userDetail.isAdmin && <NavDropdown.Item href='/profile/admin' className="dropDown" >Admin panel</NavDropdown.Item>}
                         </NavDropdown>

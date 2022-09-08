@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllUsers, getUserByEmail, putUser } from '../../redux/actions'
+import { getAllUsers, putUser } from '../../redux/actions'
 import './User.css'
+import { Loading } from "react-admin";
 
 
 
@@ -12,10 +13,14 @@ export default function UserEdit() {
   const dispatch = useDispatch();
   const allUsers = useSelector((store) => store.users);
   const { email } = useParams();
-  const thisUser = allUsers.find(e => e.email === email)
+  const [thisUser, setThisUser] = useState({})
+  const navigate = useNavigate()
 
-  useEffect(()=>{
-    dispatch(getAllUsers())
+  useEffect(() => {
+    if (allUsers.length === 0) {
+      dispatch(getAllUsers())
+    }
+    setThisUser(allUsers.length ? allUsers.find(e => e.email === email) : {})
   }, [allUsers])
 
   const [input, setInput] = useState({
@@ -26,8 +31,9 @@ export default function UserEdit() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("hasta aca nillega")
     dispatch(putUser(email, input));
+    navigate(`/profile/admin/usercontrol/userdetail/${thisUser.email}`)
+    dispatch(getAllUsers())
   }
 
   function handleChange(e) {
@@ -36,6 +42,9 @@ export default function UserEdit() {
       [e.target.name]: e.target.value,
     })
   }
+  if(allUsers.length === 0){
+    return <Loading/>
+}
 
   return (
     <div className="UserEditContainer">
@@ -49,40 +58,28 @@ export default function UserEdit() {
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="UserEditMargin">
             <label>Admin:</label>
-            <select
-              value={input.isAdmin}
-              name='isAdmin'
-              onChange={(e) => handleChange(e)}
-            >
+            <select value={input.isAdmin} name='isAdmin' onChange={(e) => handleChange(e)}>
               <option value={true}>Yes</option>
               <option value={false} >No</option>
             </select>
           </div>
           <div className="UserEditMargin">
             <label>Active:</label>
-            <select
-              value={input.isActive}
-              name='isActive'
-              onChange={(e) => handleChange(e)}
-            >
+            <select value={input.isActive} name='isActive' onChange={(e) => handleChange(e)}>
               <option value={true}>Yes</option>
               <option value={false} >No</option>
             </select>
           </div>
           <div className="UserEditMargin">
-            <label>Banned:</label>
-            <select
-              value={input.isBloked}
-              name='isBloked'
-              onChange={(e) => handleChange(e)}
-            >
+            <label>Blocked:</label>
+            <select value={input.isBloked} name='isBloked' onChange={(e) => handleChange(e)}>
               <option value={true}>Yes</option>
               <option value={false} >No</option>
             </select>
           </div>
           <div className="UserEditMargin">
             <button className="btn btn-outline-success me-2" type='submit' onClick={handleSubmit}>
-              <Link to={`/profile/admin/usercontrol/userdetail/${thisUser.email}`}>Modify</Link>
+              Modify
             </button>
             <button className="btn btn-outline-success me-2">
               <Link to={`/profile/admin/usercontrol/userdetail/${thisUser.email}`}>Cancel</Link>

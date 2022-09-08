@@ -47,7 +47,7 @@ export default function AboutUs() {
           </div>
         </div>
         <div className='TeamCard'>
-          <img className='imageAboutUs' src="https://media-exp1.licdn.com/dms/image/C5603AQGwy0ZtDrGGGg/profile-displayphoto-shrink_200_200/0/1631376049562?e=1666828800&v=beta&t=q8ls3vU7XjW8eJ2ouiUHX0z19kum3KaVZakQblAF_qE" alt="Roger miño" />
+          <img className='imageAboutUs' src="https://media-exp1.licdn.com/dms/image/C4D03AQHtmr5mxp93uw/profile-displayphoto-shrink_800_800/0/1662472016195?e=1668038400&v=beta&t=7R4-gQiQ2dG-mD7g-segPgBE8GLb_vPsbC2mlMtQuNU" alt="Roger miño" />
           <p>Roger Miño</p>
           <div className='IconDiv'>
             <a rel="noreferrer" target="_blank" href="https://github.com/roger077">
