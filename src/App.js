@@ -17,7 +17,6 @@ import CookieCard from './components/CookieCard';
 import AlertMessage from "./components/Alerts/AlertMessage";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import StripeComponent from './components/StripeComponent/StripeComponent';
 import ShoopingCart from "./components/ShoppingCart";
 import { useAuth0 } from '@auth0/auth0-react';
 import { Alert, AlertTitle, Snackbar } from "@mui/material";
@@ -74,7 +73,6 @@ function App() {
                 <Route exact path='/about' element={<AboutUs />} />
                 <Route exact path='/favorites' element={<Favorites />} />
                 <Route exact path='/cart' element={<ShoopingCart />} />
-                <Route path='/stripe' element={<StripeComponent />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
             <Snackbar open={added} autoHideDuration={1000} onClose={handleClose}>

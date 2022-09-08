@@ -2,18 +2,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-// import { allOrders, getAllProducts } from '../../redux/actions';
+import { useSelector } from 'react-redux';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export default function Chart() {
 
     const [balance, setBalance] = useState({})
     const [data, setData] = useState([])
+    const allOrder = useSelector((state) => state.orders)
     
     useEffect(() => {
         getBalance()
-    }, [])
+    }, [allOrder])
 
     useEffect(() => {
         setData([...data, {
@@ -33,9 +33,6 @@ export default function Chart() {
             })
             .catch(error => console.log(error.message))
     }
-
-
-
 
     return (
         <ResponsiveContainer width="100%" height="100%">
