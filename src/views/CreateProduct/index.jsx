@@ -5,7 +5,7 @@ import { Alert, AlertTitle, Snackbar } from "@mui/material"
 import axios from "axios"
 
 export default function CreateProduct() {
-
+    
     const { user, isAuthenticated } = useAuth0();
     const [error, setError] = useState({})
     const [inputForm, setInputForm] = useState({
@@ -13,18 +13,18 @@ export default function CreateProduct() {
         description: '',
         image: [],
         category: [],
-        color: '',
+        color: 'Yellow',
         price: 0,
         stock: 0,
         brand: '',
-        status: '',
+        status: 'New',
     })
     //-------------------------
     //-------------------------
     const [warning, setWarning] = useState(true);
     const [success, setSuccess] = useState(false);
     const [fail, setFail] = useState(false);
-
+    
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -43,38 +43,38 @@ export default function CreateProduct() {
             email: user.email,
         }
     }
-
-
+    
+    
     function validate(input) {
-
+        
         let error = {}
         if (input.name.length >= 0 && !input.name.match(/^[a-zA-Z_]+( [a-zA-Z_]+)*$/)) {
             error.name = 'Only letters and no spaces are allowed at the end!'
         } else error.name = null
-
+        
         if (input.category && input.category.length === 0) {
             error.category = 'You have to choose at least one category'
         } else error.category = null
-
+        
         if (!input.color) {
             error.color = 'Must declare a color'
         } else error.color = null
-
+        
         if (input.price > 10000 || input.price < 0) {
             error.price = 'It has to be between 0 and 10000 dollars'
         } else error.price = null
-
+        
         if (input.stock > 30 || input.stock < 0) {
             error.stock = 'It has to be between 0 and 30'
         } else error.stock = null
-
+        
         if (input.brand.length >= 0 && !input.brand.match(/^[a-zA-Z_]+( [a-zA-Z_]+)*$/)) {
             error.brand = 'Only letters and no spaces are allowed at the end!'
         } else error.brand = null
         return error
     }
-
-
+    
+    
     function handleChange(e) {
         setInputForm({
             ...inputForm,
@@ -85,7 +85,7 @@ export default function CreateProduct() {
             [e.target.name]: e.target.value
         }))
     }
-
+    
     function handleSelect(e) {
         setInputForm({
             ...inputForm,
@@ -96,7 +96,7 @@ export default function CreateProduct() {
             category: [...inputForm.category, e.target.value]
         }))
     }
-
+    
     function handleSelectC(e) {
         setInputForm({
             ...inputForm,
@@ -107,7 +107,7 @@ export default function CreateProduct() {
             color: e.target.value
         }))
     }
-
+    
     function handleSelectS(e) {
         setInputForm({
             ...inputForm,
@@ -118,8 +118,9 @@ export default function CreateProduct() {
             status: e.target.value
         }))
     }
-
-
+    
+    console.log(inputForm)
+    
     const uploadImage = async (e) => {
         const files = e.target.files;
         const data = new FormData();
@@ -151,8 +152,8 @@ export default function CreateProduct() {
         if (error.name === null && error.category === null && error.color === null &&
             error.price === null && error.stock === null && error.brand === null) {
             if (isAuthenticated) {
-                const response = postProduct()
-                await response.status === 201 ? setSuccess(true) :  setFail(true)
+                const response = await postProduct()
+                 response.status === 201 ? setSuccess(true) :  setFail(true)
                 setInputForm({
                     name: '',
                     description: '',
@@ -241,8 +242,7 @@ export default function CreateProduct() {
                         </div>
                         <div id='input-name' className='form-inputs'>
                             <label>Color:</label>
-                            <select onChange={(e) => { handleSelectC(e) }}>
-                                <option value="default"> -Select at least one</option>
+                            <select value="Yellow" onChange={(e) => { handleSelectC(e) }}>
                                 <option value="Yellow "> Yellow </option>
                                 <option value="Green"> Green </option>
                                 <option value="Purple"> Purple </option>

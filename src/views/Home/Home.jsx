@@ -24,7 +24,7 @@ import CloseButton from 'react-bootstrap/CloseButton';
 import 'bootstrap/dist/css/bootstrap.css';
 import './Home.css';
 
-export default function Home({handleAdded, handleNotAdded}) {
+export default function Home({ handleAdded, handleNotAdded }) {
 
   //Hooks
   const location = useLocation();
@@ -35,7 +35,7 @@ export default function Home({handleAdded, handleNotAdded}) {
   const [currentPage, setCurrentPage] = useState(1);
   // Getting value of the query from the url
   const [searchParams] = useSearchParams();
-  const searchName = searchParams.get('name');
+    const searchName = searchParams.get('name');
   const filters = []
   searchParams.forEach((value, key) => {
     filters.push([key, value]);
@@ -90,19 +90,9 @@ export default function Home({handleAdded, handleNotAdded}) {
               <p><b>{allInstruments.length}</b> results</p>
             </div>
 
-            <FormControl
-              variant="standard"
-              sx={{ m: 1, minWidth: 90 }}
-              size="small"
-              className={allInstruments.length ? null : "ocult"}
-            >
+            <FormControl variant="standard" sx={{ m: 1, minWidth: 90 }} size="small" className={allInstruments.length ? null : "ocult"}>
               <InputLabel id="demo-simple-select-label">Order by</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Order by"
-                onChange={(e) => { handleOrder(e) }}
-              >
+              <Select labelId="demo-simple-select-label" id="demo-simple-select" label="Order by" onChange={(e) => { handleOrder(e) }}>
                 <MenuItem value="Lower price">Price: Low to High</MenuItem>
                 <MenuItem value="Higher price">Price: Hig to Low</MenuItem>
                 <MenuItem value="Down to Up">Name: A-Z</MenuItem>

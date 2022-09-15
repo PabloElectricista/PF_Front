@@ -22,7 +22,7 @@ root.render(
     <Auth0Provider domain={authCredentials.domain} clientId={authCredentials.clientId} audience={authCredentials.audience} redirectUri={window.location.origin}>
       <Provider store={store}>
         <App />
-      </Provider>
+      </Provider> 
     </Auth0Provider>
   </React.StrictMode>
 );
